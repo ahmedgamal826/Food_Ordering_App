@@ -141,3 +141,27 @@ Future signInWithGoogle({required BuildContext context}) async {
   await FirebaseAuth.instance.signInWithCredential(credential);
   Navigator.of(context).pushNamedAndRemoveUntil("homeScreen", (route) => false);
 }
+
+Future signInWithGoogleByAdmin({required BuildContext context}) async {
+  // Trigger the authentication flow
+  final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+  if (googleUser == null) {
+    return; // out of funcion ==============>
+  }
+
+  // Obtain the auth details from the request
+  final GoogleSignInAuthentication? googleAuth =
+      await googleUser?.authentication;
+
+  // Create a new credential
+  final credential = GoogleAuthProvider.credential(
+    accessToken: googleAuth?.accessToken,
+    idToken: googleAuth?.idToken,
+  );
+
+  // Once signed in, return the UserCredential
+  await FirebaseAuth.instance.signInWithCredential(credential);
+  Navigator.of(context)
+      .pushNamedAndRemoveUntil("AdminHomePage", (route) => false);
+}

@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:food_ordering_app/Screens/order_screen.dart';
-import 'package:food_ordering_app/models/special_food_model.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class MyDrawer extends StatelessWidget {
@@ -30,12 +29,21 @@ class MyDrawer extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                       color: Colors.white),
                 ),
-                Text(
-                  email,
-                  style: const TextStyle(fontSize: 15, color: Colors.white),
+                Expanded(
+                  child: Text(
+                    email,
+                    style: const TextStyle(
+                      fontSize: 15,
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
+
+
               ],
+
             ),
+
           ),
           ListTile(
             leading: const Icon(

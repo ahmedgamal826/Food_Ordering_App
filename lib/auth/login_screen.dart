@@ -38,155 +38,172 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Form(
       key: _formKey,
-      child: SafeArea(
-        child: Scaffold(
-          backgroundColor: Colors.white,
-          body: ListView(
-            children: [
-              const SizedBox(
-                height: 50,
-              ),
-
-              Stack(
+      child: Scaffold(
+        // appBar: AppBar(
+        //   backgroundColor: Colors.blue,
+        //   toolbarHeight: 0,
+        // ),
+        backgroundColor: Colors.white,
+        body: Column(
+          children: [
+            const SizedBox(
+              height: 50,
+            ),
+            Row(
+              children: [
+                IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: const Icon(Icons.arrow_back))
+              ],
+            ),
+            Expanded(
+              child: ListView(
+                physics: const BouncingScrollPhysics(),
+                padding: const EdgeInsets.only(top: 0, bottom: 30),
                 children: [
-                  Container(
-                    decoration: const BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage('assets/images/login_logooo.png'),
+                  Stack(
+                    children: [
+                      Container(
+                        decoration: const BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage('assets/images/login_logooo.png'),
+                          ),
+                        ),
+                        //width: 100,
+                        height: 160,
                       ),
-                    ),
-                    //width: 100,
-                    height: 160,
+                      const Positioned(
+                        top: 130,
+                        right: 130,
+                        child: Text(
+                          'Food Delivery App',
+                          style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.black,
+                              fontStyle: FontStyle.italic),
+                        ),
+                      ),
+                    ],
                   ),
-                  const Positioned(
-                    top: 130,
-                    right: 130,
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.only(left: 15),
                     child: Text(
-                      'Food Delivery App',
-                      style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.black,
-                          fontStyle: FontStyle.italic),
+                      'Sign In',
+                      style: TextStyle(fontSize: 40, color: Colors.orange),
                     ),
                   ),
-                ],
-              ),
-
-              const SizedBox(
-                height: 50,
-              ),
-
-              const Padding(
-                padding: EdgeInsets.only(left: 15),
-                child: Text(
-                  'Sign In',
-                  style: TextStyle(fontSize: 40, color: Colors.orange),
-                ),
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              const Padding(
-                padding: EdgeInsets.only(left: 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Email',
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.only(left: 20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Email',
+                          style: TextStyle(
+                              fontSize: 25,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                      ],
+                    ),
+                  ),
+                  CustomTextFiled(
+                    hintText: 'Enter your Email',
+                    controller: emailController,
+                    validatorMessage: 'Email is required',
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.only(left: 20),
+                    child: Text(
+                      'Password',
                       style: TextStyle(
-                          fontSize: 25,
+                          fontSize: 22,
                           fontWeight: FontWeight.bold,
                           color: Colors.black),
                     ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                  ],
-                ),
-              ),
-              CustomTextFiled(
-                hintText: 'Enter your Email',
-                controller: emailController,
-                validatorMessage: 'Email is required',
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              const Padding(
-                padding: EdgeInsets.only(left: 20),
-                child: Text(
-                  'Password',
-                  style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black),
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              CustomTextFiled(
-                hintText: 'Enter your Password',
-                validatorMessage: 'Password is required',
-                controller: passwordController,
-              ),
-              CustomTextButton(
-                text: 'Forget Password?',
-                onPressed: () async {
-                  if (emailController.text == '') {
-                    awesomeDialog(
-                        context: context,
-                        content: 'الرجاء من كتابة بريدك الالكتروني');
-                    return;
-                  }
-                  try {
-                    await FirebaseAuth.instance
-                        .sendPasswordResetEmail(email: emailController.text);
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  CustomTextFiled(
+                    hintText: 'Enter your Password',
+                    validatorMessage: 'Password is required',
+                    controller: passwordController,
+                  ),
+                  CustomTextButton(
+                    text: 'Forget Password?',
+                    onPressed: () async {
+                      if (emailController.text == '') {
+                        awesomeDialog(
+                            context: context,
+                            content: 'الرجاء من كتابة بريدك الالكتروني');
+                        return;
+                      }
+                      try {
+                        await FirebaseAuth.instance.sendPasswordResetEmail(
+                            email: emailController.text);
 
-                    AwesomeDialog(
-                      context: context,
-                      dialogType: DialogType.success,
-                      //animType: AnimType.rightSlide,
-                      title: 'Error',
-                      desc:
-                          'لقد تم ارسال لينك لإعادة كلمة المرور إلي بريدك الالكتروني .. الرجاء التوجه الي بريدك الالكتروني والضغط علي اللينك',
-                    ).show();
-                  } catch (e) {
-                    awesomeDialog(
-                        context: context,
-                        content:
-                            'الرجاء التأكد من ان البريد الالكتروني الذي ادخلته صحيح ثم قم بإعادة المحاولة');
-                  }
-                },
+                        AwesomeDialog(
+                          context: context,
+                          dialogType: DialogType.success,
+                          //animType: AnimType.rightSlide,
+                          title: 'Error',
+                          desc:
+                              'لقد تم ارسال لينك لإعادة كلمة المرور إلي بريدك الالكتروني .. الرجاء التوجه الي بريدك الالكتروني والضغط علي اللينك',
+                        ).show();
+                      } catch (e) {
+                        awesomeDialog(
+                            context: context,
+                            content:
+                                'الرجاء التأكد من ان البريد الالكتروني الذي ادخلته صحيح ثم قم بإعادة المحاولة');
+                      }
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                  CustomButton(buttonText: 'Login', onPressed: handleSignIn),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const SizedBox(
+                    width: 50,
+                  ),
+                  LoginWithGoogleButton(
+                    onpressed: () {
+                      signInWithGoogle(context: context);
+                    },
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  CustomTextAndTextbutton(
+                    text1: "Don't have an account? ",
+                    text2: 'Sign Up',
+                    onTap: () {
+                      Navigator.of(context)
+                          .pushReplacementNamed("registerScreen");
+                    },
+                  )
+                ],
               ),
-              const SizedBox(height: 20),
-              CustomButton(buttonText: 'Login', onPressed: handleSignIn),
-              const SizedBox(
-                height: 10,
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              const SizedBox(
-                width: 50,
-              ),
-              // LoginWithGoogleButton(
-              //   onpressed: () {
-              //     signInWithGoogle(context: context);
-              //   },
-              // ),
-              // const SizedBox(
-              //   height: 20,
-              // ),
-              CustomTextAndTextbutton(
-                text1: "Don't have an account? ",
-                text2: 'Sign Up',
-                onTap: () {
-                  Navigator.of(context).pushReplacementNamed("registerScreen");
-                },
-              )
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

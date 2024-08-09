@@ -71,147 +71,165 @@ class _RegisterScreenState extends State<RegisterScreen> {
       }
     }
 
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        body: Form(
-          key: _formKey,
-          child: ListView(
-            children: [
-              Stack(
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Form(
+        key: _formKey,
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 50,
+            ),
+            Row(
+              children: [
+                IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: const Icon(Icons.arrow_back))
+              ],
+            ),
+            Expanded(
+              child: ListView(
+                physics: const BouncingScrollPhysics(),
+                padding: const EdgeInsets.only(top: 0, bottom: 30),
                 children: [
-                  Container(
-                    decoration: const BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage('assets/images/login_logooo.png'),
+                  Stack(
+                    children: [
+                      Container(
+                        decoration: const BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage('assets/images/login_logooo.png'),
+                          ),
+                        ),
+                        //width: 100,
+                        height: 150,
                       ),
-                    ),
-                    //width: 100,
-                    height: 150,
+                      const Positioned(
+                        top: 125,
+                        right: 130,
+                        child: Text(
+                          'Food Delivery App',
+                          style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.black,
+                              fontStyle: FontStyle.italic),
+                        ),
+                      ),
+                    ],
                   ),
-                  const Positioned(
-                    top: 125,
-                    right: 130,
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.only(left: 15),
                     child: Text(
-                      'Food Delivery App',
-                      style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.black,
-                          fontStyle: FontStyle.italic),
+                      'Sign Up',
+                      style: TextStyle(fontSize: 40, color: Colors.orange),
                     ),
                   ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.only(left: 20),
+                    child: Text(
+                      'Username',
+                      style: TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  CustomTextFiled(
+                    hintText: 'Enter your Name',
+                    controller: nameController,
+                    validatorMessage: 'Username is required',
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.only(left: 20),
+                    child: Text(
+                      'Email',
+                      style: TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  CustomTextFiled(
+                    hintText: 'Enter your Email',
+                    controller: emailController,
+                    validatorMessage: 'Email is required',
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.only(left: 20),
+                    child: Text(
+                      'Password',
+                      style: TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  CustomTextFiled(
+                    hintText: 'Enter your Password',
+                    controller: passwordController,
+                    validatorMessage: 'Password is required',
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.only(left: 20),
+                    child: Text(
+                      'Confirm Password',
+                      style: TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  CustomTextFiled(
+                    hintText: 'Enter Confirm Password',
+                    controller: confirmPasswordController,
+                    validatorMessage: 'Confirm Password is required',
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  CustomButton(buttonText: 'Sign Up', onPressed: handleSignUp),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  CustomTextAndTextbutton(
+                    text1: 'Already have an account? ',
+                    text2: 'Login',
+                    onTap: () {
+                      Navigator.of(context).pushReplacementNamed("loginScreen");
+                    },
+                  )
                 ],
               ),
-              const SizedBox(
-                height: 30,
-              ),
-              const Padding(
-                padding: EdgeInsets.only(left: 15),
-                child: Text(
-                  'Sign Up',
-                  style: TextStyle(fontSize: 40, color: Colors.orange),
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              const Padding(
-                padding: EdgeInsets.only(left: 20),
-                child: Text(
-                  'Username',
-                  style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black),
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              CustomTextFiled(
-                hintText: 'Enter your Name',
-                controller: nameController,
-                validatorMessage: 'Username is required',
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              const Padding(
-                padding: EdgeInsets.only(left: 20),
-                child: Text(
-                  'Email',
-                  style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black),
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              CustomTextFiled(
-                hintText: 'Enter your Email',
-                controller: emailController,
-                validatorMessage: 'Email is required',
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              const Padding(
-                padding: EdgeInsets.only(left: 20),
-                child: Text(
-                  'Password',
-                  style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black),
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              CustomTextFiled(
-                hintText: 'Enter your Password',
-                controller: passwordController,
-                validatorMessage: 'Password is required',
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              const Padding(
-                padding: EdgeInsets.only(left: 20),
-                child: Text(
-                  'Confirm Password',
-                  style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black),
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              CustomTextFiled(
-                hintText: 'Enter Confirm Password',
-                controller: confirmPasswordController,
-                validatorMessage: 'Confirm Password is required',
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              CustomButton(buttonText: 'Sign Up', onPressed: handleSignUp),
-              const SizedBox(
-                height: 10,
-              ),
-              CustomTextAndTextbutton(
-                text1: 'Already have an account? ',
-                text2: 'Login',
-                onTap: () {
-                  Navigator.of(context).pushReplacementNamed("loginScreen");
-                },
-              )
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
