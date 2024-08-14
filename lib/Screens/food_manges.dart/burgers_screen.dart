@@ -75,21 +75,21 @@ class BurgersScreen extends StatefulWidget {
 }
 
 class _BurgersScreenState extends State<BurgersScreen> {
-  List<String> burgerImages = [
-    'assets/images/chicken-burger.jpg',
-    'assets/images/chicken-burger.jpg',
-    'assets/images/chicken-burger.jpg',
-    'assets/images/chicken-burger.jpg',
-    'assets/images/chicken-burger.jpg',
-    'assets/images/chicken-burger.jpg',
-    'assets/images/chicken-burger.jpg',
-    'assets/images/chicken-burger.jpg',
-    'assets/images/chicken-burger.jpg',
-    'assets/images/chicken-burger.jpg',
-    'assets/images/chicken-burger.jpg',
-    'assets/images/chicken-burger.jpg',
-    'assets/images/chicken-burger.jpg',
-  ];
+  // List<String> burgerImages = [
+  //   'assets/images/chicken-burger.jpg',
+  //   'assets/images/chicken-burger.jpg',
+  //   'assets/images/chicken-burger.jpg',
+  //   'assets/images/chicken-burger.jpg',
+  //   'assets/images/chicken-burger.jpg',
+  //   'assets/images/chicken-burger.jpg',
+  //   'assets/images/chicken-burger.jpg',
+  //   'assets/images/chicken-burger.jpg',
+  //   'assets/images/chicken-burger.jpg',
+  //   'assets/images/chicken-burger.jpg',
+  //   'assets/images/chicken-burger.jpg',
+  //   'assets/images/chicken-burger.jpg',
+  //   'assets/images/chicken-burger.jpg',
+  // ];
 
   @override
   Widget build(BuildContext context) {
@@ -126,7 +126,7 @@ class _BurgersScreenState extends State<BurgersScreen> {
             child: GridView.builder(
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
-              itemCount: burgerImages.length,
+              itemCount: 10,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 crossAxisSpacing: 10,
@@ -145,23 +145,23 @@ class _BurgersScreenState extends State<BurgersScreen> {
                           width: 200, // Adjust width as needed
                           height: 200, // Adjust height as needed
                           decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage(
-                                  'assets/images/burger_gridView.png'),
-                            ),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
+                              // image: DecorationImage(
+                              //   image: AssetImage(
+                              //       'assets/images/burger_gridView.png'),
+                              // ),
+                              // borderRadius: BorderRadius.circular(10),
+                              ),
                         ),
                       ),
                     ),
                     SizedBox(height: 8),
-                    Text(
-                      'Grilled Chicken Burger',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
-                    ),
+                    // Text(
+                    //   'Grilled Chicken Burger',
+                    //   style: TextStyle(
+                    //     fontWeight: FontWeight.bold,
+                    //     fontSize: 16,
+                    //   ),
+                    // ),
                     SizedBox(height: 4),
                     SizedBox(height: 8),
                   ],

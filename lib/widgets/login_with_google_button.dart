@@ -8,14 +8,14 @@ class LoginWithGoogleButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 30),
+      padding: const EdgeInsets.symmetric(horizontal: 10),
       child: ElevatedButton(
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.orange,
           ),
           onPressed: onpressed,
           child: Padding(
-            padding: const EdgeInsets.all(12),
+            padding: const EdgeInsets.all(10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

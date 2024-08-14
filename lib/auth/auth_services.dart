@@ -1,0 +1,531 @@
+// // // // import 'package:cloud_firestore/cloud_firestore.dart';
+// // // // import 'package:firebase_auth/firebase_auth.dart';
+// // // // import 'package:flutter/material.dart';
+
+// // // // class AuthService extends ChangeNotifier {
+// // // //   // instance of auth
+// // // //   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+
+// // // //   // instance of firestore
+// // // //   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+// // // //   // sign user in
+// // // //   // login
+// // // //   Future<UserCredential> signInWithEmailandPassword(
+// // // //       String email, String password) async {
+// // // //     try {
+// // // //       // sign in
+// // // //       UserCredential userCredential = await _firebaseAuth
+// // // //           .signInWithEmailAndPassword(email: email, password: password);
+
+// // // //       // add a new document for the user in users collection if it doesn't already exists
+// // // //       _firestore.collection('user_app').doc(userCredential.user!.uid).set({
+// // // //         'uid': userCredential.user!.uid,
+// // // //         'email': email,
+// // // //       }, SetOptions(merge: true));
+
+// // // //       return userCredential;
+// // // //     }
+// // // //     // catch any errors
+// // // //     on FirebaseAuthException catch (e) {
+// // // //       throw Exception(e.code);
+// // // //     }
+// // // //   }
+
+// // // //   // create a new password
+// // // // // register
+// // // //   Future<UserCredential> signUpWithEmailandPassword(
+// // // //       String name, String email, String password) async {
+// // // //     try {
+// // // //       UserCredential userCredential = await _firebaseAuth
+// // // //           .createUserWithEmailAndPassword(email: email, password: password);
+
+// // // //       // after creating the user, create a new document for the users in the users collection
+
+// // // //       _firestore.collection('user_app').doc(userCredential.user!.uid).set({
+// // // //         'name': name,
+// // // //         'uid': userCredential.user!.uid,
+// // // //         'email': email,
+// // // //       });
+
+// // // //       return userCredential;
+// // // //     } on FirebaseAuthException catch (e) {
+// // // //       throw Exception(e.code);
+// // // //     }
+// // // //   }
+
+// // // //   // sign user out
+// // // //   Future<void> signOut() async {
+// // // //     return await FirebaseAuth.instance.signOut();
+// // // //   }
+// // // // }
+
+// // // import 'package:cloud_firestore/cloud_firestore.dart';
+// // // import 'package:firebase_auth/firebase_auth.dart';
+// // // import 'package:flutter/material.dart';
+
+// // // class AuthService extends ChangeNotifier {
+// // //   // Firebase Auth instance
+// // //   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+
+// // //   // Firestore instance
+// // //   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+// // //   // Variables to hold user data
+// // //   String? _userName;
+// // //   String? _userEmail;
+
+// // //   // Getters for user data
+// // //   String? get userName => _userName;
+// // //   String? get userEmail => _userEmail;
+
+// // //   // Sign in user
+// // //   Future<UserCredential> signInWithEmailandPassword(
+// // //       String email, String password) async {
+// // //     try {
+// // //       // Sign in
+// // //       UserCredential userCredential = await _firebaseAuth
+// // //           .signInWithEmailAndPassword(email: email, password: password);
+
+// // //       // Fetch user data from Firestore
+// // //       await _fetchUserData(userCredential.user!.uid);
+
+// // //       // Notify listeners to update UI
+// // //       notifyListeners();
+
+// // //       return userCredential;
+// // //     } on FirebaseAuthException catch (e) {
+// // //       throw Exception(e.code);
+// // //     }
+// // //   }
+
+// // //   // Sign up user
+// // //   Future<UserCredential> signUpWithEmailandPassword(
+// // //       String name, String email, String password) async {
+// // //     try {
+// // //       UserCredential userCredential = await _firebaseAuth
+// // //           .createUserWithEmailAndPassword(email: email, password: password);
+
+// // //       // Save user data in Firestore
+// // //       await _firestore
+// // //           .collection('user_app')
+// // //           .doc(userCredential.user!.uid)
+// // //           .set({
+// // //         'name': name,
+// // //         'uid': userCredential.user!.uid,
+// // //         'email': email,
+// // //       });
+
+// // //       // Fetch user data
+// // //       await _fetchUserData(userCredential.user!.uid);
+
+// // //       // Notify listeners to update UI
+// // //       notifyListeners();
+
+// // //       return userCredential;
+// // //     } on FirebaseAuthException catch (e) {
+// // //       throw Exception(e.code);
+// // //     }
+// // //   }
+
+// // //   // Fetch user data from Firestore
+// // //   Future<void> _fetchUserData(String uid) async {
+// // //     DocumentSnapshot userDoc =
+// // //         await _firestore.collection('user_app').doc(uid).get();
+
+// // //     if (userDoc.exists) {
+// // //       _userName = userDoc['name'];
+// // //       _userEmail = userDoc['email'];
+// // //     }
+// // //   }
+
+// // //   // Sign out user
+// // //   Future<void> signOut() async {
+// // //     await _firebaseAuth.signOut();
+
+// // //     // Clear user data
+// // //     _userName = null;
+// // //     _userEmail = null;
+
+// // //     // Notify listeners to update UI
+// // //     notifyListeners();
+// // //   }
+// // // }
+
+// // import 'package:cloud_firestore/cloud_firestore.dart';
+// // import 'package:firebase_auth/firebase_auth.dart';
+// // import 'package:flutter/material.dart';
+
+// // class AuthService extends ChangeNotifier {
+// //   // Firebase Auth instance
+// //   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+
+// //   // Firestore instance
+// //   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+// //   // Variables to hold user data
+// //   String? _userName;
+// //   String? _userEmail;
+
+// //   // Getters for user data
+// //   String? get userName => _userName;
+// //   String? get userEmail => _userEmail;
+
+// //   // Sign in user
+// //   Future<UserCredential> signInWithEmailandPassword(
+// //       String email, String password) async {
+// //     try {
+// //       // Sign in
+// //       UserCredential userCredential = await _firebaseAuth
+// //           .signInWithEmailAndPassword(email: email, password: password);
+
+// //       // Fetch user data from Firestore
+// //       await _fetchUserData(userCredential.user!.uid);
+
+// //       // Notify listeners to update UI
+// //       notifyListeners();
+
+// //       return userCredential;
+// //     } on FirebaseAuthException catch (e) {
+// //       throw Exception(e.code);
+// //     }
+// //   }
+
+// //   // Sign up user
+// //   Future<UserCredential> signUpWithEmailandPassword(
+// //       String name, String email, String password) async {
+// //     try {
+// //       UserCredential userCredential = await _firebaseAuth
+// //           .createUserWithEmailAndPassword(email: email, password: password);
+
+// //       // Save user data in Firestore
+// //       await _firestore
+// //           .collection('user_app')
+// //           .doc(userCredential.user!.uid)
+// //           .set({
+// //         'name': name,
+// //         'uid': userCredential.user!.uid,
+// //         'email': email,
+// //       });
+
+// //       // Fetch user data
+// //       await _fetchUserData(userCredential.user!.uid);
+
+// //       // Notify listeners to update UI
+// //       notifyListeners();
+
+// //       return userCredential;
+// //     } on FirebaseAuthException catch (e) {
+// //       throw Exception(e.code);
+// //     }
+// //   }
+
+// //   // Fetch user data from Firestore
+// //   Future<void> _fetchUserData(String uid) async {
+// //     DocumentSnapshot userDoc =
+// //         await _firestore.collection('user_app').doc(uid).get();
+
+// //     if (userDoc.exists) {
+// //       _userName = userDoc['name'];
+// //       _userEmail = userDoc['email'];
+// //     }
+// //   }
+
+// //   // Load user data from Firestore
+// //   Future<void> loadUserData() async {
+// //     User? user = _firebaseAuth.currentUser;
+// //     if (user != null) {
+// //       await _fetchUserData(user.uid);
+// //       notifyListeners();
+// //     }
+// //   }
+
+// //   // Sign out user
+// //   Future<void> signOut() async {
+// //     await _firebaseAuth.signOut();
+
+// //     // Clear user data
+// //     _userName = null;
+// //     _userEmail = null;
+
+// //     // Notify listeners to update UI
+// //     notifyListeners();
+// //   }
+// // }
+
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:flutter/material.dart';
+
+// class AuthService extends ChangeNotifier {
+//   // Firebase Auth instance
+//   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+
+//   // Firestore instance
+//   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+//   // Variables to hold user data
+//   String? _userName;
+//   String? _userEmail;
+
+//   // Getters for user data
+//   String? get userName => _userName;
+//   String? get userEmail => _userEmail;
+
+//   // Stream of authentication state changes
+//   Stream<User?> get authStateChanges => _firebaseAuth.authStateChanges();
+
+//   // Check if user is logged in
+//   bool get isLoggedIn => _firebaseAuth.currentUser != null;
+
+//   // Sign in user
+//   Future<UserCredential> signInWithEmailandPassword(
+//       String email, String password) async {
+//     try {
+//       // Sign in
+//       UserCredential userCredential = await _firebaseAuth
+//           .signInWithEmailAndPassword(email: email, password: password);
+
+//       // Fetch user data from Firestore
+//       await _fetchUserData(userCredential.user!.uid);
+
+//       // Notify listeners to update UI
+//       notifyListeners();
+
+//       return userCredential;
+//     } on FirebaseAuthException catch (e) {
+//       throw Exception(e.code);
+//     }
+//   }
+
+//   // Sign up user
+//   Future<UserCredential> signUpWithEmailandPassword(
+//       String name, String email, String password) async {
+//     try {
+//       UserCredential userCredential = await _firebaseAuth
+//           .createUserWithEmailAndPassword(email: email, password: password);
+
+//       // Save user data in Firestore
+//       await _firestore
+//           .collection('user_app')
+//           .doc(userCredential.user!.uid)
+//           .set({
+//         'name': name,
+//         'uid': userCredential.user!.uid,
+//         'email': email,
+//       });
+
+//       // Fetch user data
+//       await _fetchUserData(userCredential.user!.uid);
+
+//       // Notify listeners to update UI
+//       notifyListeners();
+
+//       return userCredential;
+//     } on FirebaseAuthException catch (e) {
+//       throw Exception(e.code);
+//     }
+//   }
+
+//   // Fetch user data from Firestore
+//   Future<void> _fetchUserData(String uid) async {
+//     DocumentSnapshot userDoc =
+//         await _firestore.collection('user_app').doc(uid).get();
+
+//     if (userDoc.exists) {
+//       _userName = userDoc['name'];
+//       _userEmail = userDoc['email'];
+//     }
+//   }
+
+//   // Load user data from Firestore
+//   Future<void> loadUserData() async {
+//     User? user = _firebaseAuth.currentUser;
+//     if (user != null) {
+//       await _fetchUserData(user.uid);
+//       notifyListeners();
+//     }
+//   }
+
+//   // Sign out user
+//   Future<void> signOut() async {
+//     await _firebaseAuth.signOut();
+
+//     // Clear user data
+//     _userName = null;
+//     _userEmail = null;
+
+//     // Notify listeners to update UI
+//     notifyListeners();
+//   }
+// }
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+
+class AuthService extends ChangeNotifier {
+  // Firebase Auth instance
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+
+  // Firestore instance
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  // Google Sign-In instance
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
+
+  // Variables to hold user data
+  String? _userName;
+  String? _userEmail;
+
+  // Getters for user data
+  String? get userName => _userName;
+  String? get userEmail => _userEmail;
+
+  // Stream of authentication state changes
+  Stream<User?> get authStateChanges => _firebaseAuth.authStateChanges();
+
+  // Check if user is logged in
+  bool get isLoggedIn => _firebaseAuth.currentUser != null;
+
+  // Constructor
+  AuthService() {
+    // Load user data when the AuthService is instantiated
+    _initializeUserData();
+  }
+
+  // Initialize user data
+  Future<void> _initializeUserData() async {
+    User? user = _firebaseAuth.currentUser;
+    if (user != null) {
+      await _fetchUserData(user.uid);
+      notifyListeners();
+    }
+  }
+
+  // Sign in user
+  Future<UserCredential> signInWithEmailandPassword(
+      String email, String password) async {
+    try {
+      // Sign in
+      UserCredential userCredential = await _firebaseAuth
+          .signInWithEmailAndPassword(email: email, password: password);
+
+      // Fetch user data from Firestore
+      await _fetchUserData(userCredential.user!.uid);
+
+      // Notify listeners to update UI
+      notifyListeners();
+
+      return userCredential;
+    } on FirebaseAuthException catch (e) {
+      // Handle specific error cases
+      switch (e.code) {
+        case 'user-not-found':
+          throw 'No user found with this email.';
+        case 'wrong-password':
+          throw 'Incorrect password.';
+        case 'invalid-email':
+          throw 'The email address is not valid.';
+        default:
+          throw 'No user found for this email.';
+      }
+    }
+  }
+
+  // Sign up user
+  Future<UserCredential> signUpWithEmailandPassword(
+      String name, String email, String password) async {
+    try {
+      UserCredential userCredential = await _firebaseAuth
+          .createUserWithEmailAndPassword(email: email, password: password);
+
+      // Save user data in Firestore
+      await _firestore
+          .collection('user_app')
+          .doc(userCredential.user!.uid)
+          .set({
+        'name': name,
+        'uid': userCredential.user!.uid,
+        'email': email,
+      });
+
+      // Fetch user data
+      await _fetchUserData(userCredential.user!.uid);
+
+      // Notify listeners to update UI
+      notifyListeners();
+
+      return userCredential;
+    } on FirebaseAuthException catch (e) {
+      throw Exception(e.code);
+    }
+  }
+
+  // Sign in user with Google
+  Future<UserCredential> signInWithGoogle() async {
+    try {
+      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+
+      if (googleUser == null) {
+        throw Exception('Google sign in was aborted');
+      }
+
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
+
+      final OAuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      UserCredential userCredential =
+          await _firebaseAuth.signInWithCredential(credential);
+
+      // Save user data in Firestore
+      await _firestore
+          .collection('user_app')
+          .doc(userCredential.user!.uid)
+          .set({
+        'name': userCredential.user!.displayName,
+        'uid': userCredential.user!.uid,
+        'email': userCredential.user!.email,
+        'profile_picture': userCredential.user!.photoURL,
+      }, SetOptions(merge: true));
+
+      // Fetch user data
+      await _fetchUserData(userCredential.user!.uid);
+
+      // Notify listeners to update UI
+      notifyListeners();
+
+      return userCredential;
+    } on FirebaseAuthException catch (e) {
+      throw Exception(e.code);
+    }
+  }
+
+  // Fetch user data from Firestore
+  Future<void> _fetchUserData(String uid) async {
+    DocumentSnapshot userDoc =
+        await _firestore.collection('user_app').doc(uid).get();
+
+    if (userDoc.exists) {
+      _userName = userDoc['name'];
+      _userEmail = userDoc['email'];
+    }
+  }
+
+  // Sign out user
+  Future<void> signOut() async {
+    await _firebaseAuth.signOut();
+
+    // Clear user data
+    _userName = null;
+    _userEmail = null;
+
+    // Notify listeners to update UI
+    notifyListeners();
+  }
+}

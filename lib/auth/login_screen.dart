@@ -9,6 +9,7 @@ import 'package:food_ordering_app/widgets/custom_text_button.dart';
 import 'package:food_ordering_app/widgets/custom_text_filed.dart';
 import 'package:food_ordering_app/widgets/custom_text_textButton..dart';
 import 'package:food_ordering_app/widgets/login_with_google_button.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -23,16 +24,20 @@ class _LoginScreenState extends State<LoginScreen> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  void handleSignIn() {
-    if (_formKey.currentState!.validate()) {
-      setState(() {
-        signIn(
-            context: context,
-            emailController: emailController,
-            passwordController: passwordController);
-      });
-    }
-  }
+  // void handleSignIn() async {
+  //   if (_formKey.currentState!.validate()) {
+  //     setState(() {
+  //       signIn(
+  //           context: context,
+  //           emailController: emailController,
+  //           passwordController: passwordController);
+  //     });
+
+  //     SharedPreferences sharedPreferences =
+  //         await SharedPreferences.getInstance();
+  //     sharedPreferences.setString('emailLogin', emailController.text);
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -174,7 +179,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                   ),
                   const SizedBox(height: 20),
-                  CustomButton(buttonText: 'Login', onPressed: handleSignIn),
+                  CustomButton(buttonText: 'Login', onPressed: () {}),
                   const SizedBox(
                     height: 10,
                   ),
@@ -186,7 +191,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   LoginWithGoogleButton(
                     onpressed: () {
-                      signInWithGoogle(context: context);
+                      // signInWithGoogle(context: context);
                     },
                   ),
                   const SizedBox(

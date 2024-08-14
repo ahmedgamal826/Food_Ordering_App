@@ -10,14 +10,11 @@ class CustomTextButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: onPressed,
-      child: const Padding(
-        padding: EdgeInsets.only(right: 10),
-        child: Align(
-          alignment: Alignment.centerRight,
-          child: Text(
-            'Forget Password?',
-            style: TextStyle(fontSize: 16, color: Colors.black),
-          ),
+      child: const Align(
+        alignment: Alignment.centerRight,
+        child: Text(
+          'Forget Password?',
+          style: TextStyle(fontSize: 16, color: Colors.black),
         ),
       ),
     );

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_ordering_app/Screens/Test%20Screens/admin_login_screen.dart';
+import 'package:food_ordering_app/auth/login_or_register.dart';
+import 'package:food_ordering_app/auth/login_page.dart';
 import 'package:food_ordering_app/auth/login_screen.dart';
 import 'package:food_ordering_app/widgets/custom_button.dart';
 
@@ -14,7 +16,7 @@ class AdminOrUserScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
+            const Text(
               'Welcome to the Food Ordering App!',
               style: TextStyle(
                 fontSize: 22,
@@ -23,14 +25,14 @@ class AdminOrUserScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            Text(
+            const Text(
               'Please select your role to proceed.',
               style: TextStyle(
                 fontSize: 18,
                 color: Colors.black,
               ),
             ),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             CustomButton(
               buttonText: 'Admin',
               onPressed: () {
@@ -40,13 +42,13 @@ class AdminOrUserScreen extends StatelessWidget {
                 );
               },
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             CustomButton(
               buttonText: 'User',
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (_) => LoginScreen()),
+                  MaterialPageRoute(builder: (_) => LoginOrRegister()),
                 );
               },
             ),
