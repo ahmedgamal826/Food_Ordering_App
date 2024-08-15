@@ -3,12 +3,18 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:food_ordering_app/widgets/show_snack_bar.dart';
 import 'package:food_ordering_app/widgets/text_field_add_food.dart';
 import 'package:image_picker/image_picker.dart';
 
 class UpdateFood extends StatefulWidget {
-  UpdateFood({super.key, required this.docId, required this.foodData}) {}
+  UpdateFood(
+      {super.key,
+      required this.docId,
+      required this.foodData,
+      required this.collectionName}) {}
 
+  final String collectionName;
   final String docId;
   final Map<String, dynamic> foodData;
 
@@ -70,7 +76,10 @@ class _UpdateFoodState extends State<UpdateFood> {
     // });
     // Navigator.pop(context);
 
-    FirebaseFirestore.instance.collection('foods').doc(widget.docId).update({
+    FirebaseFirestore.instance
+        .collection(widget.collectionName)
+        .doc(widget.docId)
+        .update({
       'name': nameController.text,
       'price': priceController.text,
       'image': imageUrl,
@@ -78,6 +87,11 @@ class _UpdateFoodState extends State<UpdateFood> {
     }).then((_) {
       print('Food is updated successfully');
       Navigator.pop(context);
+      customShowSnackBar(
+        context: context,
+        content:
+            '${nameController.text} is updated in ${widget.collectionName}',
+      );
     }).catchError((error) {
       print("Failed to update food: $error");
     }).whenComplete(() {
@@ -107,7 +121,7 @@ class _UpdateFoodState extends State<UpdateFood> {
         children: [
           Padding(
             padding: const EdgeInsets.all(16),
-            child: Column(
+            child: ListView(
               children: [
                 TextFieledAddFood(
                   controller: nameController,
@@ -119,14 +133,23 @@ class _UpdateFoodState extends State<UpdateFood> {
                   hinText: 'Food Price',
                 ),
                 const SizedBox(height: 20),
-                const SizedBox(height: 20),
                 ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.orange,
+                  ),
                   onPressed: pickImage,
-                  child: const Text('Pick Image'),
+                  child: const Text(
+                    'Pick Image',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
                 if (image != null) Image.file(File(image!.path)),
                 const SizedBox(
-                  height: 20,
+                  height: 50,
                 ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(

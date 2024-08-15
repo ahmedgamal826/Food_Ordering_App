@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 
 class SearchTextformField extends StatelessWidget {
-  SearchTextformField({super.key, required this.hintText});
+  SearchTextformField(
+      {super.key, required this.hintText, required this.onChanged});
 
   String hintText;
+  final ValueChanged<String> onChanged; // Add this line
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+        padding: const EdgeInsets.symmetric(vertical: 30),
         child: TextField(
+          onChanged: onChanged,
           cursorColor: Colors.black,
           decoration: InputDecoration(
             border: const OutlineInputBorder(),

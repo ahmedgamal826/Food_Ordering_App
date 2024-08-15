@@ -3,14 +3,14 @@ import 'package:food_ordering_app/Screens/food_manges.dart/add_food_page.dart';
 import 'package:food_ordering_app/Screens/food_manges.dart/food_list.dart';
 import 'package:food_ordering_app/widgets/search_textform_field.dart';
 
-class BurgersScreen extends StatefulWidget {
-  const BurgersScreen({super.key});
+class PizzaScreen extends StatefulWidget {
+  const PizzaScreen({super.key});
 
   @override
-  _BurgersScreenState createState() => _BurgersScreenState();
+  State<PizzaScreen> createState() => _PizzaScreenState();
 }
 
-class _BurgersScreenState extends State<BurgersScreen> {
+class _PizzaScreenState extends State<PizzaScreen> {
   String searchQuery = '';
 
   void updateSearchQuery(String query) {
@@ -26,7 +26,7 @@ class _BurgersScreenState extends State<BurgersScreen> {
         iconTheme: const IconThemeData(color: Colors.white),
         backgroundColor: Colors.orange,
         title: const Text(
-          'Burgers',
+          'Pizza',
           style: TextStyle(
             fontSize: 25,
             fontWeight: FontWeight.bold,
@@ -40,15 +40,15 @@ class _BurgersScreenState extends State<BurgersScreen> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: SearchTextformField(
-              hintText: 'Search your burger...',
+              hintText: 'Search your pizza...',
               onChanged: updateSearchQuery, // Pass the function here
             ),
           ),
           Expanded(
             child: FoodList(
-              collectionName: 'burger category',
+              collectionName: 'pizza category',
               searchQuery: searchQuery, // Pass the searchQuery here
-              foodName: 'burger',
+              foodName: 'pizza',
               foodDetailsRoute: 'burgerDetailsScreen',
             ),
           ),

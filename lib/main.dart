@@ -7,6 +7,9 @@ import 'package:food_ordering_app/Screens/food_manges.dart/admin_home_page.dart'
 import 'package:food_ordering_app/Screens/burger_details.dart';
 import 'package:food_ordering_app/Screens/food_manges.dart/burgers_screen.dart';
 import 'package:food_ordering_app/Screens/check_box.dart';
+import 'package:food_ordering_app/Screens/food_manges.dart/chicken_screen.dart';
+import 'package:food_ordering_app/Screens/food_manges.dart/pizza_details_screen.dart';
+import 'package:food_ordering_app/Screens/food_manges.dart/pizza_screen.dart';
 import 'package:food_ordering_app/Screens/radio_button.dart';
 import 'package:food_ordering_app/Screens/splash_screen.dart';
 import 'package:food_ordering_app/auth/auth_gate.dart';
@@ -138,7 +141,10 @@ class _FirebaseLearningState extends State<FoodOrderingApp> {
         "radioButton": (context) => MyRadioButton(),
         'ProductSelectionScreen': (context) => ProductSelectionScreen(),
         'AdminHomePage': (context) => AdminHomePage(),
-        "LoginOrRegister": (context) => LoginOrRegister()
+        "LoginOrRegister": (context) => LoginOrRegister(),
+        'pizzaScreen': (context) => PizzaScreen(),
+        'chickenScreen': (context) => ChickenScreen(),
+        'PizzaDetailsScreen': (context) => PizzaDetailsScreen()
       },
     );
   }
