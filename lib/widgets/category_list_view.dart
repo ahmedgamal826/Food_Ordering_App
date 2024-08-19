@@ -97,9 +97,14 @@ import 'package:flutter/material.dart';
 import 'package:food_ordering_app/widgets/custom_category.dart';
 
 class CategoryListView extends StatelessWidget {
-  const CategoryListView({super.key, required this.categoryName});
+  const CategoryListView({
+    super.key,
+    required this.categoryName,
+    this.onTap,
+  });
 
   final String categoryName;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -112,49 +117,42 @@ class CategoryListView extends StatelessWidget {
           image: 'assets/images/coffee.png',
           categoryName: 'Coffee',
           onTap: () {
-            Navigator.pushNamed(context, 'pizzaScreen');
+            Navigator.pushNamed(context, 'coffee');
           },
         ),
         CustomCategory(
           image: 'assets/images/tea.png',
           categoryName: 'Tea',
           onTap: () {
-            Navigator.pushNamed(context, 'pizzaScreen');
-          },
-        ),
-        CustomCategory(
-          image: 'assets/images/soda.png',
-          categoryName: 'Pepsi',
-          onTap: () {
-            Navigator.pushNamed(context, 'pizzaScreen');
+            Navigator.pushNamed(context, 'tea');
           },
         ),
         CustomCategory(
           image: 'assets/images/water-bottle.png',
           categoryName: 'Water',
           onTap: () {
-            Navigator.pushNamed(context, 'pizzaScreen');
+            Navigator.pushNamed(context, 'water');
           },
         ),
         CustomCategory(
           image: 'assets/images/lemonade.png',
           categoryName: 'Lemonade Juice',
           onTap: () {
-            Navigator.pushNamed(context, 'pizzaScreen');
+            Navigator.pushNamed(context, 'lemonadeJuice');
           },
         ),
         CustomCategory(
           image: 'assets/images/strawberry-juice.png',
           categoryName: 'Strawberry Juice',
           onTap: () {
-            Navigator.pushNamed(context, 'pizzaScreen');
+            Navigator.pushNamed(context, 'strawberryJuice');
           },
         ),
         CustomCategory(
           image: 'assets/images/orange-juice.png',
           categoryName: 'Orange Juice',
           onTap: () {
-            Navigator.pushNamed(context, 'pizzaScreen');
+            Navigator.pushNamed(context, 'orangeJuice');
           },
         ),
       ];
@@ -178,35 +176,35 @@ class CategoryListView extends StatelessWidget {
           categoryName: 'Chicken',
           image: 'assets/images/chicken.png',
           onTap: () {
-            Navigator.pushNamed(context, 'pizzaScreen');
+            Navigator.pushNamed(context, 'chickenScreen');
           },
         ),
         CustomCategory(
           categoryName: 'Fish',
           image: 'assets/images/fish.png',
           onTap: () {
-            Navigator.pushNamed(context, 'pizzaScreen');
+            Navigator.pushNamed(context, 'fishScreen');
           },
         ),
         CustomCategory(
           categoryName: 'Meat',
           image: 'assets/images/meat.png',
           onTap: () {
-            Navigator.pushNamed(context, 'pizzaScreen');
+            Navigator.pushNamed(context, 'meatScreen');
           },
         ),
         CustomCategory(
           categoryName: 'Pasta',
           image: 'assets/images/pasta.png',
           onTap: () {
-            Navigator.pushNamed(context, 'pizzaScreen');
+            Navigator.pushNamed(context, 'pastaScreen');
           },
         ),
         CustomCategory(
           categoryName: 'Sushi',
           image: 'assets/images/sushi.png',
           onTap: () {
-            Navigator.pushNamed(context, 'pizzaScreen');
+            Navigator.pushNamed(context, 'sushiScreen');
           },
         ),
       ];
@@ -216,35 +214,35 @@ class CategoryListView extends StatelessWidget {
           categoryName: 'Chocolate Cake',
           image: 'assets/images/chocolate-cake.png',
           onTap: () {
-            Navigator.pushNamed(context, 'burgerScreen');
+            Navigator.pushNamed(context, 'chocolateCake');
           },
         ),
         CustomCategory(
           categoryName: 'Donut',
           image: 'assets/images/donut.png',
           onTap: () {
-            Navigator.pushNamed(context, 'pizzaScreen');
+            Navigator.pushNamed(context, 'donuts');
           },
         ),
         CustomCategory(
           categoryName: 'Ice Cream',
           image: 'assets/images/ice-cream.png',
           onTap: () {
-            Navigator.pushNamed(context, 'pizzaScreen');
+            Navigator.pushNamed(context, 'iceCream');
           },
         ),
         CustomCategory(
           categoryName: 'Waffle',
           image: 'assets/images/waffle.png',
           onTap: () {
-            Navigator.pushNamed(context, 'pizzaScreen');
+            Navigator.pushNamed(context, 'waffle');
           },
         ),
         CustomCategory(
           image: 'assets/images/desserts.png',
           categoryName: 'Cupcake',
           onTap: () {
-            Navigator.pushNamed(context, 'pizzaScreen');
+            Navigator.pushNamed(context, 'cupcake');
           },
         )
       ];
@@ -254,49 +252,42 @@ class CategoryListView extends StatelessWidget {
           image: 'assets/images/burger and drink.png',
           categoryName: 'Burger + Pepsi',
           onTap: () {
-            Navigator.pushNamed(context, 'pizzaScreen');
+            Navigator.pushNamed(context, 'burger and pepsi');
           },
         ),
         CustomCategory(
           image: 'assets/images/fish and rice.png',
           categoryName: 'Fish + Rice',
           onTap: () {
-            Navigator.pushNamed(context, 'pizzaScreen');
+            Navigator.pushNamed(context, 'fishandrice');
           },
         ),
         CustomCategory(
           image: 'assets/images/meat and drink.png',
           categoryName: 'Meat + Juice',
           onTap: () {
-            Navigator.pushNamed(context, 'pizzaScreen');
+            Navigator.pushNamed(context, 'meatandjuice');
+          },
+        ),
+        CustomCategory(
+          image: 'assets/images/chicken-rice.png',
+          categoryName: 'Chicken + Rice',
+          onTap: () {
+            Navigator.pushNamed(context, 'chickenandrice');
           },
         ),
         CustomCategory(
           image: 'assets/images/fast-food (2).png',
           categoryName: 'Burger + Fries',
           onTap: () {
-            Navigator.pushNamed(context, 'pizzaScreen');
+            Navigator.pushNamed(context, 'burgerandfries1');
           },
         ),
         CustomCategory(
-          image: 'assets/images/fast-food (3).png',
-          categoryName: 'Donuts + Fries',
+          image: 'assets/images/chicken-soup.png',
+          categoryName: 'Pasta + Chicken',
           onTap: () {
-            Navigator.pushNamed(context, 'pizzaScreen');
-          },
-        ),
-        CustomCategory(
-          image: 'assets/images/bakery.png',
-          categoryName: 'Cake + Donuts',
-          onTap: () {
-            Navigator.pushNamed(context, 'pizzaScreen');
-          },
-        ),
-        CustomCategory(
-          image: 'assets/images/fastfood.png',
-          categoryName: 'Burger + Fries',
-          onTap: () {
-            Navigator.pushNamed(context, 'pizzaScreen');
+            Navigator.pushNamed(context, 'pastaandChicken');
           },
         ),
       ];

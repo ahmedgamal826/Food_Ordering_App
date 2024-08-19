@@ -492,6 +492,7 @@ class AuthService extends ChangeNotifier {
         'uid': userCredential.user!.uid,
         'email': userCredential.user!.email,
         'profile_picture': userCredential.user!.photoURL,
+        'rool': 'user'
       }, SetOptions(merge: true));
 
       // Fetch user data

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:food_ordering_app/auth/auth_services.dart';
 import 'package:food_ordering_app/widgets/custom_button.dart';
 import 'package:food_ordering_app/widgets/custom_text_filed.dart';
+import 'package:food_ordering_app/widgets/show_snack_bar.dart';
 import 'package:provider/provider.dart';
 
 import '../components/my_button.dart';
@@ -129,13 +130,14 @@ class _RegisterPageState extends State<RegisterPage> {
           });
         }
 
-        Navigator.pushReplacementNamed(context, 'homeScreen');
+        Navigator.pushReplacementNamed(context, 'userScreen');
       } catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(e.toString()),
-          ),
-        );
+        customShowSnackBar(context: context, content: '${e.toString()}');
+        // ScaffoldMessenger.of(context).showSnackBar(
+        //   SnackBar(
+        //     content: Text(e.toString()),
+        //   ),
+        // );
       } finally {
         setState(() {
           isLoading = false;

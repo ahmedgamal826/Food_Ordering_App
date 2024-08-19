@@ -5,6 +5,7 @@ import 'package:food_ordering_app/Screens/food_manges.dart/admin_home_page.dart'
 import 'package:food_ordering_app/widgets/auth_functions.dart';
 import 'package:food_ordering_app/widgets/custom_text_filed.dart';
 import 'package:food_ordering_app/widgets/login_with_google_button.dart';
+import 'package:food_ordering_app/widgets/show_snack_bar.dart';
 
 class AdminLoginScreen extends StatefulWidget {
   @override
@@ -176,19 +177,24 @@ class _AdminLoginScreenState extends State<AdminLoginScreen> {
 
         // عرض رسائل الخطأ باستخدام Snackbar
         if (e.code == 'user-not-found') {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Email not found')),
-          );
+          customShowSnackBar(context: context, content: 'Email not found');
+          // ScaffoldMessenger.of(context).showSnackBar(
+          //   const SnackBar(content: Text('Email not found')),
+          // );
         } else if (e.code == 'wrong-password') {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Wrong password')),
-          );
+          customShowSnackBar(context: context, content: 'Wrong password');
+          // ScaffoldMessenger.of(context).showSnackBar(
+          //   const SnackBar(content: Text('Wrong password')),
+          // );
         } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Error: This email does not belong to an admin.'),
-            ),
-          );
+          customShowSnackBar(
+              context: context,
+              content: 'Error: This email does not belong to an admin.');
+          // ScaffoldMessenger.of(context).showSnackBar(
+          //   const SnackBar(
+          //     content: Text('Error: This email does not belong to an admin.'),
+          //   ),
+          // );
         }
       } finally {
         setState(() {

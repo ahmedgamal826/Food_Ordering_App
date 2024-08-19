@@ -11,8 +11,11 @@ class TextFieledAddFood extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextField(
       controller: controller,
-      keyboardType:
-          hinText == 'Food Name' ? TextInputType.name : TextInputType.number,
+      keyboardType: hinText == 'Food Name' ||
+              hinText == 'Drink Name' ||
+              hinText == 'Sweet Name'
+          ? TextInputType.name
+          : TextInputType.number,
       decoration: InputDecoration(
         hintText: hinText,
         hintStyle: const TextStyle(color: Colors.white),

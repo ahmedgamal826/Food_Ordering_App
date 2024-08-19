@@ -8,13 +8,16 @@ import 'package:food_ordering_app/widgets/text_field_add_food.dart';
 import 'package:image_picker/image_picker.dart';
 
 class UpdateFood extends StatefulWidget {
-  UpdateFood(
-      {super.key,
-      required this.docId,
-      required this.foodData,
-      required this.collectionName}) {}
+  UpdateFood({
+    super.key,
+    required this.docId,
+    required this.foodData,
+    required this.collectionName,
+    required this.categoryName,
+  }) {}
 
   final String collectionName;
+  final String categoryName;
   final String docId;
   final Map<String, dynamic> foodData;
 
@@ -103,14 +106,32 @@ class _UpdateFoodState extends State<UpdateFood> {
 
   @override
   Widget build(BuildContext context) {
+    final isDrinkCategory = widget.collectionName == 'tea category' ||
+        widget.collectionName == 'coffee category' ||
+        widget.collectionName == 'lemonade category' ||
+        widget.collectionName == 'orange juice category' ||
+        widget.collectionName == 'water category' ||
+        widget.collectionName == 'pepsi category' ||
+        widget.collectionName == 'strawberry juice category';
+
+    final isSweetCategory = widget.collectionName == 'ice cream category' ||
+        widget.collectionName == 'donuts category' ||
+        widget.collectionName == 'waffle category' ||
+        widget.collectionName == 'chocolate cake category' ||
+        widget.collectionName == 'Cupcake category';
+
     return Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.white),
         centerTitle: true,
         backgroundColor: Colors.orange,
-        title: const Text(
-          'Edit Food',
-          style: TextStyle(
+        title: Text(
+          isDrinkCategory
+              ? 'Edit Drink'
+              : isSweetCategory
+                  ? 'Edit Sweet'
+                  : 'Edit Food',
+          style: const TextStyle(
             fontSize: 23,
             fontWeight: FontWeight.bold,
             color: Colors.white,
@@ -125,12 +146,20 @@ class _UpdateFoodState extends State<UpdateFood> {
               children: [
                 TextFieledAddFood(
                   controller: nameController,
-                  hinText: 'Food Name',
+                  hinText: isDrinkCategory
+                      ? 'Drink Name'
+                      : isSweetCategory
+                          ? 'Sweet Name'
+                          : 'Food Name',
                 ),
                 const SizedBox(height: 20),
                 TextFieledAddFood(
                   controller: priceController,
-                  hinText: 'Food Price',
+                  hinText: isDrinkCategory
+                      ? 'Drink Price'
+                      : isSweetCategory
+                          ? 'Sweet Price'
+                          : 'Food Price',
                 ),
                 const SizedBox(height: 20),
                 ElevatedButton(
@@ -156,9 +185,13 @@ class _UpdateFoodState extends State<UpdateFood> {
                     backgroundColor: Colors.orange,
                   ),
                   onPressed: updateFood,
-                  child: const Text(
-                    'Edit Food',
-                    style: TextStyle(
+                  child: Text(
+                    isDrinkCategory
+                        ? 'Edit Drink'
+                        : isSweetCategory
+                            ? 'Edit Sweet'
+                            : 'Edit Food',
+                    style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,

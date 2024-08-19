@@ -9,6 +9,7 @@ import 'package:food_ordering_app/widgets/custom_button.dart';
 import 'package:food_ordering_app/widgets/custom_text_button.dart';
 import 'package:food_ordering_app/widgets/custom_text_filed.dart';
 import 'package:food_ordering_app/widgets/login_with_google_button.dart';
+import 'package:food_ordering_app/widgets/show_snack_bar.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
@@ -37,15 +38,17 @@ class _LoginPageState extends State<LoginPage> {
       try {
         await authService.signInWithEmailandPassword(
             emailController.text, passwordController.text);
-        Navigator.pushReplacementNamed(context, 'homeScreen');
+        Navigator.pushReplacementNamed(context, 'userScreen');
       } catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              e.toString(),
-            ),
-          ),
-        );
+        customShowSnackBar(context: context, content: '${e.toString()}');
+
+        // ScaffoldMessenger.of(context).showSnackBar(
+        //   SnackBar(
+        //     content: Text(
+        //       e.toString(),
+        //     ),
+        //   ),
+        // );
       } finally {
         setState(() {
           isLoading = false; // Stop loading
@@ -65,9 +68,8 @@ class _LoginPageState extends State<LoginPage> {
     });
 
     try {
-      await authService
-        ..signInWithGoogle();
-      Navigator.pushReplacementNamed(context, 'homeScreen');
+      await authService.signInWithGoogle();
+      Navigator.pushReplacementNamed(context, 'userScreen');
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

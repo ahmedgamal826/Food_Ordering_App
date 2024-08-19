@@ -124,13 +124,8 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:food_ordering_app/Screens/food_manges.dart/add_food_page.dart';
 import 'package:food_ordering_app/Screens/admin_or_user_screen.dart';
 import 'package:food_ordering_app/widgets/category_list_view.dart';
-import 'package:food_ordering_app/Screens/food_manges.dart/food_list.dart';
-import 'package:food_ordering_app/widgets/search_textform_field.dart';
-
-import '../Test Screens/admin_login_screen.dart';
 
 class AdminHomePage extends StatefulWidget {
   const AdminHomePage({super.key});
@@ -140,14 +135,14 @@ class AdminHomePage extends StatefulWidget {
 }
 
 class _AdminHomePageState extends State<AdminHomePage> {
-  String searchQuery = '';
+  // String searchQuery = '';
   bool isLoading = false;
 
-  void updateSearchQuery(String query) {
-    setState(() {
-      searchQuery = query;
-    });
-  }
+  // void updateSearchQuery(String query) {
+  //   setState(() {
+  //     searchQuery = query;
+  //   });
+  // }
 
   Future<void> logout(BuildContext context) async {
     setState(() {
@@ -195,7 +190,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
       ),
       body: ListView(
         physics: const BouncingScrollPhysics(),
-        children: const [
+        children: [
           Padding(
             padding: EdgeInsets.all(20),
             child: Text(

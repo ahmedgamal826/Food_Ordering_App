@@ -1,7 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:food_ordering_app/Screens/food_manges.dart/user_home_page.dart';
 import 'package:food_ordering_app/Screens/splash_screen.dart';
-import 'package:food_ordering_app/auth/home_page.dart';
+import 'package:food_ordering_app/Screens/food_manges.dart/home_page.dart';
 
 class AuthGate extends StatelessWidget {
   const AuthGate({super.key});
@@ -15,7 +16,7 @@ class AuthGate extends StatelessWidget {
           // user is logged in
 
           if (snapshot.hasData) {
-            return HomePage();
+            return UserHomePage();
           } else {
             return const SplashScreen();
           }

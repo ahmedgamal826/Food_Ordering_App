@@ -3,14 +3,14 @@ import 'package:food_ordering_app/Screens/food_manges.dart/add_food_page.dart';
 import 'package:food_ordering_app/Screens/food_manges.dart/food_list.dart';
 import 'package:food_ordering_app/widgets/search_textform_field.dart';
 
-class BurgersScreen extends StatefulWidget {
-  const BurgersScreen({super.key});
+class MeatAndJuice extends StatefulWidget {
+  const MeatAndJuice({super.key});
 
   @override
-  _BurgersScreenState createState() => _BurgersScreenState();
+  State<MeatAndJuice> createState() => _MeatAndJuiceState();
 }
 
-class _BurgersScreenState extends State<BurgersScreen> {
+class _MeatAndJuiceState extends State<MeatAndJuice> {
   String searchQuery = '';
 
   void updateSearchQuery(String query) {
@@ -26,7 +26,7 @@ class _BurgersScreenState extends State<BurgersScreen> {
         iconTheme: const IconThemeData(color: Colors.white),
         backgroundColor: Colors.orange,
         title: const Text(
-          'Burgers',
+          'meat and juice',
           style: TextStyle(
             fontSize: 25,
             fontWeight: FontWeight.bold,
@@ -37,19 +37,12 @@ class _BurgersScreenState extends State<BurgersScreen> {
       ),
       body: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: SearchTextformField(
-              hintText: 'Search your burger...',
-              onChanged: updateSearchQuery, // Pass the function here
-            ),
-          ),
           Expanded(
             child: FoodList(
-              collectionName: 'burger category',
+              collectionName: 'meat and juice',
               searchQuery: searchQuery, // Pass the searchQuery here
-              foodName: 'burger',
-              foodDetailsRoute: 'burgerDetailsScreen',
+              foodName: 'meat and juice',
+              foodDetailsRoute: 'sushiScreen',
             ),
           ),
         ],
@@ -65,8 +58,10 @@ class _BurgersScreenState extends State<BurgersScreen> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) =>
-                    AddFoodPage(collectionName: 'burger category'),
+                builder: (context) => AddFoodPage(
+                  collectionName: 'meat and juice',
+                  categoryName: 'Foods',
+                ),
               ),
             );
           }),

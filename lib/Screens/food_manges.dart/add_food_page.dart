@@ -282,8 +282,13 @@ import 'package:image_picker/image_picker.dart';
 
 class AddFoodPage extends StatefulWidget {
   final String collectionName;
+  final String categoryName; // إضافة المتغير الجديد
 
-  AddFoodPage({super.key, required this.collectionName});
+  AddFoodPage({
+    super.key,
+    required this.collectionName,
+    required this.categoryName,
+  });
 
   @override
   State<AddFoodPage> createState() => _AddFoodPageState();
@@ -352,14 +357,22 @@ class _AddFoodPageState extends State<AddFoodPage> {
 
   @override
   Widget build(BuildContext context) {
+    final isDrinkCategory = widget.categoryName == 'Drinks';
+    final isFoodCategory = widget.categoryName == 'Foods';
+    final isSweetCategory = widget.categoryName == 'Sweets';
+
     return Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.white),
         centerTitle: true,
         backgroundColor: Colors.orange,
-        title: const Text(
-          'Add Food',
-          style: TextStyle(
+        title: Text(
+          isDrinkCategory
+              ? 'Add Drink'
+              : isFoodCategory
+                  ? 'Add Food'
+                  : 'Add Sweet',
+          style: const TextStyle(
             fontSize: 23,
             fontWeight: FontWeight.bold,
             color: Colors.white,
@@ -375,12 +388,20 @@ class _AddFoodPageState extends State<AddFoodPage> {
               children: [
                 TextFieledAddFood(
                   controller: nameController,
-                  hinText: 'Food Name',
+                  hinText: isDrinkCategory
+                      ? 'Drink Name'
+                      : isFoodCategory
+                          ? 'Food Name'
+                          : 'Sweet Name',
                 ),
                 const SizedBox(height: 20),
                 TextFieledAddFood(
                   controller: priceController,
-                  hinText: 'Food Price',
+                  hinText: isDrinkCategory
+                      ? 'Drink Price'
+                      : isFoodCategory
+                          ? 'Food Price'
+                          : 'Sweet Price',
                 ),
                 const SizedBox(height: 10),
                 ElevatedButton(
@@ -404,9 +425,13 @@ class _AddFoodPageState extends State<AddFoodPage> {
                     backgroundColor: Colors.orange,
                   ),
                   onPressed: addFood,
-                  child: const Text(
-                    'Add Food',
-                    style: TextStyle(
+                  child: Text(
+                    isDrinkCategory
+                        ? 'Add Drink'
+                        : isFoodCategory
+                            ? 'Add Food'
+                            : 'Add Sweet',
+                    style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
