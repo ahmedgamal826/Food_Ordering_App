@@ -483,3 +483,175 @@
 //     );
 //   }
 // }
+
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:food_ordering_app/Screens/admin_or_user_screen.dart';
+import 'package:food_ordering_app/Screens/food_manges.dart/Foods%20Screens/burgers_screen.dart';
+import 'package:food_ordering_app/auth/auth_services.dart';
+import 'package:food_ordering_app/widgets/category_list_view.dart';
+import 'package:provider/provider.dart';
+
+class RestaurantHomePage extends StatefulWidget {
+  const RestaurantHomePage({super.key});
+
+  @override
+  State<RestaurantHomePage> createState() => _RestaurantHomePageState();
+}
+
+class _RestaurantHomePageState extends State<RestaurantHomePage> {
+  bool isLoading = false;
+
+  Future<void> logout(BuildContext context) async {
+    setState(() {
+      isLoading = true;
+    });
+
+    await FirebaseAuth.instance.signOut();
+
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => AdminOrUserScreen(),
+      ),
+    ).whenComplete(() {
+      setState(() {
+        isLoading = false;
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final authService = Provider.of<AuthService>(context);
+    return StreamBuilder<User?>(
+      stream: authService.authStateChanges,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Scaffold(
+            appBar: AppBar(
+              title: const Text(''),
+            ),
+            body: const Center(
+              child: CircularProgressIndicator(
+                color: Colors.orange,
+              ),
+            ),
+          );
+        } else if (snapshot.hasError) {
+          return Scaffold(
+            appBar: AppBar(
+              title: Text(''),
+            ),
+            body: Center(
+              child: Text('Error: ${snapshot.error}'),
+            ),
+          );
+        } else {
+          // Check if user is logged in
+          if (!authService.isLoggedIn) {
+            return Scaffold(
+              appBar: AppBar(
+                title: Text(''),
+              ),
+              body: const Center(
+                child: Text('User is not logged in'),
+              ),
+            );
+          }
+
+          // Display user information
+
+          return Scaffold(
+            appBar: AppBar(
+              automaticallyImplyLeading: false,
+              backgroundColor: Colors.orange,
+              centerTitle: true,
+              title: const Text(
+                'Restaurant Home Page',
+                style: TextStyle(
+                  fontSize: 23,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+              actions: [
+                IconButton(
+                  onPressed: () {
+                    logout(context);
+                  },
+                  icon: const Icon(
+                    Icons.logout,
+                  ),
+                )
+              ],
+            ),
+            body: ListView(
+              physics: const BouncingScrollPhysics(),
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(left: 10, top: 20),
+                  child: Text(
+                    'Welcome 👋 ${authService.userName ?? 'Loading...'}',
+                    style: TextStyle(
+                      fontSize: 25,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 15),
+                  child: Text(
+                    "Let's eat",
+                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 15),
+                  child: const Text(
+                    'Nutrious food.',
+                    style: TextStyle(fontSize: 30),
+                  ),
+                ),
+                SizedBox(height: 20),
+                CategoryListView(
+                  categoryName: 'Foods',
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => BurgersScreen()),
+                    );
+                  },
+                ),
+                SizedBox(height: 20),
+                CategoryListView(
+                  categoryName: 'Drinks',
+                  onTap: () {
+                    Navigator.pushNamed(context, 'drinksScreen');
+                  },
+                ),
+                SizedBox(height: 20),
+                CategoryListView(
+                  categoryName: 'Sweets',
+                  onTap: () {
+                    Navigator.pushNamed(context, 'sweetsScreen');
+                  },
+                ),
+                SizedBox(height: 20),
+                CategoryListView(
+                  categoryName: 'Popular Offers',
+                  onTap: () {
+                    Navigator.pushNamed(context, 'offersScreen');
+                  },
+                ),
+              ],
+            ),
+          );
+        }
+      },
+    );
+  }
+}

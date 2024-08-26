@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:food_ordering_app/Screens/food_manges.dart/admin_home_page.dart';
+import 'package:food_ordering_app/Screens/food_manges.dart/admin_management.dart';
 import 'package:food_ordering_app/widgets/auth_functions.dart';
 import 'package:food_ordering_app/widgets/custom_text_filed.dart';
 import 'package:food_ordering_app/widgets/login_with_google_button.dart';
@@ -140,7 +140,7 @@ class _AdminLoginScreenState extends State<AdminLoginScreen> {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => const AdminHomePage(),
+              builder: (context) => const AdminManagement(),
             ),
           );
         }

@@ -27,7 +27,7 @@ class UpdateFood extends StatefulWidget {
 
 class _UpdateFoodState extends State<UpdateFood> {
   final TextEditingController nameController = TextEditingController();
-
+  final TextEditingController descriptionController = TextEditingController();
   final TextEditingController priceController = TextEditingController();
   final ImagePicker picker = ImagePicker();
   XFile? image;
@@ -37,8 +37,8 @@ class _UpdateFoodState extends State<UpdateFood> {
   void initState() {
     super.initState();
     nameController.text = widget.foodData['name'] ?? '';
+    descriptionController.text = widget.foodData['description'] ?? '';
     priceController.text = widget.foodData['price'].toString() ?? '';
-    // تحميل الصورة إذا كانت موجودة
   }
 
   Future<void> pickImage() async {
@@ -84,6 +84,7 @@ class _UpdateFoodState extends State<UpdateFood> {
         .doc(widget.docId)
         .update({
       'name': nameController.text,
+      'description': descriptionController.text,
       'price': priceController.text,
       'image': imageUrl,
       'timestamp': FieldValue.serverTimestamp(),
@@ -151,6 +152,15 @@ class _UpdateFoodState extends State<UpdateFood> {
                       : isSweetCategory
                           ? 'Sweet Name'
                           : 'Food Name',
+                ),
+                const SizedBox(height: 20),
+                TextFieledAddFood(
+                  controller: descriptionController,
+                  hinText: isDrinkCategory
+                      ? 'Drink Description'
+                      : isSweetCategory
+                          ? 'Sweet Description'
+                          : 'Food Description',
                 ),
                 const SizedBox(height: 20),
                 TextFieledAddFood(

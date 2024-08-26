@@ -296,6 +296,7 @@ class AddFoodPage extends StatefulWidget {
 
 class _AddFoodPageState extends State<AddFoodPage> {
   final TextEditingController nameController = TextEditingController();
+  final TextEditingController descriptionController = TextEditingController();
   final TextEditingController priceController = TextEditingController();
   final ImagePicker imagePicker = ImagePicker();
   XFile? image; // لحفظ الصورة التي يتم اختيارها
@@ -336,6 +337,7 @@ class _AddFoodPageState extends State<AddFoodPage> {
 
     FirebaseFirestore.instance.collection(widget.collectionName).add({
       'name': nameController.text,
+      'description': descriptionController.text,
       'price': priceController.text,
       'image': imageUrl,
       'timestamp': FieldValue.serverTimestamp(),
@@ -393,6 +395,15 @@ class _AddFoodPageState extends State<AddFoodPage> {
                       : isFoodCategory
                           ? 'Food Name'
                           : 'Sweet Name',
+                ),
+                const SizedBox(height: 20),
+                TextFieledAddFood(
+                  controller: descriptionController,
+                  hinText: isDrinkCategory
+                      ? 'Drink Description'
+                      : isFoodCategory
+                          ? 'Food Description'
+                          : 'Sweet Description',
                 ),
                 const SizedBox(height: 20),
                 TextFieledAddFood(

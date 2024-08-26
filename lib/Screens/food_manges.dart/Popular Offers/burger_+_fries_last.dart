@@ -26,7 +26,7 @@ class _BurgerFriesLastState extends State<BurgerFriesLast> {
         iconTheme: const IconThemeData(color: Colors.white),
         backgroundColor: Colors.orange,
         title: const Text(
-          'burger and fries1',
+          'burger and fries',
           style: TextStyle(
             fontSize: 25,
             fontWeight: FontWeight.bold,
@@ -41,7 +41,7 @@ class _BurgerFriesLastState extends State<BurgerFriesLast> {
             child: FoodList(
               collectionName: 'burger and fries1',
               searchQuery: searchQuery, // Pass the searchQuery here
-              foodName: 'burger and fries1',
+              foodName: 'burger and fries',
               foodDetailsRoute: 'sushiScreen',
             ),
           ),

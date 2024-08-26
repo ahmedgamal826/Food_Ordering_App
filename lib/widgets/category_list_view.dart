@@ -166,6 +166,13 @@ class CategoryListView extends StatelessWidget {
           },
         ),
         CustomCategory(
+          categoryName: 'Fries',
+          image: 'assets/images/french-fries.png',
+          onTap: () {
+            Navigator.pushNamed(context, 'friesScreen');
+          },
+        ),
+        CustomCategory(
           categoryName: 'Pizza',
           image: 'assets/images/pizza.png',
           onTap: () {
@@ -191,6 +198,13 @@ class CategoryListView extends StatelessWidget {
           image: 'assets/images/meat.png',
           onTap: () {
             Navigator.pushNamed(context, 'meatScreen');
+          },
+        ),
+        CustomCategory(
+          categoryName: 'Rice',
+          image: 'assets/images/rice-bowl.png',
+          onTap: () {
+            Navigator.pushNamed(context, 'riceScreen');
           },
         ),
         CustomCategory(
@@ -263,8 +277,8 @@ class CategoryListView extends StatelessWidget {
           },
         ),
         CustomCategory(
-          image: 'assets/images/meat and drink.png',
-          categoryName: 'Meat + Juice',
+          image: 'assets/images/kabsa.png',
+          categoryName: 'Meat + Rice',
           onTap: () {
             Navigator.pushNamed(context, 'meatandjuice');
           },

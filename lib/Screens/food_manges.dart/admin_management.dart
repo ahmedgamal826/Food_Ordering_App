@@ -8,14 +8,14 @@
 
 // import '../Test Screens/admin_login_screen.dart';
 
-// class AdminHomePage extends StatefulWidget {
-//   const AdminHomePage({super.key});
+// class AdminManagement extends StatefulWidget {
+//   const AdminManagement({super.key});
 
 //   @override
-//   State<AdminHomePage> createState() => _AdminHomePageState();
+//   State<AdminManagement> createState() => _AdminManagementState();
 // }
 
-// class _AdminHomePageState extends State<AdminHomePage> {
+// class _AdminManagementState extends State<AdminManagement> {
 //   String searchQuery = '';
 //   bool isLoading = false;
 
@@ -124,129 +124,80 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:food_ordering_app/Screens/account_management.dart';
 import 'package:food_ordering_app/Screens/admin_or_user_screen.dart';
+import 'package:food_ordering_app/Screens/food_manges.dart/admin_home_screen.dart';
+import 'package:food_ordering_app/Screens/food_manges.dart/order_managment.dart';
+import 'package:food_ordering_app/auth/profile_screen.dart';
 import 'package:food_ordering_app/widgets/category_list_view.dart';
 
-class AdminHomePage extends StatefulWidget {
-  const AdminHomePage({super.key});
+class AdminManagement extends StatefulWidget {
+  const AdminManagement({super.key});
 
   @override
-  State<AdminHomePage> createState() => _AdminHomePageState();
+  State<AdminManagement> createState() => _AdminManagementState();
 }
 
-class _AdminHomePageState extends State<AdminHomePage> {
-  // String searchQuery = '';
-  bool isLoading = false;
+class _AdminManagementState extends State<AdminManagement> {
+  int _selectedIndex = 0; // Track the selected index
 
-  // void updateSearchQuery(String query) {
-  //   setState(() {
-  //     searchQuery = query;
-  //   });
-  // }
+  final List<Widget> _pages = [
+    AdminHomeScreen(),
+    OrderManagment(),
+    // List of all orders with details such as customer name, ordered items, order status, and timestamps.
+    //Ability to update the status of orders (e.g., pending, in progress, completed, canceled).
 
-  Future<void> logout(BuildContext context) async {
+    AccountManagement(),
+    // Information on user accounts, including their order history and payment details.
+    const ProfileScreen(),
+  ];
+
+  void _onItemTapped(int index) {
     setState(() {
-      isLoading = true; // عرض دائرة التحميل
-    });
-
-    await FirebaseAuth.instance.signOut();
-
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => AdminOrUserScreen(),
-      ),
-    ).whenComplete(() {
-      setState(() {
-        isLoading = false; // إخفاء دائرة التحميل
-      });
+      _selectedIndex = index;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      body: _pages[_selectedIndex],
+      bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.orange,
-        centerTitle: true,
-        title: const Text(
-          "Admin - Manage Foods",
-          style: TextStyle(
-            fontSize: 23,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              logout(context);
-            },
-            icon: const Icon(
-              Icons.logout,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.home,
+              size: 30,
             ),
-          )
+            label: 'Admin Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.shopping_cart,
+              size: 30,
+            ),
+            label: 'Order Management',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.account_circle,
+              size: 30,
+            ),
+            label: 'Account Management',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.person,
+              size: 30,
+            ),
+            label: 'Profile',
+          ),
         ],
-      ),
-      body: ListView(
-        physics: const BouncingScrollPhysics(),
-        children: [
-          Padding(
-            padding: EdgeInsets.all(20),
-            child: Text(
-              'Welcome, Admin! 👋 ',
-              style: TextStyle(
-                fontSize: 25,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: Text(
-              'You can manage all foods, drinks and sweets items here. Use the options below to view, add, update or delete the restaurant categories.',
-              style: TextStyle(
-                fontSize: 18,
-                color: Colors.grey,
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          Divider(
-            indent: 50,
-            endIndent: 50,
-          ),
-          SizedBox(
-            height: 30,
-          ),
-          CategoryListView(
-            categoryName: 'Foods',
-          ),
-          SizedBox(
-            height: 30,
-          ),
-          CategoryListView(
-            categoryName: 'Drinks',
-          ),
-          SizedBox(
-            height: 30,
-          ),
-          CategoryListView(
-            categoryName: 'Sweets',
-          ),
-          SizedBox(
-            height: 30,
-          ),
-          CategoryListView(
-            categoryName: 'Popular Offers',
-          ),
-          const SizedBox(
-            height: 20,
-          )
-        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.orange,
+        unselectedItemColor: Colors.grey,
+        onTap: _onItemTapped,
       ),
     );
   }

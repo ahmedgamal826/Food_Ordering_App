@@ -11,8 +11,10 @@ import 'package:food_ordering_app/Screens/food_manges.dart/Drinks%20Screens/stra
 import 'package:food_ordering_app/Screens/food_manges.dart/Drinks%20Screens/tea.dart';
 import 'package:food_ordering_app/Screens/food_manges.dart/Drinks%20Screens/water.dart';
 import 'package:food_ordering_app/Screens/food_manges.dart/Foods%20Screens/fish_screen.dart';
+import 'package:food_ordering_app/Screens/food_manges.dart/Foods%20Screens/fries_screen.dart';
 import 'package:food_ordering_app/Screens/food_manges.dart/Foods%20Screens/meat_screen.dart';
 import 'package:food_ordering_app/Screens/food_manges.dart/Foods%20Screens/pasta_screen.dart';
+import 'package:food_ordering_app/Screens/food_manges.dart/Foods%20Screens/rice_screen.dart';
 import 'package:food_ordering_app/Screens/food_manges.dart/Foods%20Screens/sushi_screen.dart';
 import 'package:food_ordering_app/Screens/food_manges.dart/Popular%20Offers/burger_+_fries_last.dart';
 import 'package:food_ordering_app/Screens/food_manges.dart/Popular%20Offers/burger_+_pepsi.dart';
@@ -25,7 +27,7 @@ import 'package:food_ordering_app/Screens/food_manges.dart/Sweets%20Screens/cupc
 import 'package:food_ordering_app/Screens/food_manges.dart/Sweets%20Screens/donuts.dart';
 import 'package:food_ordering_app/Screens/food_manges.dart/Sweets%20Screens/ice_cream.dart';
 import 'package:food_ordering_app/Screens/food_manges.dart/Sweets%20Screens/waffle.dart';
-import 'package:food_ordering_app/Screens/food_manges.dart/admin_home_page.dart';
+import 'package:food_ordering_app/Screens/food_manges.dart/admin_management.dart';
 import 'package:food_ordering_app/Screens/food_manges.dart/Foods%20Screens/burgers_screen.dart';
 import 'package:food_ordering_app/Screens/check_box.dart';
 import 'package:food_ordering_app/Screens/food_manges.dart/Foods%20Screens/chicken_screen.dart';
@@ -113,7 +115,7 @@ class _FirebaseLearningState extends State<FoodOrderingApp> {
     if (adminDoc.exists) {
       String role = adminDoc.get('rool');
       if (role == 'admin') {
-        return AdminHomePage(); // Replace with your admin home page
+        return AdminManagement(); // Replace with your admin home page
       }
       {
         return SplashScreen(); // Replace with your user home page
@@ -166,8 +168,8 @@ class _FirebaseLearningState extends State<FoodOrderingApp> {
         //"homeScreen": (context) => HomePage(),
         //"burgerDetailsScreen": (context) => BurgerDetails(),
         "radioButton": (context) => MyRadioButton(),
-        'ProductSelectionScreen': (context) => ProductSelectionScreen(),
-        'AdminHomePage': (context) => AdminHomePage(),
+        //'ProductSelectionScreen': (context) => ProductSelectionScreen(),
+        'AdminHomePage': (context) => AdminManagement(),
         "LoginOrRegister": (context) => LoginOrRegister(),
 
         'chickenScreen': (context) => ChickenScreen(),
@@ -175,9 +177,11 @@ class _FirebaseLearningState extends State<FoodOrderingApp> {
         'userScreen': (context) => UserHomePage(),
         // Foods
         "burgerScreen": (context) => BurgersScreen(),
+        "friesScreen": (context) => FriesScreen(),
         'pizzaScreen': (context) => PizzaScreen(),
         'fishScreen': (context) => FishScreen(),
         'meatScreen': (context) => MeatScreen(),
+        'riceScreen': (context) => RiceScreen(),
         'pastaScreen': (context) => PastaScreen(),
         'sushiScreen': (context) => SushiScreen(),
         // Drinks
