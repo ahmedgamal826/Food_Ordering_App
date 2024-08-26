@@ -52,7 +52,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBnGYxnbE22_IGlXVeHEXpJHkx5EhoxAEc',
-    appId: '1:200884864027:android:db99487d9f8fa52ae2a4be',
+    appId: '1:200884864027:android:8990e972f2561514e2a4be',
     messagingSenderId: '200884864027',
     projectId: 'food-ordering-app-f89c6',
     storageBucket: 'food-ordering-app-f89c6.appspot.com',
@@ -60,11 +60,13 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyAjCKVVq4sGyROpN-CapT3CcZ3vCThWIKo',
-    appId: '1:200884864027:ios:b660340300552564e2a4be',
+    appId: '1:200884864027:ios:14a3fb88d0e21189e2a4be',
     messagingSenderId: '200884864027',
     projectId: 'food-ordering-app-f89c6',
     storageBucket: 'food-ordering-app-f89c6.appspot.com',
-    iosBundleId: 'com.example.foodOrderingApp',
+    androidClientId: '200884864027-fr9ul5iolvai4vcb6q0dmq361l6m0388.apps.googleusercontent.com',
+    iosClientId: '200884864027-k6dkhah3crp45rhgqlj4edhhv6c630nh.apps.googleusercontent.com',
+    iosBundleId: 'com.example.quranTutorial',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
@@ -73,6 +75,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '200884864027',
     projectId: 'food-ordering-app-f89c6',
     storageBucket: 'food-ordering-app-f89c6.appspot.com',
+    androidClientId: '200884864027-fr9ul5iolvai4vcb6q0dmq361l6m0388.apps.googleusercontent.com',
+    iosClientId: '200884864027-k78613fh34beblap8e79sviofj9p21bm.apps.googleusercontent.com',
     iosBundleId: 'com.example.foodOrderingApp',
   );
 

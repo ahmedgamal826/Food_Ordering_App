@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_ordering_app/Screens/Test%20Screens/admin_login_screen.dart';
+import 'package:food_ordering_app/widgets/map_screen.dart';
 import 'package:food_ordering_app/auth/login_or_register.dart';
 import 'package:food_ordering_app/auth/login_page.dart';
 import 'package:food_ordering_app/auth/login_screen.dart';
@@ -17,7 +18,7 @@ class AdminOrUserScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text(
-              'Welcome to the Food Ordering App!',
+              'Welcome to the Food Delivery App!',
               style: TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
@@ -49,6 +50,7 @@ class AdminOrUserScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (_) => LoginOrRegister()),
+                  //MaterialPageRoute(builder: (_) => GetLocation()),
                 );
               },
             ),

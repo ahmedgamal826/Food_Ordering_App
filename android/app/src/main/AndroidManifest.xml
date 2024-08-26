@@ -1,14 +1,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.quran_tutorial">
    <application
-        android:label="google maps testing"
+        android:label="Food Delivery App"
 
 
 
 
 
         android:name="${applicationName}"
-        android:icon="@mipmap/launcher_icon">
+        android:icon="@mipmap/ic_launcher">
        <meta-data android:name="com.google.android.geo.API_KEY"
            android:value="AIzaSyAn5qSZRLvjuqmHAAJYCOku3y8TiuRAzZU"/>
         <activity

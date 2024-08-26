@@ -28,10 +28,35 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
-        child: Image.asset('assets/images/logo.jpg'),
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            Positioned(
+              top: screenHeight * 0.3,
+              child: Image.asset(
+                width: screenWidth * 0.5,
+                height: screenHeight * 0.3,
+                'assets/images/delivery_man.png',
+              ),
+            ),
+            Positioned(
+              top: screenHeight * 0.53,
+              child: const Text(
+                'Food Delivery App',
+                style: TextStyle(
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
+                  fontStyle: FontStyle.italic,
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
