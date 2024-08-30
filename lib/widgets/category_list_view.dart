@@ -260,7 +260,7 @@ class CategoryListView extends StatelessWidget {
           },
         )
       ];
-    } else if (categoryName == 'Popular Offers') {
+    } else if (categoryName == 'Popular Meals') {
       categories = [
         CustomCategory(
           image: 'assets/images/burger and drink.png',

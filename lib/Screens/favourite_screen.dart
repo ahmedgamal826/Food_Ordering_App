@@ -28,7 +28,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:food_ordering_app/Screens/food_manges.dart/home_page.dart';
 import 'package:food_ordering_app/widgets/show_snack_bar.dart';
 
 class FavouriteScreen extends StatefulWidget {
@@ -108,8 +107,8 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
         backgroundColor: Colors.orange,
       ),
       body: favouriteItems.isEmpty
-          ? Center(
-              child: const Text(
+          ? const Center(
+              child: Text(
                 'Favourites is Empty',
                 style: TextStyle(
                   fontSize: 22,

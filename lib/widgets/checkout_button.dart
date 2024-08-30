@@ -1013,27 +1013,31 @@ class _CheckoutButtonState extends State<CheckoutButton> {
                   return ListTile(
                     leading: Text(
                       '$quantity',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 16,
                       ),
                     ),
-                    title: Text('$productName'),
+                    title: Text(
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      '$productName',
+                    ),
                     trailing: Text(
                       '\$${itemTotalPrice.toStringAsFixed(2)}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 16,
                       ),
                     ),
                   );
                 }).toList(),
-                Divider(
+                const Divider(
                   indent: 25,
                   endIndent: 25,
                   color: Colors.orange,
                   thickness: 3,
                 ),
                 ListTile(
-                  leading: Text(
+                  leading: const Text(
                     'Total: ',
                     style: TextStyle(
                       fontSize: 23,
@@ -1043,14 +1047,14 @@ class _CheckoutButtonState extends State<CheckoutButton> {
                   ),
                   trailing: Text(
                     '\$${widget.total.toStringAsFixed(2)}',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                       color: Colors.orange,
                     ),
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
               ],
             ),
           ),
@@ -1060,7 +1064,7 @@ class _CheckoutButtonState extends State<CheckoutButton> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text(
+              child: const Text(
                 'OK',
                 style: TextStyle(
                   fontSize: 17,

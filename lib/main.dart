@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:device_preview/device_preview.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +28,6 @@ import 'package:food_ordering_app/Screens/food_manges.dart/Sweets%20Screens/ice_
 import 'package:food_ordering_app/Screens/food_manges.dart/Sweets%20Screens/waffle.dart';
 import 'package:food_ordering_app/Screens/food_manges.dart/admin_management.dart';
 import 'package:food_ordering_app/Screens/food_manges.dart/Foods%20Screens/burgers_screen.dart';
-import 'package:food_ordering_app/Screens/check_box.dart';
 import 'package:food_ordering_app/Screens/food_manges.dart/Foods%20Screens/chicken_screen.dart';
 import 'package:food_ordering_app/Screens/food_manges.dart/pizza_details_screen.dart';
 import 'package:food_ordering_app/Screens/food_manges.dart/Foods%20Screens/pizza_screen.dart';

@@ -1886,18 +1886,18 @@ class _OrderScreenState extends State<OrderScreen> {
           }
 
           return Scaffold(
-            backgroundColor: Color(0xffF4F4F4),
+            backgroundColor: const Color(0xffF4F4F4),
             appBar: AppBar(
               leading: IconButton(
                 onPressed: () {
                   Navigator.pushNamed(context, 'userScreen');
                 },
-                icon: Icon(
+                icon: const Icon(
                   Icons.arrow_back,
                   color: Colors.orange,
                 ),
               ),
-              backgroundColor: Color(0xffF4F4F4),
+              backgroundColor: const Color(0xffF4F4F4),
               centerTitle: true,
               title: const Text(
                 'Check Out',
@@ -1915,7 +1915,11 @@ class _OrderScreenState extends State<OrderScreen> {
                   .snapshots(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator());
+                  return const Center(
+                    child: CircularProgressIndicator(
+                      color: Colors.orange,
+                    ),
+                  );
                 }
 
                 if (snapshot.hasError) {
@@ -1923,7 +1927,9 @@ class _OrderScreenState extends State<OrderScreen> {
                 }
 
                 if (!snapshot.hasData || !snapshot.data!.exists) {
-                  return Center(child: Text('No items in cart.'));
+                  return const Center(
+                    child: Text('No items in cart.'),
+                  );
                 }
 
                 final cartData = snapshot.data!.data() as Map<String, dynamic>;
@@ -1943,8 +1949,8 @@ class _OrderScreenState extends State<OrderScreen> {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
+                    const Padding(
+                      padding: EdgeInsets.symmetric(
                         horizontal: 20,
                         vertical: 10,
                       ),
@@ -1982,9 +1988,10 @@ class _OrderScreenState extends State<OrderScreen> {
                               direction: DismissDirection.endToStart,
                               background: Container(
                                 alignment: Alignment.centerRight,
-                                padding: EdgeInsets.symmetric(horizontal: 20),
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 20),
                                 color: Colors.red,
-                                child: Icon(
+                                child: const Icon(
                                   Icons.delete,
                                   color: Colors.white,
                                 ),
@@ -1994,10 +2001,12 @@ class _OrderScreenState extends State<OrderScreen> {
                                   context: context,
                                   builder: (BuildContext context) {
                                     return AlertDialog(
-                                      title: Text("Confirm Deletion"),
+                                      title: const Text("Confirm Deletion"),
                                       content: Text(
                                         "Are you sure you want to delete $productName?",
-                                        style: TextStyle(
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 2,
+                                        style: const TextStyle(
                                           color: Colors.black,
                                           fontSize: 18,
                                           fontWeight: FontWeight.bold,
@@ -2015,7 +2024,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                               onPressed: () =>
                                                   Navigator.of(context)
                                                       .pop(false),
-                                              child: Text(
+                                              child: const Text(
                                                 "Cancel",
                                                 style: TextStyle(
                                                   color: Colors.white,
@@ -2034,7 +2043,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                               onPressed: () =>
                                                   Navigator.of(context)
                                                       .pop(true),
-                                              child: Text(
+                                              child: const Text(
                                                 "Delete",
                                                 style: TextStyle(
                                                   color: Colors.white,
@@ -2079,7 +2088,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                               fit: BoxFit.contain,
                                             ),
                                           )
-                                        : Center(
+                                        : const Center(
                                             child: Icon(
                                               Icons.image,
                                               size: 120,
@@ -2087,12 +2096,17 @@ class _OrderScreenState extends State<OrderScreen> {
                                             ),
                                           ),
                                   ),
-                                  title: Text(
-                                    productName,
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.orange,
+                                  title: SizedBox(
+                                    width: 30,
+                                    child: Text(
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                      productName,
+                                      style: const TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.orange,
+                                      ),
                                     ),
                                   ),
                                   subtitle: Column(
@@ -2100,7 +2114,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text('Size: $size'),
-                                      SizedBox(height: 5),
+                                      const SizedBox(height: 5),
                                       Text(
                                           '\$${itemTotalPrice.toStringAsFixed(2)}'),
                                     ],
@@ -2115,7 +2129,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                             updateItem(
                                               itemId,
                                               quantity,
-                                              size, // مرر الحجم المختار هنا
+                                              size,
                                             );
                                           }
                                         },
@@ -2127,7 +2141,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                             borderRadius:
                                                 BorderRadius.circular(20),
                                           ),
-                                          child: Align(
+                                          child: const Align(
                                             alignment: Alignment.center,
                                             child: Text(
                                               '-',
@@ -2160,7 +2174,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                             updateItem(
                                               itemId,
                                               quantity,
-                                              size, // مرر الحجم المختار هنا
+                                              size,
                                             );
                                           }
                                         },
@@ -2172,7 +2186,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                             borderRadius:
                                                 BorderRadius.circular(20),
                                           ),
-                                          child: Align(
+                                          child: const Align(
                                             alignment: Alignment.center,
                                             child: Text(
                                               '+',
@@ -2185,50 +2199,8 @@ class _OrderScreenState extends State<OrderScreen> {
                                           ),
                                         ),
                                       ),
-                                      // IconButton(
-                                      //   icon: Icon(Icons.add),
-                                      //   onPressed: () {
-                                      //     quantity++;
-                                      //     updateItem(
-                                      //       productName,
-                                      //       quantity,
-                                      //       size, // مرر الحجم المختار هنا
-                                      //     );
-                                      //   },
-                                      // ),
                                     ],
                                   ),
-
-                                  // trailing: Row(
-                                  //   mainAxisSize: MainAxisSize.min,
-                                  //   children: [
-                                  //     IconButton(
-                                  //       icon: Icon(Icons.remove),
-                                  //       onPressed: () {
-                                  //         if (quantity > 1) {
-                                  //           quantity--;
-                                  //           updateItem(
-                                  //             productName,
-                                  //             quantity,
-                                  //             size,
-                                  //           );
-                                  //         }
-                                  //       },
-                                  //     ),
-                                  //     Text('$quantity'),
-                                  //     IconButton(
-                                  //       icon: Icon(Icons.add),
-                                  //       onPressed: () {
-                                  //         quantity++;
-                                  //         updateItem(
-                                  //           productName,
-                                  //           quantity,
-                                  //           size,
-                                  //         );
-                                  //       },
-                                  //     ),
-                                  //   ],
-                                  // ),
                                 ),
                               ),
                             ),
@@ -2236,7 +2208,7 @@ class _OrderScreenState extends State<OrderScreen> {
                         },
                       ),
                     ),
-                    Divider(
+                    const Divider(
                       color: Colors.black,
                       indent: 20,
                       endIndent: 20,

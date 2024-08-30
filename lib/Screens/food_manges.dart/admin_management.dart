@@ -128,6 +128,7 @@ import 'package:food_ordering_app/Screens/account_management.dart';
 import 'package:food_ordering_app/Screens/admin_or_user_screen.dart';
 import 'package:food_ordering_app/Screens/food_manges.dart/admin_home_screen.dart';
 import 'package:food_ordering_app/Screens/food_manges.dart/order_managment.dart';
+import 'package:food_ordering_app/Screens/offers_screen.dart';
 import 'package:food_ordering_app/auth/profile_screen.dart';
 import 'package:food_ordering_app/widgets/category_list_view.dart';
 
@@ -143,6 +144,7 @@ class _AdminManagementState extends State<AdminManagement> {
 
   final List<Widget> _pages = [
     AdminHomeScreen(),
+    OffersScreen(),
     OrderManagment(),
     // List of all orders with details such as customer name, ordered items, order status, and timestamps.
     //Ability to update the status of orders (e.g., pending, in progress, completed, canceled).
@@ -171,6 +173,13 @@ class _AdminManagementState extends State<AdminManagement> {
               size: 30,
             ),
             label: 'Admin Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.local_offer_sharp,
+              size: 30,
+            ),
+            label: 'Offers',
           ),
           BottomNavigationBarItem(
             icon: Icon(

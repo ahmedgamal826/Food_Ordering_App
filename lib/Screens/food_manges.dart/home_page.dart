@@ -642,7 +642,7 @@ class _RestaurantHomePageState extends State<RestaurantHomePage> {
                 ),
                 SizedBox(height: 20),
                 CategoryListView(
-                  categoryName: 'Popular Offers',
+                  categoryName: 'Popular Meals',
                   onTap: () {
                     Navigator.pushNamed(context, 'offersScreen');
                   },

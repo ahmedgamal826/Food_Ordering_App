@@ -298,6 +298,9 @@ class _AddFoodPageState extends State<AddFoodPage> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController priceController = TextEditingController();
+  final TextEditingController priceBeforeDiscountController =
+      TextEditingController();
+  final TextEditingController discountController = TextEditingController();
   final ImagePicker imagePicker = ImagePicker();
   XFile? image; // لحفظ الصورة التي يتم اختيارها
   bool isLoading = false;
@@ -339,6 +342,8 @@ class _AddFoodPageState extends State<AddFoodPage> {
       'name': nameController.text,
       'description': descriptionController.text,
       'price': priceController.text,
+      'priceAfterDiscount': priceBeforeDiscountController.text,
+      'offerDiscount': discountController.text,
       'image': imageUrl,
       'timestamp': FieldValue.serverTimestamp(),
     }).then((_) {
@@ -362,6 +367,7 @@ class _AddFoodPageState extends State<AddFoodPage> {
     final isDrinkCategory = widget.categoryName == 'Drinks';
     final isFoodCategory = widget.categoryName == 'Foods';
     final isSweetCategory = widget.categoryName == 'Sweets';
+    final isOffersCategory = widget.categoryName == 'Offers';
 
     return Scaffold(
       appBar: AppBar(
@@ -373,7 +379,9 @@ class _AddFoodPageState extends State<AddFoodPage> {
               ? 'Add Drink'
               : isFoodCategory
                   ? 'Add Food'
-                  : 'Add Sweet',
+                  : isSweetCategory
+                      ? 'Add Sweet'
+                      : 'Add Offers',
           style: const TextStyle(
             fontSize: 23,
             fontWeight: FontWeight.bold,
@@ -394,7 +402,9 @@ class _AddFoodPageState extends State<AddFoodPage> {
                       ? 'Drink Name'
                       : isFoodCategory
                           ? 'Food Name'
-                          : 'Sweet Name',
+                          : isOffersCategory
+                              ? 'Offer Name'
+                              : 'Sweet Name',
                 ),
                 const SizedBox(height: 20),
                 TextFieledAddFood(
@@ -403,18 +413,49 @@ class _AddFoodPageState extends State<AddFoodPage> {
                       ? 'Drink Description'
                       : isFoodCategory
                           ? 'Food Description'
-                          : 'Sweet Description',
+                          : isOffersCategory
+                              ? 'Offer Description'
+                              : 'Sweet Description',
                 ),
                 const SizedBox(height: 20),
+                isOffersCategory
+                    ? TextFieledAddFood(
+                        controller: discountController,
+                        hinText: isDrinkCategory
+                            ? 'Drink Price'
+                            : isFoodCategory
+                                ? 'Food Price'
+                                : isOffersCategory
+                                    ? 'Offer Discount'
+                                    : 'Sweet Price',
+                      )
+                    : const SizedBox(height: 10),
+                const SizedBox(height: 20),
                 TextFieledAddFood(
-                  controller: priceController,
+                  controller: priceBeforeDiscountController,
                   hinText: isDrinkCategory
                       ? 'Drink Price'
                       : isFoodCategory
                           ? 'Food Price'
-                          : 'Sweet Price',
+                          : isOffersCategory
+                              ? 'Offer Price'
+                              : 'Sweet Price',
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 20),
+                isOffersCategory
+                    ? TextFieledAddFood(
+                        controller: priceController,
+                        hinText: isDrinkCategory
+                            ? 'Drink Price'
+                            : isFoodCategory
+                                ? 'Food Price'
+                                : isOffersCategory
+                                    ? 'Offer Price After Discount'
+                                    : 'Sweet Price',
+                      )
+                    : const SizedBox(height: 20),
+                const SizedBox(height: 20),
+                const SizedBox(height: 20),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.orange,
@@ -441,7 +482,9 @@ class _AddFoodPageState extends State<AddFoodPage> {
                         ? 'Add Drink'
                         : isFoodCategory
                             ? 'Add Food'
-                            : 'Add Sweet',
+                            : isOffersCategory
+                                ? 'Add Offer'
+                                : 'Add Sweet',
                     style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,

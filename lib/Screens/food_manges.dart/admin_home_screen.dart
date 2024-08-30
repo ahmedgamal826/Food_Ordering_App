@@ -117,7 +117,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
             height: 30,
           ),
           CategoryListView(
-            categoryName: 'Popular Offers',
+            categoryName: 'Popular Meals',
           ),
           const SizedBox(
             height: 20,

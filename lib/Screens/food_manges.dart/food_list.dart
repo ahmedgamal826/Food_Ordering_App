@@ -121,6 +121,8 @@ class _FoodListState extends State<FoodList> {
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
+
     final CollectionReference foodRef =
         FirebaseFirestore.instance.collection(widget.collectionName);
 
@@ -208,9 +210,15 @@ class _FoodListState extends State<FoodList> {
                 final imageUrl = data['image'] as String? ?? '';
                 final name = data['name'] as String? ?? '';
                 final description = data['description'] as String? ?? '';
+                final discountOffer = data['offerDiscount'] as String? ?? '';
                 //final price = data['price'];
                 final priceString = data['price'] as String ?? '0.0';
                 final price = double.tryParse(priceString) ?? 0.0;
+
+                final priceBeforeDiscountString =
+                    data['priceAfterDiscount'] ?? '0.0';
+                final priceBeforeDiscount =
+                    double.tryParse(priceBeforeDiscountString) ?? 0.0;
 
                 return InkWell(
                   onTap: () {
@@ -222,14 +230,14 @@ class _FoodListState extends State<FoodList> {
                         return StatefulBuilder(builder:
                             (BuildContext context, StateSetter setState) {
                           return Container(
-                            height: 600,
+                            height: screenHeight * 0.8,
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(20),
                             ),
                             child: Padding(
                               padding: const EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 10),
+                                  horizontal: 5, vertical: 0),
                               child: ListView(
                                 children: [
                                   Row(
@@ -271,55 +279,65 @@ class _FoodListState extends State<FoodList> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: <Widget>[
-                                          Container(
-                                            constraints: BoxConstraints(
-                                              maxWidth: 220,
-                                            ),
-                                            child: Text(
-                                              name,
-                                              softWrap: true,
-                                              overflow: TextOverflow.clip,
-                                              style: TextStyle(
-                                                fontSize: 25,
-                                                fontWeight: FontWeight.bold,
+                                          SizedBox(
+                                            width: 200,
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(
+                                                top: 10,
+                                              ),
+                                              child: Text(
+                                                name,
+                                                softWrap: true,
+                                                maxLines: 2,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: const TextStyle(
+                                                  fontSize: 25,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
                                               ),
                                             ),
                                           ),
-                                          SizedBox(height: 5),
-                                          Text(
-                                            '⭐⭐⭐⭐⭐',
-                                            style: TextStyle(fontSize: 13),
+                                          const SizedBox(height: 5),
+                                          const SizedBox(
+                                            width: 100,
+                                            child: Text(
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                              '⭐⭐⭐⭐⭐',
+                                              style: TextStyle(fontSize: 13),
+                                            ),
                                           ),
                                           SizedBox(height: 10),
                                           Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceEvenly,
                                             children: [
-                                              Text(
-                                                '\$',
-                                                style: TextStyle(
-                                                  fontSize: 25,
-                                                  color: Colors.orange,
-                                                  fontWeight: FontWeight.bold,
+                                              const SizedBox(
+                                                width: 20,
+                                                child: Text(
+                                                  '\$',
+                                                  style: TextStyle(
+                                                    fontSize: 25,
+                                                    color: Colors.orange,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
                                                 ),
                                               ),
-                                              Text(
-                                                '${_totalPrice.toStringAsFixed(2)}',
-                                                style: TextStyle(
-                                                  fontSize: 25,
-                                                  fontWeight: FontWeight.bold,
+                                              SizedBox(
+                                                width: 120,
+                                                child: Text(
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  '${_totalPrice.toStringAsFixed(2)}',
+                                                  style: const TextStyle(
+                                                    fontSize: 25,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
                                                 ),
                                               ),
                                               SizedBox(
                                                 width: widthScreen * 0.25,
                                               ),
-                                              // IconButton(
-                                              //   onPressed: () {},
-                                              //   icon: Icon(
-                                              //     Icons.favorite_border,
-                                              //     size: 30,
-                                              //   ),
-                                              // ),
                                             ],
                                           )
                                         ],
@@ -414,10 +432,10 @@ class _FoodListState extends State<FoodList> {
                                       ),
                                     ],
                                   ),
-                                  SizedBox(height: 20),
+                                  const SizedBox(height: 20),
                                   Row(
                                     children: [
-                                      Padding(
+                                      const Padding(
                                         padding: const EdgeInsets.only(left: 5),
                                         child: Text(
                                           'Size',
@@ -455,10 +473,10 @@ class _FoodListState extends State<FoodList> {
                                   const SizedBox(
                                     height: 20,
                                   ),
-                                  Padding(
+                                  const Padding(
                                     padding: const EdgeInsets.only(left: 5),
                                     child: Text(
-                                      'Description', // Replace with your dynamic text
+                                      'Description',
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
@@ -468,7 +486,7 @@ class _FoodListState extends State<FoodList> {
                                       ),
                                     ),
                                   ),
-                                  SizedBox(width: 30),
+                                  const SizedBox(width: 30),
                                   Padding(
                                     padding: const EdgeInsets.only(left: 5),
                                     child: Container(
@@ -482,7 +500,7 @@ class _FoodListState extends State<FoodList> {
                                       ),
                                     ),
                                   ),
-                                  SizedBox(height: 20),
+                                  const SizedBox(height: 20),
                                   isAdmin
                                       ? Text('')
                                       : ElevatedButton(
@@ -563,7 +581,8 @@ class _FoodListState extends State<FoodList> {
                                           ),
                                           style: ElevatedButton.styleFrom(
                                               backgroundColor: Colors.orange,
-                                              padding: EdgeInsets.all(10)),
+                                              padding:
+                                                  const EdgeInsets.all(10)),
                                         ),
                                   const SizedBox(
                                     height: 20,
@@ -576,255 +595,616 @@ class _FoodListState extends State<FoodList> {
                       },
                     );
                   },
-                  child: Card(
-                    elevation: 5,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          height: 150,
-                          width: double.infinity,
-                          child: imageUrl.startsWith('http')
-                              ? ClipRRect(
-                                  borderRadius: BorderRadius.circular(10),
-                                  child: Image.network(
-                                    // height: 100,
-                                    // width: double.infinity,
-                                    fit: BoxFit.cover,
-                                    imageUrl,
-                                  ),
-                                )
-                              : Center(
-                                  child: Icon(
-                                    Icons.image,
-                                    size: 120,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                        ),
-                        Expanded(
-                          child: Row(
+                  // Admin
+                  child: isAdmin
+                      ? Card(
+                          elevation: 5,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Expanded(
-                                child: Text(
-                                  textAlign: TextAlign.center,
-                                  name,
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
+                              widget.collectionName == 'offers_category'
+                                  ? Stack(
+                                      children: [
+                                        SizedBox(
+                                          height: 115,
+                                          width: double.infinity,
+                                          child: imageUrl.startsWith('http')
+                                              ? ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  child: Image.network(
+                                                    // height: 100,
+                                                    // width: double.infinity,
+                                                    fit: BoxFit.cover,
+                                                    imageUrl,
+                                                  ),
+                                                )
+                                              : const Center(
+                                                  child: Icon(
+                                                    Icons.image,
+                                                    size: 120,
+                                                    color: Colors.black,
+                                                  ),
+                                                ),
+                                        ),
+                                        Container(
+                                          width: 40,
+                                          color: Colors.red,
+                                          child: Text(
+                                            textAlign: TextAlign.center,
+                                            '${discountOffer}%',
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    )
+                                  : SizedBox(
+                                      height: 115,
+                                      width: double.infinity,
+                                      child: imageUrl.startsWith('http')
+                                          ? ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              child: Image.network(
+                                                // height: 100,
+                                                // width: double.infinity,
+                                                fit: BoxFit.cover,
+                                                imageUrl,
+                                              ),
+                                            )
+                                          : const Center(
+                                              child: Icon(
+                                                Icons.image,
+                                                size: 120,
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                    ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                    width: 100,
+                                    height: 50,
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 10,
+                                      ),
+                                      child: Text(
+                                        textAlign: TextAlign.center,
+                                        name,
+                                        style: const TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
                                   ),
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                    width: 60,
+                                    child: widget.collectionName ==
+                                            'offers_category'
+                                        ? Text(
+                                            textAlign: TextAlign.center,
+                                            '\$${priceBeforeDiscount}',
+                                            style: const TextStyle(
+                                              fontSize: 16,
+                                              decoration:
+                                                  TextDecoration.lineThrough,
+                                              color: Colors.red,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                          )
+                                        : Text(
+                                            textAlign: TextAlign.center,
+                                            '\$${price.toString()}',
+                                            style: const TextStyle(
+                                              fontSize: 16,
+                                              color: Colors.orange,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  widget.collectionName == 'offers_category'
+                                      ? SizedBox(
+                                          width: 60,
+                                          child: Text(
+                                            '\$${price}',
+                                            style: const TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.green,
+                                            ),
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        )
+                                      : const SizedBox()
+                                ],
+                              ),
+                              isAdmin
+                                  ? Padding(
+                                      padding: const EdgeInsets.all(1),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          IconButton(
+                                            onPressed: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      UpdateFood(
+                                                    docId: doc.id,
+                                                    foodData: data,
+                                                    collectionName:
+                                                        widget.collectionName,
+                                                    categoryName: '',
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                            icon: const Icon(
+                                              Icons.edit,
+                                              color: Colors.blue,
+                                            ),
+                                          ),
+                                          IconButton(
+                                            onPressed: () {
+                                              showDialog(
+                                                context: context,
+                                                builder:
+                                                    (BuildContext context) {
+                                                  return AlertDialog(
+                                                    backgroundColor:
+                                                        Colors.orange,
+                                                    title: const Text(
+                                                      'Confirm Delete',
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                    content: Text(
+                                                      'Are you sure you want to delete $name?',
+                                                      maxLines: 2,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      style: const TextStyle(
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 18,
+                                                      ),
+                                                    ),
+                                                    actions: [
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          ElevatedButton(
+                                                            style:
+                                                                ElevatedButton
+                                                                    .styleFrom(
+                                                              backgroundColor:
+                                                                  Colors.white,
+                                                            ),
+                                                            child: const Text(
+                                                              'Cancel',
+                                                              style: TextStyle(
+                                                                fontSize: 20,
+                                                                color: Colors
+                                                                    .black,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                              ),
+                                                            ),
+                                                            onPressed: () {
+                                                              Navigator.of(
+                                                                      context)
+                                                                  .pop(); // Close the dialog
+                                                            },
+                                                          ),
+                                                          const SizedBox(
+                                                            width: 10,
+                                                          ),
+                                                          ElevatedButton(
+                                                            style:
+                                                                ElevatedButton
+                                                                    .styleFrom(
+                                                              backgroundColor:
+                                                                  Colors.white,
+                                                            ),
+                                                            child: const Text(
+                                                              'Delete',
+                                                              style: TextStyle(
+                                                                fontSize: 20,
+                                                                color: Colors
+                                                                    .black,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                              ),
+                                                            ),
+                                                            onPressed: () {
+                                                              // Perform the delete operation
+                                                              foodRef
+                                                                  .doc(doc.id)
+                                                                  .delete();
+                                                              customShowSnackBar(
+                                                                context:
+                                                                    context,
+                                                                content:
+                                                                    '$name is deleted from ${widget.collectionName}',
+                                                              );
+                                                              Navigator.of(
+                                                                      context)
+                                                                  .pop(); // Close the dialog after delete
+                                                            },
+                                                          ),
+                                                        ],
+                                                      )
+                                                    ],
+                                                  );
+                                                },
+                                              );
+                                            },
+                                            icon: const Icon(
+                                              Icons.delete,
+                                              color: Colors.red,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  : Padding(
+                                      padding: const EdgeInsets.only(left: 8),
+                                      child: Row(
+                                        //crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Expanded(
+                                            child: Text(
+                                              '\$$price',
+                                              style: const TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.orange,
+                                              ),
+                                              overflow: TextOverflow
+                                                  .ellipsis, // Ensure text doesn't overflow
+                                              maxLines:
+                                                  2, // Limit the number of lines
+                                            ),
+                                          ),
+                                          StatefulBuilder(
+                                            builder: (context, setState) {
+                                              return IconButton(
+                                                onPressed: () async {
+                                                  setState(() {
+                                                    isFavouriteList[index] =
+                                                        !isFavouriteList[index];
+                                                  });
+
+                                                  final user = FirebaseAuth
+                                                      .instance.currentUser;
+                                                  if (user != null) {
+                                                    final userId = user.uid;
+
+                                                    final docRef = FirebaseFirestore
+                                                        .instance
+                                                        .collection('users')
+                                                        .doc(userId)
+                                                        .collection(
+                                                            'favourites')
+                                                        .doc(doc
+                                                            .id); // Use user ID to create or reference the document
+
+                                                    // final docRef = FirebaseFirestore
+                                                    //     .instance
+                                                    //     .collection('favourites')
+                                                    //     .doc(doc.id);
+
+                                                    if (isFavouriteList[
+                                                        index]) {
+                                                      // Add to favourites
+                                                      await docRef.set({
+                                                        'name': name,
+                                                        'price': price,
+                                                        'imageUrl': imageUrl,
+                                                        'description':
+                                                            description,
+                                                        'timestamp': FieldValue
+                                                            .serverTimestamp(),
+                                                      });
+                                                    } else {
+                                                      // Remove from favourites
+                                                      await docRef.delete();
+                                                    }
+                                                  }
+
+                                                  customShowSnackBar(
+                                                    context: context,
+                                                    content:
+                                                        '$name is added to favourites',
+                                                  );
+                                                },
+                                                icon: Icon(
+                                                  isFavouriteList[index]
+                                                      ? Icons.favorite
+                                                      : Icons.favorite_border,
+                                                  color: isFavouriteList[index]
+                                                      ? Colors.red
+                                                      : Colors.black,
+                                                ),
+                                              );
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                            ],
+                          ),
+                        )
+                      // User
+                      : Card(
+                          elevation: 5,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              widget.collectionName == 'offers_category'
+                                  ? Stack(
+                                      children: [
+                                        SizedBox(
+                                          height: 115,
+                                          width: double.infinity,
+                                          child: imageUrl.startsWith('http')
+                                              ? ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  child: Image.network(
+                                                    // height: 100,
+                                                    // width: double.infinity,
+                                                    fit: BoxFit.cover,
+                                                    imageUrl,
+                                                  ),
+                                                )
+                                              : const Center(
+                                                  child: Icon(
+                                                    Icons.image,
+                                                    size: 120,
+                                                    color: Colors.black,
+                                                  ),
+                                                ),
+                                        ),
+                                        Container(
+                                          width: 40,
+                                          color: Colors.red,
+                                          child: Text(
+                                            textAlign: TextAlign.center,
+                                            '${discountOffer}%',
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    )
+                                  : SizedBox(
+                                      height: 140,
+                                      width: double.infinity,
+                                      child: imageUrl.startsWith('http')
+                                          ? ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              child: Image.network(
+                                                // height: 100,
+                                                // width: double.infinity,
+                                                fit: BoxFit.cover,
+                                                imageUrl,
+                                              ),
+                                            )
+                                          : const Center(
+                                              child: Icon(
+                                                Icons.image,
+                                                size: 120,
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                    ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                    height: 50,
+                                    width: 100,
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 10,
+                                      ),
+                                      child: Text(
+                                        textAlign: TextAlign.center,
+                                        name,
+                                        style: const TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 8),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  //crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Expanded(
+                                      child: Container(
+                                        constraints:
+                                            BoxConstraints(maxWidth: 50),
+                                        child: widget.collectionName ==
+                                                'offers_category'
+                                            ? Padding(
+                                                padding: const EdgeInsets.only(
+                                                    top: 30),
+                                                child: Text(
+                                                  '\$$priceBeforeDiscount',
+                                                  style: const TextStyle(
+                                                    fontSize: 18,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.red,
+                                                    decoration: TextDecoration
+                                                        .lineThrough,
+                                                  ),
+                                                  overflow: TextOverflow
+                                                      .ellipsis, // Ensure text doesn't overflow
+                                                  // maxLines: 2,
+                                                ),
+                                              )
+                                            : Text(
+                                                '\$$price',
+                                                style: const TextStyle(
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.orange,
+                                                ),
+                                                overflow: TextOverflow
+                                                    .ellipsis, // Ensure text doesn't overflow
+                                                // maxLines: 2,
+                                              ),
+                                      ),
+                                    ),
+                                    widget.collectionName == 'offers_category'
+                                        ? Expanded(
+                                            child: Container(
+                                              constraints:
+                                                  BoxConstraints(maxWidth: 50),
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(
+                                                    top: 30),
+                                                child: Text(
+                                                  '\$$price',
+                                                  style: const TextStyle(
+                                                    fontSize: 18,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.green,
+                                                  ),
+                                                  overflow: TextOverflow
+                                                      .ellipsis, // Ensure text doesn't overflow
+                                                  // maxLines: 2,
+                                                ),
+                                              ),
+                                            ),
+                                          )
+                                        : Text(''),
+                                    widget.collectionName != 'offers_category'
+                                        ? StatefulBuilder(
+                                            builder: (context, setState) {
+                                              return IconButton(
+                                                onPressed: () async {
+                                                  setState(() {
+                                                    isFavouriteList[index] =
+                                                        !isFavouriteList[index];
+                                                  });
+
+                                                  final user = FirebaseAuth
+                                                      .instance.currentUser;
+                                                  if (user != null) {
+                                                    final userId = user.uid;
+
+                                                    final docRef = FirebaseFirestore
+                                                        .instance
+                                                        .collection('users')
+                                                        .doc(userId)
+                                                        .collection(
+                                                            'favourites')
+                                                        .doc(doc
+                                                            .id); // Use user ID to create or reference the document
+
+                                                    // final docRef = FirebaseFirestore
+                                                    //     .instance
+                                                    //     .collection('favourites')
+                                                    //     .doc(doc.id);
+
+                                                    if (isFavouriteList[
+                                                        index]) {
+                                                      // Add to favourites
+                                                      await docRef.set({
+                                                        'name': name,
+                                                        'price': price,
+                                                        'imageUrl': imageUrl,
+                                                        'description':
+                                                            description,
+                                                        'timestamp': FieldValue
+                                                            .serverTimestamp(),
+                                                      });
+                                                    } else {
+                                                      // Remove from favourites
+                                                      await docRef.delete();
+                                                    }
+                                                  }
+
+                                                  customShowSnackBar(
+                                                    context: context,
+                                                    content:
+                                                        '$name is added to favourites',
+                                                  );
+                                                },
+                                                icon: Icon(
+                                                  isFavouriteList[index]
+                                                      ? Icons.favorite
+                                                      : Icons.favorite_border,
+                                                  color: isFavouriteList[index]
+                                                      ? Colors.red
+                                                      : Colors.black,
+                                                ),
+                                              );
+                                            },
+                                          )
+                                        : Text('')
+                                  ],
                                 ),
                               ),
                             ],
                           ),
                         ),
-
-                        ///    SizedBox(height: 8.0), // Space between name and price
-
-                        isAdmin
-                            ? Padding(
-                                padding: const EdgeInsets.all(1),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      '\$$price',
-                                      style: const TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.orange,
-                                      ),
-                                      overflow: TextOverflow
-                                          .ellipsis, // Ensure text doesn't overflow
-                                      maxLines: 2, // Limit the number of lines
-                                    ),
-                                    IconButton(
-                                      onPressed: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => UpdateFood(
-                                              docId: doc.id,
-                                              foodData: data,
-                                              collectionName:
-                                                  widget.collectionName,
-                                              categoryName: '',
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                      icon: const Icon(
-                                        Icons.edit,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                    IconButton(
-                                      onPressed: () {
-                                        foodRef.doc(doc.id).delete();
-                                        customShowSnackBar(
-                                            context: context,
-                                            content:
-                                                '$name is deleted from ${widget.collectionName}');
-                                      },
-                                      icon: const Icon(
-                                        Icons.delete,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            : Padding(
-                                padding: const EdgeInsets.only(left: 8),
-                                child: Row(
-                                  //crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Expanded(
-                                      child: Text(
-                                        '\$$price',
-                                        style: const TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.orange,
-                                        ),
-                                        overflow: TextOverflow
-                                            .ellipsis, // Ensure text doesn't overflow
-                                        maxLines:
-                                            2, // Limit the number of lines
-                                      ),
-                                    ),
-                                    StatefulBuilder(
-                                      builder: (context, setState) {
-                                        return IconButton(
-                                          onPressed: () async {
-                                            setState(() {
-                                              isFavouriteList[index] =
-                                                  !isFavouriteList[index];
-                                            });
-
-                                            final user = FirebaseAuth
-                                                .instance.currentUser;
-                                            if (user != null) {
-                                              final userId = user.uid;
-
-                                              final docRef = FirebaseFirestore
-                                                  .instance
-                                                  .collection('users')
-                                                  .doc(userId)
-                                                  .collection('favourites')
-                                                  .doc(doc
-                                                      .id); // Use user ID to create or reference the document
-
-                                              // final docRef = FirebaseFirestore
-                                              //     .instance
-                                              //     .collection('favourites')
-                                              //     .doc(doc.id);
-
-                                              if (isFavouriteList[index]) {
-                                                // Add to favourites
-                                                await docRef.set({
-                                                  'name': name,
-                                                  'price': price,
-                                                  'imageUrl': imageUrl,
-                                                  'description': description,
-                                                  'timestamp': FieldValue
-                                                      .serverTimestamp(),
-                                                });
-                                              } else {
-                                                // Remove from favourites
-                                                await docRef.delete();
-                                              }
-                                            }
-
-                                            customShowSnackBar(
-                                              context: context,
-                                              content:
-                                                  '$name is added to favourites',
-                                            );
-                                          },
-                                          icon: Icon(
-                                            isFavouriteList[index]
-                                                ? Icons.favorite
-                                                : Icons.favorite_border,
-                                            color: isFavouriteList[index]
-                                                ? Colors.red
-                                                : Colors.black,
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  ],
-                                ),
-                              ),
-                      ],
-                    ),
-                    // child: ListTile(
-                    //   // contentPadding: const EdgeInsets.all(10),
-                    //   leading: imageUrl.startsWith('http')
-                    //       ? Image.network(
-                    //           height: 120,
-                    //           width: 50,
-                    //           // fit: BoxFit.contain,
-                    //           imageUrl,
-                    //         )
-                    //       : Icon(
-                    //           Icons.image,
-                    //           size: 55,
-                    //           color: Colors.black,
-                    //         ),
-                    //   title: Text(
-                    //     name,
-                    //     style: const TextStyle(fontWeight: FontWeight.bold),
-                    //   ),
-                    //   subtitle: Text('\$$price'),
-                    //   trailing: isAdmin
-                    //       ? Row(
-                    //           mainAxisSize: MainAxisSize.min,
-                    //           children: [
-                    //             IconButton(
-                    //               onPressed: () {
-                    //                 Navigator.push(
-                    //                   context,
-                    //                   MaterialPageRoute(
-                    //                     builder: (context) => UpdateFood(
-                    //                       docId: doc.id,
-                    //                       foodData: data,
-                    //                       collectionName:
-                    //                           widget.collectionName,
-                    //                       categoryName: '',
-                    //                     ),
-                    //                   ),
-                    //                 );
-                    //               },
-                    //               icon: const Icon(
-                    //                 Icons.edit,
-                    //                 color: Colors.black,
-                    //               ),
-                    //             ),
-                    //             IconButton(
-                    //               onPressed: () {
-                    //                 foodRef.doc(doc.id).delete();
-                    //                 customShowSnackBar(
-                    //                     context: context,
-                    //                     content:
-                    //                         '$name is deleted from ${widget.collectionName}');
-                    //               },
-                    //               icon: const Icon(
-                    //                 Icons.delete,
-                    //                 color: Colors.black,
-                    //               ),
-                    //             ),
-                    //           ],
-                    //         )
-                    //       : null,
-                    // ),
-                  ),
                 );
               },
             ),

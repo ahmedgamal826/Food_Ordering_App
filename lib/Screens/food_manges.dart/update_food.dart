@@ -29,6 +29,9 @@ class _UpdateFoodState extends State<UpdateFood> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController priceController = TextEditingController();
+  final TextEditingController priceBeforeDiscountController =
+      TextEditingController();
+  final TextEditingController discountOfferController = TextEditingController();
   final ImagePicker picker = ImagePicker();
   XFile? image;
   bool isLoading = false;
@@ -39,6 +42,10 @@ class _UpdateFoodState extends State<UpdateFood> {
     nameController.text = widget.foodData['name'] ?? '';
     descriptionController.text = widget.foodData['description'] ?? '';
     priceController.text = widget.foodData['price'].toString() ?? '';
+    priceBeforeDiscountController.text =
+        widget.foodData['priceAfterDiscount'].toString() ?? '';
+    discountOfferController.text =
+        widget.foodData['offerDiscount'].toString() ?? '';
   }
 
   Future<void> pickImage() async {
@@ -85,7 +92,9 @@ class _UpdateFoodState extends State<UpdateFood> {
         .update({
       'name': nameController.text,
       'description': descriptionController.text,
+      'offerDiscount': discountOfferController.text,
       'price': priceController.text,
+      'priceAfterDiscount': priceBeforeDiscountController.text,
       'image': imageUrl,
       'timestamp': FieldValue.serverTimestamp(),
     }).then((_) {
@@ -121,6 +130,8 @@ class _UpdateFoodState extends State<UpdateFood> {
         widget.collectionName == 'chocolate cake category' ||
         widget.collectionName == 'Cupcake category';
 
+    final isOffersCategory = widget.collectionName == 'offers_category';
+
     return Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.white),
@@ -131,7 +142,9 @@ class _UpdateFoodState extends State<UpdateFood> {
               ? 'Edit Drink'
               : isSweetCategory
                   ? 'Edit Sweet'
-                  : 'Edit Food',
+                  : isOffersCategory
+                      ? 'Edit Offers'
+                      : 'Edit Food',
           style: const TextStyle(
             fontSize: 23,
             fontWeight: FontWeight.bold,
@@ -151,7 +164,9 @@ class _UpdateFoodState extends State<UpdateFood> {
                       ? 'Drink Name'
                       : isSweetCategory
                           ? 'Sweet Name'
-                          : 'Food Name',
+                          : isOffersCategory
+                              ? 'Offer Name'
+                              : 'Food Name',
                 ),
                 const SizedBox(height: 20),
                 TextFieledAddFood(
@@ -160,18 +175,48 @@ class _UpdateFoodState extends State<UpdateFood> {
                       ? 'Drink Description'
                       : isSweetCategory
                           ? 'Sweet Description'
-                          : 'Food Description',
+                          : isOffersCategory
+                              ? 'Offer Description'
+                              : 'Food Description',
                 ),
                 const SizedBox(height: 20),
+                isOffersCategory
+                    ? TextFieledAddFood(
+                        controller: discountOfferController,
+                        hinText: isDrinkCategory
+                            ? 'Drink Price'
+                            : isSweetCategory
+                                ? 'Sweet Price'
+                                : isOffersCategory
+                                    ? 'Offer Discount'
+                                    : 'Food Price',
+                      )
+                    : const SizedBox(height: 20),
+                isOffersCategory ? const SizedBox(height: 20) : SizedBox(),
                 TextFieledAddFood(
-                  controller: priceController,
+                  controller: priceBeforeDiscountController,
                   hinText: isDrinkCategory
                       ? 'Drink Price'
                       : isSweetCategory
                           ? 'Sweet Price'
-                          : 'Food Price',
+                          : isOffersCategory
+                              ? 'Offer Price'
+                              : 'Food Price',
                 ),
                 const SizedBox(height: 20),
+                isOffersCategory
+                    ? TextFieledAddFood(
+                        controller: priceController,
+                        hinText: isDrinkCategory
+                            ? 'Drink Price'
+                            : isSweetCategory
+                                ? 'Sweet Price'
+                                : isOffersCategory
+                                    ? 'offer Price After Discount'
+                                    : 'Food Price',
+                      )
+                    : const SizedBox(height: 20),
+                isOffersCategory ? const SizedBox(height: 20) : SizedBox(),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.orange,
@@ -200,7 +245,9 @@ class _UpdateFoodState extends State<UpdateFood> {
                         ? 'Edit Drink'
                         : isSweetCategory
                             ? 'Edit Sweet'
-                            : 'Edit Food',
+                            : isOffersCategory
+                                ? 'Edit Offer'
+                                : 'Edit Food',
                     style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,

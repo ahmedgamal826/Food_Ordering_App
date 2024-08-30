@@ -4,6 +4,7 @@ import 'package:food_ordering_app/Screens/admin_or_user_screen.dart';
 import 'package:food_ordering_app/Screens/favourite_screen.dart';
 import 'package:food_ordering_app/Screens/food_manges.dart/Foods%20Screens/burgers_screen.dart';
 import 'package:food_ordering_app/Screens/food_manges.dart/home_page.dart';
+import 'package:food_ordering_app/Screens/offers_screen.dart';
 import 'package:food_ordering_app/Screens/order_screen.dart';
 import 'package:food_ordering_app/auth/auth_services.dart';
 import 'package:food_ordering_app/auth/profile_screen.dart';
@@ -21,7 +22,7 @@ class _UserHomePageState extends State<UserHomePage> {
 
   final List<Widget> _pages = [
     RestaurantHomePage(),
-    OrderScreen(),
+    OffersScreen(),
     OrderScreen(),
     FavouriteScreen(),
     const ProfileScreen(),
@@ -128,10 +129,10 @@ class _UserHomePageState extends State<UserHomePage> {
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(
-                    Icons.restaurant,
+                    Icons.local_offer,
                     size: 30,
                   ),
-                  label: 'Foods',
+                  label: 'Offers',
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(
