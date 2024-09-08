@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_ordering_app/Screens/Test%20Screens/admin_login_screen.dart';
+import 'package:food_ordering_app/Screens/Test%20Screens/register.dart';
 import 'package:food_ordering_app/widgets/map_screen.dart';
 import 'package:food_ordering_app/auth/login_or_register.dart';
 import 'package:food_ordering_app/auth/login_page.dart';
@@ -38,7 +39,7 @@ class AdminOrUserScreen extends StatelessWidget {
               buttonText: 'Admin',
               onPressed: () {
                 Navigator.push(
-                  context,
+                  context, // AdminLoginScreen
                   MaterialPageRoute(builder: (_) => AdminLoginScreen()),
                 );
               },

@@ -3,11 +3,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:food_ordering_app/Screens/admin_or_user_screen.dart';
 import 'package:food_ordering_app/Screens/favourite_screen.dart';
 import 'package:food_ordering_app/Screens/food_manges.dart/Foods%20Screens/burgers_screen.dart';
-import 'package:food_ordering_app/Screens/food_manges.dart/home_page.dart';
+import 'package:food_ordering_app/Screens/food_manges.dart/restaurant_home_page.dart';
 import 'package:food_ordering_app/Screens/offers_screen.dart';
 import 'package:food_ordering_app/Screens/order_screen.dart';
 import 'package:food_ordering_app/auth/auth_services.dart';
 import 'package:food_ordering_app/auth/profile_screen.dart';
+import 'package:food_ordering_app/widgets/checkout)_screen.dart';
 import 'package:provider/provider.dart';
 
 class UserHomePage extends StatefulWidget {
@@ -24,6 +25,7 @@ class _UserHomePageState extends State<UserHomePage> {
     RestaurantHomePage(),
     OffersScreen(),
     OrderScreen(),
+    // CheckoutScreen(),
     FavouriteScreen(),
     const ProfileScreen(),
   ];

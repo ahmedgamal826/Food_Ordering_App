@@ -97,7 +97,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
         leading: Text(''),
         centerTitle: true,
         title: const Text(
-          'Favourites',
+          'My Favourites',
           style: TextStyle(
             fontSize: 25,
             color: Colors.white,

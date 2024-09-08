@@ -575,16 +575,16 @@ class _RestaurantHomePageState extends State<RestaurantHomePage> {
                   color: Colors.white,
                 ),
               ),
-              actions: [
-                IconButton(
-                  onPressed: () {
-                    logout(context);
-                  },
-                  icon: const Icon(
-                    Icons.logout,
-                  ),
-                )
-              ],
+              // actions: [
+              //   IconButton(
+              //     onPressed: () {
+              //       logout(context);
+              //     },
+              //     icon: const Icon(
+              //       Icons.logout,
+              //     ),
+              //   )
+              // ],
             ),
             body: ListView(
               physics: const BouncingScrollPhysics(),

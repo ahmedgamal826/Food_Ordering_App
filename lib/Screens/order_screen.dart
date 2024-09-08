@@ -1928,7 +1928,14 @@ class _OrderScreenState extends State<OrderScreen> {
 
                 if (!snapshot.hasData || !snapshot.data!.exists) {
                   return const Center(
-                    child: Text('No items in cart.'),
+                    child: Text(
+                      'No items in cart.',
+                      style: TextStyle(
+                        fontSize: 25,
+                        color: Colors.orange,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   );
                 }
 
@@ -1946,344 +1953,368 @@ class _OrderScreenState extends State<OrderScreen> {
                   totalPrice += deliveryPrice;
                 }
 
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 10,
-                      ),
-                      child: Text(
-                        'Your Order',
-                        style: TextStyle(
-                          color: Colors.orange,
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold,
+                return items.isEmpty
+                    ? Center(
+                        child: Text(
+                          'No items in cart.',
+                          style: TextStyle(
+                            fontSize: 25,
+                            color: Colors.orange,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                    ),
-                    Expanded(
-                      child: ListView.builder(
-                        itemCount: items.length,
-                        itemBuilder: (context, index) {
-                          final item = items[index] as Map<String, dynamic>;
-                          final product =
-                              item['product'] as Map<String, dynamic>? ?? {};
-
-                          final itemId = item['id'] as String? ?? '';
-                          final productName = product['name'] as String? ?? '';
-                          final productImage =
-                              product['image'] as String? ?? '';
-                          int quantity = item['quantity'] as int? ?? 0;
-                          final size = item['size'] as String? ?? '';
-                          final itemTotalPrice =
-                              item['totalPrice'] as double? ?? 0.0;
-
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 5, vertical: 10),
-                            child: Dismissible(
-                              key: UniqueKey(),
-                              direction: DismissDirection.endToStart,
-                              background: Container(
-                                alignment: Alignment.centerRight,
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 20),
-                                color: Colors.red,
-                                child: const Icon(
-                                  Icons.delete,
-                                  color: Colors.white,
-                                ),
+                      )
+                    : Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 20,
+                              vertical: 10,
+                            ),
+                            child: Text(
+                              'Your Order',
+                              style: TextStyle(
+                                color: Colors.orange,
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold,
                               ),
-                              confirmDismiss: (direction) async {
-                                return await showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                      title: const Text("Confirm Deletion"),
-                                      content: Text(
-                                        "Are you sure you want to delete $productName?",
-                                        overflow: TextOverflow.ellipsis,
-                                        maxLines: 2,
-                                        style: const TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                            ),
+                          ),
+                          Expanded(
+                            child: ListView.builder(
+                              itemCount: items.length,
+                              itemBuilder: (context, index) {
+                                final item =
+                                    items[index] as Map<String, dynamic>;
+                                final product =
+                                    item['product'] as Map<String, dynamic>? ??
+                                        {};
+
+                                final itemId = item['id'] as String? ?? '';
+                                final productName =
+                                    product['name'] as String? ?? '';
+                                final productImage =
+                                    product['image'] as String? ?? '';
+                                int quantity = item['quantity'] as int? ?? 0;
+                                final size = item['size'] as String? ?? '';
+                                final itemTotalPrice =
+                                    item['totalPrice'] as double? ?? 0.0;
+
+                                return Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 5, vertical: 10),
+                                  child: Dismissible(
+                                    key: UniqueKey(),
+                                    direction: DismissDirection.endToStart,
+                                    background: Container(
+                                      alignment: Alignment.centerRight,
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 20),
+                                      color: Colors.red,
+                                      child: const Icon(
+                                        Icons.delete,
+                                        color: Colors.white,
                                       ),
-                                      actions: <Widget>[
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            ElevatedButton(
-                                              style: ElevatedButton.styleFrom(
-                                                backgroundColor: Colors.orange,
+                                    ),
+                                    confirmDismiss: (direction) async {
+                                      return await showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title:
+                                                const Text("Confirm Deletion"),
+                                            content: Text(
+                                              "Are you sure you want to delete $productName?",
+                                              overflow: TextOverflow.ellipsis,
+                                              maxLines: 2,
+                                              style: const TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold,
                                               ),
-                                              onPressed: () =>
-                                                  Navigator.of(context)
-                                                      .pop(false),
-                                              child: const Text(
-                                                "Cancel",
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.bold,
+                                            ),
+                                            actions: <Widget>[
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  ElevatedButton(
+                                                    style: ElevatedButton
+                                                        .styleFrom(
+                                                      backgroundColor:
+                                                          Colors.orange,
+                                                    ),
+                                                    onPressed: () =>
+                                                        Navigator.of(context)
+                                                            .pop(false),
+                                                    child: const Text(
+                                                      "Cancel",
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 18,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  const SizedBox(
+                                                    width: 10,
+                                                  ),
+                                                  ElevatedButton(
+                                                    style: ElevatedButton
+                                                        .styleFrom(
+                                                      backgroundColor:
+                                                          Colors.orange,
+                                                    ),
+                                                    onPressed: () =>
+                                                        Navigator.of(context)
+                                                            .pop(true),
+                                                    child: const Text(
+                                                      "Delete",
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 18,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              )
+                                            ],
+                                          );
+                                        },
+                                      );
+                                    },
+                                    onDismissed: (direction) {
+                                      deleteItem(itemId, productName);
+                                    },
+                                    child: Card(
+                                      elevation: 5,
+                                      color: Colors.white,
+                                      child: ListTile(
+                                        leading: Container(
+                                          height: 70,
+                                          width: 80,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(
+                                                10), // Adjust the radius as needed
+                                            border: Border.all(
+                                                color: Colors.white,
+                                                width:
+                                                    2), // Optional: Add a border if desired
+                                          ),
+                                          child: productImage.startsWith('http')
+                                              ? ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10), // Ensure the border radius matches
+                                                  child: Image.network(
+                                                    productImage,
+                                                    height: 50,
+                                                    width: 50,
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                )
+                                              : const Center(
+                                                  child: Icon(
+                                                    Icons.image,
+                                                    size: 120,
+                                                    color: Colors.black,
+                                                  ),
+                                                ),
+                                        ),
+                                        title: SizedBox(
+                                          width: 30,
+                                          child: Text(
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                            productName,
+                                            style: const TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.orange,
+                                            ),
+                                          ),
+                                        ),
+                                        subtitle: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text('Size: $size'),
+                                            const SizedBox(height: 5),
+                                            Text(
+                                                '\$${itemTotalPrice.toStringAsFixed(2)}'),
+                                          ],
+                                        ),
+                                        trailing: Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            InkWell(
+                                              onTap: () {
+                                                if (quantity > 1) {
+                                                  quantity--;
+                                                  updateItem(
+                                                    itemId,
+                                                    quantity,
+                                                    size,
+                                                  );
+                                                }
+                                              },
+                                              child: Container(
+                                                width: 50,
+                                                height: 30,
+                                                decoration: BoxDecoration(
+                                                  color: Colors.orange,
+                                                  borderRadius:
+                                                      BorderRadius.circular(20),
+                                                ),
+                                                child: const Align(
+                                                  alignment: Alignment.center,
+                                                  child: Text(
+                                                    '-',
+                                                    style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 23,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  ),
                                                 ),
                                               ),
                                             ),
                                             const SizedBox(
-                                              width: 10,
+                                              width: 5,
                                             ),
-                                            ElevatedButton(
-                                              style: ElevatedButton.styleFrom(
-                                                backgroundColor: Colors.orange,
+                                            Text(
+                                              '$quantity',
+                                              style: const TextStyle(
+                                                fontSize: 21,
+                                                fontWeight: FontWeight.bold,
                                               ),
-                                              onPressed: () =>
-                                                  Navigator.of(context)
-                                                      .pop(true),
-                                              child: const Text(
-                                                "Delete",
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.bold,
+                                            ),
+                                            const SizedBox(
+                                              width: 5,
+                                            ),
+                                            InkWell(
+                                              onTap: () {
+                                                if (quantity >= 1) {
+                                                  quantity++;
+                                                  updateItem(
+                                                    itemId,
+                                                    quantity,
+                                                    size,
+                                                  );
+                                                }
+                                              },
+                                              child: Container(
+                                                width: 50,
+                                                height: 30,
+                                                decoration: BoxDecoration(
+                                                  color: Colors.orange,
+                                                  borderRadius:
+                                                      BorderRadius.circular(20),
+                                                ),
+                                                child: const Align(
+                                                  alignment: Alignment.center,
+                                                  child: Text(
+                                                    '+',
+                                                    style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 23,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  ),
                                                 ),
                                               ),
                                             ),
                                           ],
-                                        )
-                                      ],
-                                    );
-                                  },
+                                        ),
+                                      ),
+                                    ),
+                                  ),
                                 );
                               },
-                              onDismissed: (direction) {
-                                deleteItem(itemId, productName);
-                              },
-                              child: Card(
-                                elevation: 5,
-                                color: Colors.white,
-                                child: ListTile(
-                                  leading: Container(
-                                    height: 70,
-                                    width: 80,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(
-                                          10), // Adjust the radius as needed
-                                      border: Border.all(
-                                          color: Colors.white,
-                                          width:
-                                              2), // Optional: Add a border if desired
+                            ),
+                          ),
+                          const Divider(
+                            color: Colors.black,
+                            indent: 20,
+                            endIndent: 20,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              right: 20,
+                              left: 20,
+                              top: 10,
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Text(
+                                      'Delivery services:',
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        color: Colors.orange,
+                                      ),
                                     ),
-                                    child: productImage.startsWith('http')
-                                        ? ClipRRect(
-                                            borderRadius: BorderRadius.circular(
-                                                10), // Ensure the border radius matches
-                                            child: Image.network(
-                                              productImage,
-                                              height: 50,
-                                              width: 50,
-                                              fit: BoxFit.contain,
-                                            ),
-                                          )
-                                        : const Center(
-                                            child: Icon(
-                                              Icons.image,
-                                              size: 120,
-                                              color: Colors.black,
-                                            ),
-                                          ),
-                                  ),
-                                  title: SizedBox(
-                                    width: 30,
-                                    child: Text(
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                      productName,
-                                      style: const TextStyle(
-                                        fontSize: 20,
+                                    Spacer(),
+                                    Text(
+                                      '\$${deliveryPrice.toStringAsFixed(2)}',
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        color: Colors.orange,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      'Total : ',
+                                      style: TextStyle(
+                                        fontSize: 22,
                                         fontWeight: FontWeight.bold,
                                         color: Colors.orange,
                                       ),
                                     ),
-                                  ),
-                                  subtitle: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text('Size: $size'),
-                                      const SizedBox(height: 5),
-                                      Text(
-                                          '\$${itemTotalPrice.toStringAsFixed(2)}'),
-                                    ],
-                                  ),
-                                  trailing: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      InkWell(
-                                        onTap: () {
-                                          if (quantity > 1) {
-                                            quantity--;
-                                            updateItem(
-                                              itemId,
-                                              quantity,
-                                              size,
-                                            );
-                                          }
-                                        },
-                                        child: Container(
-                                          width: 50,
-                                          height: 30,
-                                          decoration: BoxDecoration(
-                                            color: Colors.orange,
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                          ),
-                                          child: const Align(
-                                            alignment: Alignment.center,
-                                            child: Text(
-                                              '-',
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 23,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
+                                    Spacer(),
+                                    Text(
+                                      '\$${totalPrice.toStringAsFixed(2)}',
+                                      style: TextStyle(
+                                        fontSize: 22,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.orange,
                                       ),
-                                      const SizedBox(
-                                        width: 5,
-                                      ),
-                                      Text(
-                                        '$quantity',
-                                        style: const TextStyle(
-                                          fontSize: 21,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      const SizedBox(
-                                        width: 5,
-                                      ),
-                                      InkWell(
-                                        onTap: () {
-                                          if (quantity >= 1) {
-                                            quantity++;
-                                            updateItem(
-                                              itemId,
-                                              quantity,
-                                              size,
-                                            );
-                                          }
-                                        },
-                                        child: Container(
-                                          width: 50,
-                                          height: 30,
-                                          decoration: BoxDecoration(
-                                            color: Colors.orange,
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                          ),
-                                          child: const Align(
-                                            alignment: Alignment.center,
-                                            child: Text(
-                                              '+',
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 23,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
-                              ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                CheckoutButton(
+                                  items: items,
+                                  deliveryPrice: deliveryPrice,
+                                  total: totalPrice,
+                                  customerName: authService.userName != null
+                                      ? '${authService.userName}'
+                                      : 'sadsa',
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                )
+                              ],
                             ),
-                          );
-                        },
-                      ),
-                    ),
-                    const Divider(
-                      color: Colors.black,
-                      indent: 20,
-                      endIndent: 20,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        right: 20,
-                        left: 20,
-                        top: 10,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Text(
-                                'Delivery services:',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  color: Colors.orange,
-                                ),
-                              ),
-                              Spacer(),
-                              Text(
-                                '\$${deliveryPrice.toStringAsFixed(2)}',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  color: Colors.orange,
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Row(
-                            children: [
-                              Text(
-                                'Total : ',
-                                style: TextStyle(
-                                  fontSize: 22,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.orange,
-                                ),
-                              ),
-                              Spacer(),
-                              Text(
-                                '\$${totalPrice.toStringAsFixed(2)}',
-                                style: TextStyle(
-                                  fontSize: 22,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.orange,
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          CheckoutButton(
-                            items: items,
-                            deliveryPrice: deliveryPrice,
-                            total: totalPrice,
-                            customerName: authService.userName != null
-                                ? '${authService.userName}'
-                                : 'sadsa',
-                          ),
-                          const SizedBox(
-                            height: 20,
                           )
                         ],
-                      ),
-                    ),
-                  ],
-                );
+                      );
               },
             ),
           );

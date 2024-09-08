@@ -124,6 +124,7 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:food_ordering_app/Screens/about_us_screen.dart';
 import 'package:food_ordering_app/Screens/account_management.dart';
 import 'package:food_ordering_app/Screens/admin_or_user_screen.dart';
 import 'package:food_ordering_app/Screens/food_manges.dart/admin_home_screen.dart';
@@ -151,7 +152,7 @@ class _AdminManagementState extends State<AdminManagement> {
 
     AccountManagement(),
     // Information on user accounts, including their order history and payment details.
-    const ProfileScreen(),
+    const AboutUsScreen(),
   ];
 
   void _onItemTapped(int index) {
