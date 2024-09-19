@@ -1,14 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:food_ordering_app/auth/auth_services.dart';
+import 'package:food_ordering_app/auth/auth_services_user.dart';
 import 'package:food_ordering_app/widgets/custom_button.dart';
 import 'package:food_ordering_app/widgets/custom_text_filed.dart';
 import 'package:food_ordering_app/widgets/show_snack_bar.dart';
 import 'package:provider/provider.dart';
-
-import '../components/my_button.dart';
-import '../components/my_text_field.dart';
 
 class RegisterPage extends StatefulWidget {
   final void Function()? onTap;
@@ -25,56 +22,6 @@ class _RegisterPageState extends State<RegisterPage> {
   final confirmPasswordController = TextEditingController();
   bool isLoading = false;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-  // void signUp() async {
-  //   if (nameController == '' ||
-  //       emailController == '' ||
-  //       passwordController == '' ||
-  //       confirmPasswordController == '') {
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       const SnackBar(
-  //         content: Text("Fields are required"),
-  //       ),
-  //     );
-  //   }
-  //   if (passwordController.text != confirmPasswordController.text) {
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       const SnackBar(
-  //         content: Text("Passwords do not match!"),
-  //       ),
-  //     );
-
-  //     return;
-  //   }
-
-  //   if (_formKey.currentState!.validate()) {
-  //     // get auth services
-  //     final authServices = Provider.of<AuthService>(context, listen: false);
-
-  //     setState(() {
-  //       isLoading = true;
-  //     });
-
-  //     try {
-  //       await authServices.signUpWithEmailandPassword(
-  //           nameController.text, emailController.text, passwordController.text);
-
-  //       Navigator.pushReplacementNamed(context, 'homeScreen');
-  //     } catch (e) {
-  //       ScaffoldMessenger.of(context).showSnackBar(
-  //         SnackBar(
-  //           content: Text(
-  //             e.toString(),
-  //           ),
-  //         ),
-  //       );
-  //     } finally {
-  //       setState(() {
-  //         isLoading = false;
-  //       });
-  //     }
-  //   }
-  // }
 
   void signUp() async {
     if (nameController.text.isEmpty ||
@@ -126,18 +73,16 @@ class _RegisterPageState extends State<RegisterPage> {
               .set({
             'name': nameController.text,
             'email': emailController.text,
-            'rool': 'user', // Set role to 'user'
+            'isLoggedIn': true,
+            'rool': 'user', // Set role to 'user',
+            'loginTimestamp':
+                FieldValue.serverTimestamp(), // Add login timestamp
           });
         }
 
         Navigator.pushReplacementNamed(context, 'userScreen');
       } catch (e) {
         customShowSnackBar(context: context, content: '${e.toString()}');
-        // ScaffoldMessenger.of(context).showSnackBar(
-        //   SnackBar(
-        //     content: Text(e.toString()),
-        //   ),
-        // );
       } finally {
         setState(() {
           isLoading = false;
@@ -181,7 +126,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         const SizedBox(
                           height: 20,
                         ),
-                        Text(
+                        const Text(
                           'Username',
                           style: TextStyle(
                               fontSize: 20,
@@ -193,11 +138,10 @@ class _RegisterPageState extends State<RegisterPage> {
                           controller: nameController,
                           validatorMessage: 'Username is required',
                         ),
-
                         const SizedBox(
                           height: 10,
                         ),
-                        Text(
+                        const Text(
                           'Email',
                           style: TextStyle(
                               fontSize: 20,
@@ -209,11 +153,10 @@ class _RegisterPageState extends State<RegisterPage> {
                           hintText: 'Enter your Email',
                           validatorMessage: 'Email is required',
                         ),
-
                         const SizedBox(
                           height: 10,
                         ),
-                        Text(
+                        const Text(
                           'Password',
                           style: TextStyle(
                               fontSize: 20,
@@ -228,7 +171,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         const SizedBox(
                           height: 10,
                         ),
-                        Text(
+                        const Text(
                           'Confirm Password',
                           style: TextStyle(
                               fontSize: 20,
@@ -247,7 +190,6 @@ class _RegisterPageState extends State<RegisterPage> {
                           buttonText: 'Sign Up',
                           onPressed: signUp,
                         ),
-                        // MyButton(onTap: signUp, text: "Sign Up"),
                         const SizedBox(
                           height: 15,
                         ),

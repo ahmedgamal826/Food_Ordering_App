@@ -61,7 +61,7 @@ class _BurgerAndPepsiState extends State<BurgerAndPepsi> {
           iconTheme: const IconThemeData(color: Colors.white),
           backgroundColor: Colors.orange,
           title: const Text(
-            'burger and pepsi',
+            'Burger and Pepsi',
             style: TextStyle(
               fontSize: 25,
               fontWeight: FontWeight.bold,

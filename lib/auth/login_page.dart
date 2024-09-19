@@ -1,9 +1,7 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:food_ordering_app/auth/auth_services.dart';
-import 'package:food_ordering_app/components/my_button.dart';
-import 'package:food_ordering_app/components/my_text_field.dart';
+import 'package:food_ordering_app/auth/auth_services_user.dart';
 import 'package:food_ordering_app/widgets/awesome_dialog.dart';
 import 'package:food_ordering_app/widgets/custom_button.dart';
 import 'package:food_ordering_app/widgets/custom_text_button.dart';
@@ -41,22 +39,12 @@ class _LoginPageState extends State<LoginPage> {
         Navigator.pushReplacementNamed(context, 'userScreen');
       } catch (e) {
         customShowSnackBar(context: context, content: '${e.toString()}');
-
-        // ScaffoldMessenger.of(context).showSnackBar(
-        //   SnackBar(
-        //     content: Text(
-        //       e.toString(),
-        //     ),
-        //   ),
-        // );
       } finally {
         setState(() {
           isLoading = false; // Stop loading
         });
       }
     }
-
-    // get the auth service
   }
 
   void signInWithGoogle() async {
@@ -110,7 +98,6 @@ class _LoginPageState extends State<LoginPage> {
                           child: ListView(
                             children: [
                               Container(
-                                // width: 150,
                                 height:
                                     MediaQuery.of(context).size.height * 0.2,
                                 child: Image.asset(

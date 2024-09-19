@@ -342,7 +342,7 @@ class AboutUsScreen extends StatelessWidget {
         child: ListView(
           // crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'Welcome to Foodies Delivery!',
               style: TextStyle(
                 fontSize: 24,
@@ -351,7 +351,7 @@ class AboutUsScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            Text(
+            const Text(
               'At Foodies Delivery, we are dedicated to providing you with the best food delivery experience. Our team is passionate about delivering high-quality meals from your favorite local restaurants right to your doorstep.',
               style: TextStyle(
                 fontSize: 16,
@@ -359,7 +359,7 @@ class AboutUsScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            Text(
+            const Text(
               'Our Mission:',
               style: TextStyle(
                 fontSize: 20,
@@ -368,7 +368,7 @@ class AboutUsScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 10),
-            Text(
+            const Text(
               'To make food delivery convenient, quick, and enjoyable for everyone. We strive to connect people with delicious meals and exceptional service.',
               style: TextStyle(
                 fontSize: 16,
@@ -376,7 +376,7 @@ class AboutUsScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            Text(
+            const Text(
               'Our Services:',
               style: TextStyle(
                 fontSize: 20,
@@ -385,7 +385,7 @@ class AboutUsScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 10),
-            Text(
+            const Text(
               '• Fast and reliable delivery.\n• Wide selection of local restaurants.\n• Easy and secure payment options.\n• Exceptional customer support.',
               style: TextStyle(
                 fontSize: 16,
@@ -394,7 +394,7 @@ class AboutUsScreen extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             const SizedBox(height: 20),
-            Text(
+            const Text(
               'Contact With Us:',
               style: TextStyle(
                 fontSize: 20,
@@ -425,7 +425,7 @@ class AboutUsScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 IconButton(
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.facebook,
                     color: Colors.blue,
                     size: 50,

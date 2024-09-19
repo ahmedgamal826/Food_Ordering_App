@@ -15,6 +15,8 @@ class AdminLoginScreen extends StatefulWidget {
 class _AdminLoginScreenState extends State<AdminLoginScreen> {
   bool visible = false;
   final _formkey = GlobalKey<FormState>();
+  final TextEditingController nameController = TextEditingController();
+
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   bool isLoading = false;
@@ -49,6 +51,14 @@ class _AdminLoginScreenState extends State<AdminLoginScreen> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              CustomTextFiled(
+                                controller: nameController,
+                                hintText: 'Enter your Name',
+                                validatorMessage: 'Name is required',
+                              ),
                               const SizedBox(
                                 height: 20,
                               ),
@@ -90,7 +100,9 @@ class _AdminLoginScreenState extends State<AdminLoginScreen> {
                                     setState(() {
                                       visible = true;
                                     });
-                                    signIn(emailController.text,
+                                    signIn(
+                                        nameController.text,
+                                        emailController.text,
                                         passwordController.text);
                                   },
                                   child: const Text(
@@ -150,7 +162,61 @@ class _AdminLoginScreenState extends State<AdminLoginScreen> {
     });
   }
 
-  void signIn(String email, String password) async {
+  // void signIn(String Name, String email, String password) async {
+  //   if (_formkey.currentState!.validate()) {
+  //     setState(() {
+  //       visible = true; // إظهار الـ CircularProgressIndicator
+  //     });
+
+  //     setState(() {
+  //       isLoading = true;
+  //     });
+
+  //     try {
+  //       UserCredential userCredential =
+  //           await FirebaseAuth.instance.signInWithEmailAndPassword(
+  //         email: email,
+  //         password: password,
+  //       );
+
+  //       // عند تسجيل الدخول بنجاح، تابع إلى الشاشة المناسبة
+  //       route();
+  //     } on FirebaseAuthException catch (e) {
+  //       // إخفاء الـ CircularProgressIndicator
+  //       setState(() {
+  //         visible = false;
+  //       });
+
+  //       // عرض رسائل الخطأ باستخدام Snackbar
+  //       if (e.code == 'user-not-found') {
+  //         customShowSnackBar(context: context, content: 'Email not found');
+  //         // ScaffoldMessenger.of(context).showSnackBar(
+  //         //   const SnackBar(content: Text('Email not found')),
+  //         // );
+  //       } else if (e.code == 'wrong-password') {
+  //         customShowSnackBar(context: context, content: 'Wrong password');
+  //         // ScaffoldMessenger.of(context).showSnackBar(
+  //         //   const SnackBar(content: Text('Wrong password')),
+  //         // );
+  //       } else {
+  //         customShowSnackBar(
+  //             context: context,
+  //             content: 'Error: This email does not belong to an admin.');
+  //         // ScaffoldMessenger.of(context).showSnackBar(
+  //         //   const SnackBar(
+  //         //     content: Text('Error: This email does not belong to an admin.'),
+  //         //   ),
+  //         // );
+  //       }
+  //     } finally {
+  //       setState(() {
+  //         isLoading = false; // Stop loading
+  //       });
+  //     }
+  //   }
+  // }
+
+  void signIn(String name, String email, String password) async {
     if (_formkey.currentState!.validate()) {
       setState(() {
         visible = true; // إظهار الـ CircularProgressIndicator
@@ -167,38 +233,54 @@ class _AdminLoginScreenState extends State<AdminLoginScreen> {
           password: password,
         );
 
-        // عند تسجيل الدخول بنجاح، تابع إلى الشاشة المناسبة
+        // احصل على الـ UID الخاص بالمستخدم
+        User? user = userCredential.user;
+
+        // تحقق من وجود المستخدم في Firestore
+        DocumentSnapshot userDoc = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(user!.uid)
+            .get();
+
+        if (!userDoc.exists) {
+          // إذا لم يكن المستخدم موجودًا، أضف وثيقة جديدة تتضمن الاسم والبريد الإلكتروني
+          await FirebaseFirestore.instance
+              .collection('users')
+              .doc(user.uid)
+              .set({
+            'name': name,
+            'email': email,
+            'role': 'admin', // أو أي دور آخر
+          });
+        } else {
+          // تحديث الاسم إذا كان المستخدم موجود بالفعل
+          await FirebaseFirestore.instance
+              .collection('users')
+              .doc(user.uid)
+              .update({
+            'name': name,
+          });
+        }
+
+        // تابع إلى الشاشة المناسبة
         route();
       } on FirebaseAuthException catch (e) {
-        // إخفاء الـ CircularProgressIndicator
         setState(() {
           visible = false;
         });
 
-        // عرض رسائل الخطأ باستخدام Snackbar
         if (e.code == 'user-not-found') {
           customShowSnackBar(context: context, content: 'Email not found');
-          // ScaffoldMessenger.of(context).showSnackBar(
-          //   const SnackBar(content: Text('Email not found')),
-          // );
         } else if (e.code == 'wrong-password') {
           customShowSnackBar(context: context, content: 'Wrong password');
-          // ScaffoldMessenger.of(context).showSnackBar(
-          //   const SnackBar(content: Text('Wrong password')),
-          // );
         } else {
           customShowSnackBar(
               context: context,
               content: 'Error: This email does not belong to an admin.');
-          // ScaffoldMessenger.of(context).showSnackBar(
-          //   const SnackBar(
-          //     content: Text('Error: This email does not belong to an admin.'),
-          //   ),
-          // );
         }
       } finally {
         setState(() {
-          isLoading = false; // Stop loading
+          isLoading = false;
         });
       }
     }

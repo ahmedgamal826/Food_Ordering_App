@@ -4,7 +4,6 @@ import 'package:food_ordering_app/Screens/Test%20Screens/register.dart';
 import 'package:food_ordering_app/widgets/map_screen.dart';
 import 'package:food_ordering_app/auth/login_or_register.dart';
 import 'package:food_ordering_app/auth/login_page.dart';
-import 'package:food_ordering_app/auth/login_screen.dart';
 import 'package:food_ordering_app/widgets/custom_button.dart';
 
 class AdminOrUserScreen extends StatelessWidget {

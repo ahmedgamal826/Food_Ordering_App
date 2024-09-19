@@ -934,8 +934,8 @@ class _BillsScreenState extends State<BillsScreen> {
                                 ),
                               );
                             }).toList(),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
+                            const Padding(
+                              padding: EdgeInsets.all(8.0),
                               child: Text(
                                 'Delivery Services: \$20',
                                 style: TextStyle(
@@ -950,7 +950,7 @@ class _BillsScreenState extends State<BillsScreen> {
                               children: [
                                 Text(
                                   'Total: \$${order['total'] ?? 0.0}',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 25,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white,

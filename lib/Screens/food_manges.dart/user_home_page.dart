@@ -6,7 +6,7 @@ import 'package:food_ordering_app/Screens/food_manges.dart/Foods%20Screens/burge
 import 'package:food_ordering_app/Screens/food_manges.dart/restaurant_home_page.dart';
 import 'package:food_ordering_app/Screens/offers_screen.dart';
 import 'package:food_ordering_app/Screens/order_screen.dart';
-import 'package:food_ordering_app/auth/auth_services.dart';
+import 'package:food_ordering_app/auth/auth_services_user.dart';
 import 'package:food_ordering_app/auth/profile_screen.dart';
 import 'package:food_ordering_app/widgets/checkout)_screen.dart';
 import 'package:provider/provider.dart';
@@ -96,28 +96,6 @@ class _UserHomePageState extends State<UserHomePage> {
           }
 
           return Scaffold(
-            // appBar: AppBar(
-            //   backgroundColor: Colors.orange,
-            //   centerTitle: true,
-            //   title: const Text(
-            //     'User Home Page',
-            //     style: TextStyle(
-            //       fontSize: 23,
-            //       fontWeight: FontWeight.bold,
-            //       color: Colors.white,
-            //     ),
-            //   ),
-            //   actions: [
-            //     IconButton(
-            //       onPressed: () {
-            //         logout(context);
-            //       },
-            //       icon: const Icon(
-            //         Icons.logout,
-            //       ),
-            //     )
-            //   ],
-            // ),
             body: _pages[_selectedIndex], // Display the selected page
             bottomNavigationBar: BottomNavigationBar(
               backgroundColor: Colors.orange,

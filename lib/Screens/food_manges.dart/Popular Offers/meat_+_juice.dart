@@ -61,7 +61,7 @@ class _MeatAndJuiceState extends State<MeatAndJuice> {
           iconTheme: const IconThemeData(color: Colors.white),
           backgroundColor: Colors.orange,
           title: const Text(
-            'meat and juice',
+            'Meat and Rice',
             style: TextStyle(
               fontSize: 25,
               fontWeight: FontWeight.bold,
@@ -100,7 +100,8 @@ class _MeatAndJuiceState extends State<MeatAndJuice> {
                       ),
                     ),
                   );
-                })
+                },
+              )
             : null);
   }
 }

@@ -61,7 +61,7 @@ class _FishAndRiceState extends State<FishAndRice> {
           iconTheme: const IconThemeData(color: Colors.white),
           backgroundColor: Colors.orange,
           title: const Text(
-            'fish and rice',
+            'Fish and Rice',
             style: TextStyle(
               fontSize: 25,
               fontWeight: FontWeight.bold,

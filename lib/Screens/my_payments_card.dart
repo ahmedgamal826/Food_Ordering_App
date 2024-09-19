@@ -1606,6 +1606,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
+import 'package:food_ordering_app/widgets/show_snack_bar.dart';
 
 class MyPaymentCardsScreen extends StatefulWidget {
   const MyPaymentCardsScreen({super.key});
@@ -1664,6 +1665,8 @@ class _MyPaymentCardsScreenState extends State<MyPaymentCardsScreen> {
                   onPressed: () {
                     _removeCard(docId);
                     Navigator.of(context).pop(); // Close the dialog
+                    customShowSnackBar(
+                        context: context, content: 'Card Deleted Successfully');
                   },
                   child: const Text(
                     'Delete',
@@ -1717,7 +1720,11 @@ class _MyPaymentCardsScreenState extends State<MyPaymentCardsScreen> {
                     .snapshots(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(child: CircularProgressIndicator());
+                    return const Center(
+                      child: CircularProgressIndicator(
+                        color: Colors.orange,
+                      ),
+                    );
                   }
 
                   final cards = snapshot.data?.docs ?? [];
@@ -1727,7 +1734,7 @@ class _MyPaymentCardsScreenState extends State<MyPaymentCardsScreen> {
                       child: Text(
                         'No cards found',
                         style: TextStyle(
-                          fontSize: 18,
+                          fontSize: 25,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -1751,11 +1758,18 @@ class _MyPaymentCardsScreenState extends State<MyPaymentCardsScreen> {
                           title: Text(
                             _formatCardNumber(cardNumber),
                             style: const TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
                           ),
                           subtitle: Text(
                             'Expires: $expiryDate',
-                            style: const TextStyle(fontSize: 14),
+                            style: const TextStyle(
+                              fontSize: 16,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                           trailing: IconButton(
                             icon: const Icon(Icons.delete, color: Colors.red),
@@ -1873,7 +1887,11 @@ class _AddCardFormState extends State<AddCardForm> {
         children: [
           TextFormField(
             controller: _cardNumberController,
-            decoration: const InputDecoration(labelText: 'Card Number'),
+            decoration: const InputDecoration(
+                labelStyle: TextStyle(
+                  color: Colors.orange,
+                ),
+                labelText: 'Card Number'),
             keyboardType: TextInputType.number,
             inputFormatters: [
               FilteringTextInputFormatter.digitsOnly,
@@ -1891,8 +1909,13 @@ class _AddCardFormState extends State<AddCardForm> {
             },
           ),
           TextFormField(
+            cursorColor: Colors.black,
             controller: _expiryDateController,
-            decoration: const InputDecoration(labelText: 'Expiry Date (MM/YY)'),
+            decoration: const InputDecoration(
+                labelStyle: TextStyle(
+                  color: Colors.orange,
+                ),
+                labelText: 'Expiry Date (MM/YY)'),
             keyboardType: TextInputType.number,
             validator: (value) {
               if (value == null || value.isEmpty) {
@@ -1903,7 +1926,11 @@ class _AddCardFormState extends State<AddCardForm> {
           ),
           const SizedBox(height: 20),
           ElevatedButton(
-            onPressed: _submit,
+            onPressed: () {
+              _submit();
+              customShowSnackBar(
+                  context: context, content: 'New Card Added Successfully');
+            },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.orange,
             ),

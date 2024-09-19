@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:food_ordering_app/Screens/admin_or_user_screen.dart';
+import 'package:food_ordering_app/Screens/admin_profile_screen.dart';
 import 'package:food_ordering_app/widgets/category_list_view.dart';
 
 class AdminHomeScreen extends StatefulWidget {
@@ -11,14 +13,7 @@ class AdminHomeScreen extends StatefulWidget {
 }
 
 class _AdminHomeScreenState extends State<AdminHomeScreen> {
-  // String searchQuery = '';
   bool isLoading = false;
-
-  // void updateSearchQuery(String query) {
-  //   setState(() {
-  //     searchQuery = query;
-  //   });
-  // }
 
   Future<void> logout(BuildContext context) async {
     setState(() {
@@ -41,88 +36,119 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    User? user = FirebaseAuth.instance.currentUser;
+
     return Scaffold(
       appBar: AppBar(
+        leading: const Text(''),
         backgroundColor: Colors.orange,
         centerTitle: true,
         title: const Text(
-          "Admin - Manage Foods",
+          "Admin - Manage Restaurant",
           style: TextStyle(
             fontSize: 23,
             fontWeight: FontWeight.bold,
             color: Colors.white,
           ),
         ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              logout(context);
-            },
-            icon: const Icon(
-              Icons.logout,
-            ),
-          )
-        ],
       ),
-      body: ListView(
-        physics: const BouncingScrollPhysics(),
-        children: [
-          Padding(
-            padding: EdgeInsets.all(20),
-            child: Text(
-              'Welcome, Admin! 👋 ',
-              style: TextStyle(
-                fontSize: 25,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: Text(
-              'You can manage all foods, drinks and sweets items here. Use the options below to view, add, update or delete the restaurant categories.',
-              style: TextStyle(
-                fontSize: 18,
-                color: Colors.grey,
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          Divider(
-            indent: 50,
-            endIndent: 50,
-          ),
-          SizedBox(
-            height: 30,
-          ),
-          CategoryListView(
-            categoryName: 'Foods',
-          ),
-          SizedBox(
-            height: 30,
-          ),
-          CategoryListView(
-            categoryName: 'Drinks',
-          ),
-          SizedBox(
-            height: 30,
-          ),
-          CategoryListView(
-            categoryName: 'Sweets',
-          ),
-          SizedBox(
-            height: 30,
-          ),
-          CategoryListView(
-            categoryName: 'Popular Meals',
-          ),
-          const SizedBox(
-            height: 20,
-          )
-        ],
+      body: StreamBuilder<DocumentSnapshot>(
+        stream: FirebaseFirestore.instance
+            .collection('users')
+            .doc(user?.uid)
+            .snapshots(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(color: Colors.orange),
+            );
+          }
+
+          if (snapshot.hasError) {
+            return const Center(
+              child: Text("Error loading profile image."),
+            );
+          }
+
+          if (snapshot.hasData && snapshot.data != null) {
+            var data = snapshot.data!.data() as Map<String, dynamic>;
+            String? profileImageUrl = data['profileImage'];
+
+            return ListView(
+              physics: const BouncingScrollPhysics(),
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Expanded(
+                        child: Text(
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                          textAlign: TextAlign.start,
+                          'Welcome, Admin! 👋 ',
+                          style: TextStyle(
+                            fontSize: 28,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => AdminProfileScreen(),
+                            ),
+                          );
+                        },
+                        child: CircleAvatar(
+                          radius: 25,
+                          backgroundImage: profileImageUrl != null
+                              ? NetworkImage(profileImageUrl)
+                              : null,
+                          child: profileImageUrl == null
+                              ? const Icon(
+                                  Icons.person,
+                                  size: 50,
+                                  color: Colors.orange,
+                                )
+                              : null,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: Text(
+                    'You can manage all foods, drinks and sweets items here. Use the options below to view, add, update or delete the restaurant categories.',
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.grey,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 5),
+                const Divider(indent: 50, endIndent: 50),
+                const SizedBox(height: 30),
+                const CategoryListView(categoryName: 'Foods'),
+                const SizedBox(height: 30),
+                const CategoryListView(categoryName: 'Drinks'),
+                const SizedBox(height: 30),
+                const CategoryListView(categoryName: 'Sweets'),
+                const SizedBox(height: 30),
+                const CategoryListView(categoryName: 'Popular Meals'),
+                const SizedBox(height: 20),
+              ],
+            );
+          }
+
+          return const Center(child: Text("No data available."));
+        },
       ),
     );
   }

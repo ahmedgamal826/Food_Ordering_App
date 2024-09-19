@@ -1,36 +1,59 @@
 import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:food_ordering_app/Screens/about_us_screen.dart';
+import 'package:food_ordering_app/Screens/account_management.dart';
 import 'package:food_ordering_app/Screens/admin_or_user_screen.dart';
 import 'package:food_ordering_app/Screens/bills_screen.dart';
 import 'package:food_ordering_app/Screens/favourite_screen.dart';
+import 'package:food_ordering_app/Screens/finanicial_managmenet_screen.dart';
+import 'package:food_ordering_app/Screens/food_manges.dart/orders_managment.dart';
 import 'package:food_ordering_app/Screens/my_payments_card.dart';
 import 'package:food_ordering_app/Screens/order_in_profile.dart';
+import 'package:food_ordering_app/auth/auth_services_admin.dart';
 import 'package:food_ordering_app/auth/auth_services_user.dart';
 import 'package:food_ordering_app/widgets/card_profile.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
-class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key});
+class AdminProfileScreen extends StatefulWidget {
+  const AdminProfileScreen({super.key});
 
   @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
+  State<AdminProfileScreen> createState() => _AdminProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
+class _AdminProfileScreenState extends State<AdminProfileScreen> {
   final ImagePicker imagePicker = ImagePicker();
   XFile? image;
   bool isLoading = false;
   String? profileImageUrl;
+  String? name;
+  String? email;
 
   @override
   void initState() {
     super.initState();
     _loadProfileImage();
+    getUserData();
+  }
+
+  void getUserData() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      DocumentSnapshot userDoc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid)
+          .get();
+
+      setState(() {
+        name = userDoc.get('name');
+        email = user.email;
+      });
+    }
   }
 
   Future<void> _loadProfileImage() async {
@@ -42,7 +65,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       User? user = FirebaseAuth.instance.currentUser;
       if (user != null) {
         final userDoc =
-            FirebaseFirestore.instance.collection('user_app').doc(user.uid);
+            FirebaseFirestore.instance.collection('users').doc(user.uid);
         final docSnapshot = await userDoc.get();
         final data = docSnapshot.data();
 
@@ -125,7 +148,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
       if (user != null) {
         final userDoc =
-            FirebaseFirestore.instance.collection('user_app').doc(user.uid);
+            FirebaseFirestore.instance.collection('users').doc(user.uid);
         await userDoc.set({
           'profileImage': imageUrl,
         }, SetOptions(merge: true));
@@ -160,9 +183,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final authService = Provider.of<AuthService>(context);
+    final adminauthService = Provider.of<AdminAuthService>(context);
     return StreamBuilder<User?>(
-      stream: authService.authStateChanges,
+      stream: adminauthService.authStateChanges,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Scaffold(
@@ -186,13 +209,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
           );
         } else {
           // Check if user is logged in
-          if (!authService.isLoggedIn) {
+          if (!adminauthService.isAdminLoggedIn) {
             return Scaffold(
               appBar: AppBar(
                 title: Text(''),
               ),
               body: const Center(
-                child: Text('User is not logged in'),
+                child: Text('Admin is not logged in'),
               ),
             );
           }
@@ -205,7 +228,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               backgroundColor: Colors.orange,
               centerTitle: true,
               title: const Text(
-                'My Profile',
+                'Admin Profile',
                 style: TextStyle(
                   fontSize: 25,
                   fontWeight: FontWeight.bold,
@@ -224,7 +247,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         onTap: pickImage,
                         child: Center(
                           child: CircleAvatar(
-                            radius: 70,
+                            radius: 100,
                             backgroundImage: image != null
                                 ? FileImage(File(image!.path))
                                 : profileImageUrl != null
@@ -241,7 +264,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                       ),
                       Positioned(
-                        top: 100,
+                        top: 160,
                         bottom: 0,
                         right: 130,
                         child: IconButton(
@@ -269,9 +292,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     textAlign: TextAlign.center,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-                    '${authService.userName ?? 'loading...'}',
+                    '${name ?? ''}',
+                    // '${adminauthService.adminEmail ?? 'loading...'}',
                     style: const TextStyle(
-                      fontSize: 25,
+                      fontSize: 30,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -282,47 +306,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     textAlign: TextAlign.center,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-                    '${authService.userEmail ?? 'loading...'}',
+                    '${email ?? ''}',
                     style: const TextStyle(
-                      fontSize: 20,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => MyPaymentCardsScreen(),
-                        ),
-                      );
-                    },
-                    child: CardProfile(
-                      prefixIcon: IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.payments,
-                          color: Colors.white,
-                          size: 27,
-                        ),
-                      ),
-                      suffixIcon: IconButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => MyPaymentCardsScreen(),
-                            ),
-                          );
-                        },
-                        icon: const Icon(
-                          Icons.arrow_forward_ios,
-                          color: Colors.white,
-                        ),
-                      ),
-                      title: 'My Payment Cards',
+                      fontSize: 22,
                     ),
                   ),
                   const SizedBox(
@@ -333,7 +319,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => BillsScreen(),
+                          builder: (context) => OrdersManagment(),
                         ),
                       );
                     },
@@ -341,7 +327,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       prefixIcon: IconButton(
                         onPressed: () {},
                         icon: const Icon(
-                          Icons.payment,
+                          Icons.shopping_cart_outlined,
                           color: Colors.white,
                           size: 27,
                         ),
@@ -351,7 +337,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => BillsScreen(),
+                              builder: (context) => OrdersManagment(),
                             ),
                           );
                         },
@@ -360,7 +346,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           color: Colors.white,
                         ),
                       ),
-                      title: 'Bills',
+                      title: 'Orders Management',
                     ),
                   ),
                   const SizedBox(
@@ -371,7 +357,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => OrderInProfileUser(),
+                          builder: (context) => FinancialScreen(),
                         ),
                       );
                     },
@@ -379,9 +365,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       prefixIcon: IconButton(
                         onPressed: () {},
                         icon: const Icon(
-                          Icons.card_travel_outlined,
+                          Icons.monetization_on,
                           color: Colors.white,
-                          size: 27,
+                          size: 30,
                         ),
                       ),
                       suffixIcon: IconButton(
@@ -389,7 +375,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => OrderInProfileUser(),
+                              builder: (context) => FinancialScreen(),
                             ),
                           );
                         },
@@ -398,7 +384,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           color: Colors.white,
                         ),
                       ),
-                      title: 'My Orders',
+                      title: 'Money Management',
                     ),
                   ),
                   const SizedBox(
@@ -409,7 +395,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => FavouriteScreen(),
+                          builder: (context) => AccountManagement(),
                         ),
                       );
                     },
@@ -417,9 +403,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       prefixIcon: IconButton(
                         onPressed: () {},
                         icon: const Icon(
-                          Icons.favorite_rounded,
+                          Icons.account_circle,
                           color: Colors.white,
-                          size: 27,
+                          size: 30,
                         ),
                       ),
                       suffixIcon: IconButton(
@@ -427,7 +413,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => FavouriteScreen(),
+                              builder: (context) => AccountManagement(),
                             ),
                           );
                         },
@@ -436,45 +422,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           color: Colors.white,
                         ),
                       ),
-                      title: 'Favourites',
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => AboutUsScreen(),
-                        ),
-                      );
-                    },
-                    child: CardProfile(
-                      prefixIcon: IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.info,
-                          color: Colors.white,
-                          size: 27,
-                        ),
-                      ),
-                      suffixIcon: IconButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => AboutUsScreen(),
-                            ),
-                          );
-                        },
-                        icon: const Icon(
-                          Icons.arrow_forward_ios,
-                          color: Colors.white,
-                        ),
-                      ),
-                      title: 'About us',
+                      title: 'Account Managment',
                     ),
                   ),
                   const SizedBox(

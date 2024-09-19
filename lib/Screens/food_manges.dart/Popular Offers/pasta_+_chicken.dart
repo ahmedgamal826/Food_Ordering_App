@@ -61,7 +61,7 @@ class _PastaAndChickenState extends State<PastaAndChicken> {
           iconTheme: const IconThemeData(color: Colors.white),
           backgroundColor: Colors.orange,
           title: const Text(
-            'Pasta + Chicken',
+            'Pasta and Chicken',
             style: TextStyle(
               fontSize: 25,
               fontWeight: FontWeight.bold,

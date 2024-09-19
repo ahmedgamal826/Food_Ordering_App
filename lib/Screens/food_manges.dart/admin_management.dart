@@ -1,137 +1,9 @@
-// import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:flutter/material.dart';
-// import 'package:food_ordering_app/Screens/food_manges.dart/add_food_page.dart';
-// import 'package:food_ordering_app/Screens/admin_or_user_screen.dart';
-// import 'package:food_ordering_app/widgets/category_list_view.dart';
-// import 'package:food_ordering_app/Screens/food_manges.dart/food_list.dart';
-// import 'package:food_ordering_app/widgets/search_textform_field.dart';
-
-// import '../Test Screens/admin_login_screen.dart';
-
-// class AdminManagement extends StatefulWidget {
-//   const AdminManagement({super.key});
-
-//   @override
-//   State<AdminManagement> createState() => _AdminManagementState();
-// }
-
-// class _AdminManagementState extends State<AdminManagement> {
-//   String searchQuery = '';
-//   bool isLoading = false;
-
-//   void updateSearchQuery(String query) {
-//     setState(() {
-//       searchQuery = query;
-//     });
-//   }
-
-//   // Future<void> logout(BuildContext context) async {
-//   //   CircularProgressIndicator(
-//   //     color: Colors.orange,
-//   //   );
-//   //   await FirebaseAuth.instance.signOut();
-//   //   Navigator.pushReplacement(
-//   //     context,
-//   //     MaterialPageRoute(
-//   //       builder: (context) => AdminOrUserScreen(),
-//   //     ),
-//   //   );
-//   // }
-
-//   Future<void> logout(BuildContext context) async {
-//     setState(() {
-//       isLoading = true; // عرض دائرة التحميل
-//     });
-
-//     await FirebaseAuth.instance.signOut();
-
-//     Navigator.pushReplacement(
-//       context,
-//       MaterialPageRoute(
-//         builder: (context) => AdminOrUserScreen(),
-//       ),
-//     ).whenComplete(() {
-//       setState(() {
-//         isLoading = false; // إخفاء دائرة التحميل
-//       });
-//     });
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         backgroundColor: Colors.orange,
-//         centerTitle: true,
-//         title: const Text(
-//           "Admin - Manage Foods",
-//           style: TextStyle(
-//             fontSize: 23,
-//             fontWeight: FontWeight.bold,
-//             color: Colors.white,
-//           ),
-//         ),
-//         actions: [
-//           IconButton(
-//             onPressed: () {
-//               logout(context);
-//             },
-//             icon: const Icon(
-//               Icons.logout,
-//             ),
-//           )
-//         ],
-//       ),
-//       body: ListView(
-//         physics: const BouncingScrollPhysics(),
-//         children: const [
-//           Padding(
-//             padding: EdgeInsets.all(20),
-//             child: Text(
-//               'Welcome Admin ',
-//               style: TextStyle(
-//                 fontSize: 25,
-//                 fontWeight: FontWeight.bold,
-//                 color: Colors.black,
-//               ),
-//             ),
-//           ),
-//           SizedBox(
-//             height: 50,
-//           ),
-//           CategoryListView(),
-//           SizedBox(
-//             height: 30,
-//           ),
-//           CategoryListView(),
-//           SizedBox(
-//             height: 30,
-//           ),
-//           CategoryListView(),
-//           SizedBox(
-//             height: 30,
-//           ),
-//           CategoryListView(),
-//           SizedBox(
-//             height: 30,
-//           ),
-//           CategoryListView()
-//         ],
-//       ),
-//     );
-//   }
-// }
-
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:food_ordering_app/Screens/about_us_screen.dart';
 import 'package:food_ordering_app/Screens/account_management.dart';
-import 'package:food_ordering_app/Screens/admin_or_user_screen.dart';
+import 'package:food_ordering_app/Screens/admin_profile_screen.dart';
 import 'package:food_ordering_app/Screens/food_manges.dart/admin_home_screen.dart';
-import 'package:food_ordering_app/Screens/food_manges.dart/order_managment.dart';
+import 'package:food_ordering_app/Screens/food_manges.dart/orders_managment.dart';
 import 'package:food_ordering_app/Screens/offers_screen.dart';
-import 'package:food_ordering_app/auth/profile_screen.dart';
-import 'package:food_ordering_app/widgets/category_list_view.dart';
 
 class AdminManagement extends StatefulWidget {
   const AdminManagement({super.key});
@@ -141,18 +13,14 @@ class AdminManagement extends StatefulWidget {
 }
 
 class _AdminManagementState extends State<AdminManagement> {
-  int _selectedIndex = 0; // Track the selected index
+  int _selectedIndex = 0;
 
   final List<Widget> _pages = [
-    AdminHomeScreen(),
-    OffersScreen(),
-    OrderManagment(),
-    // List of all orders with details such as customer name, ordered items, order status, and timestamps.
-    //Ability to update the status of orders (e.g., pending, in progress, completed, canceled).
-
+    const AdminHomeScreen(),
+    const OffersScreen(),
+    OrdersManagment(),
     AccountManagement(),
-    // Information on user accounts, including their order history and payment details.
-    const AboutUsScreen(),
+    const AdminProfileScreen()
   ];
 
   void _onItemTapped(int index) {

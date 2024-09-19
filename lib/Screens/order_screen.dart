@@ -1746,7 +1746,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:food_ordering_app/auth/auth_services.dart';
+import 'package:food_ordering_app/auth/auth_services_user.dart';
 import 'package:food_ordering_app/widgets/checkout_button.dart';
 import 'package:food_ordering_app/widgets/show_snack_bar.dart';
 import 'package:provider/provider.dart';

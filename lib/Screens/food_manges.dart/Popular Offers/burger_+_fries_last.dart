@@ -61,7 +61,7 @@ class _BurgerFriesLastState extends State<BurgerFriesLast> {
           iconTheme: const IconThemeData(color: Colors.white),
           backgroundColor: Colors.orange,
           title: const Text(
-            'burger and fries',
+            'Burger and Fries',
             style: TextStyle(
               fontSize: 25,
               fontWeight: FontWeight.bold,
