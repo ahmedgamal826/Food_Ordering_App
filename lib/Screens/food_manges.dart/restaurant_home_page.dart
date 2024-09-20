@@ -2,11 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:food_ordering_app/Screens/admin_or_user_screen.dart';
-import 'package:food_ordering_app/Screens/food_manges.dart/Foods%20Screens/burgers_screen.dart';
 import 'package:food_ordering_app/auth/auth_services_user.dart';
-import 'package:food_ordering_app/auth/profile_screen.dart';
-import 'package:food_ordering_app/widgets/category_list_view.dart';
-import 'package:food_ordering_app/widgets/map_screen.dart';
+import 'package:food_ordering_app/widgets/restaurant_list_view.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:provider/provider.dart';
 
@@ -117,94 +114,6 @@ class _RestaurantHomePageState extends State<RestaurantHomePage> {
     });
   }
 
-  // Show the address in a dialog
-  // showDialog(
-  //   context: context,
-  //   builder: (context) => AlertDialog(
-  //     title: const Text(
-  //       "Current Address",
-  //       style: TextStyle(
-  //         color: Colors.orange,
-  //       ),
-  //     ),
-  //     content: isLoading
-  //         ? const Center(
-  //             child: CircularProgressIndicator(
-  //               color: Colors.orange,
-  //             ),
-  //           )
-  //         : Text(
-  //             _address,
-  //             textAlign: TextAlign.center,
-  //             style: const TextStyle(
-  //               fontSize: 20,
-  //               fontWeight: FontWeight.bold,
-  //             ),
-  //           ),
-  //     actions: <Widget>[
-  //       Row(
-  //         mainAxisAlignment: MainAxisAlignment.center,
-  //         children: [
-  //           ElevatedButton(
-  //             style: ElevatedButton.styleFrom(backgroundColor: Colors.orange),
-  //             onPressed: () {
-  //               Navigator.of(context).pop();
-  //               _navigateToMap(context, _currentLocation);
-  //             },
-  //             child: const Text(
-  //               "View on Map",
-  //               style: TextStyle(
-  //                   fontSize: 17,
-  //                   color: Colors.white,
-  //                   fontWeight: FontWeight.bold),
-  //             ),
-  //           ),
-  //           const SizedBox(width: 10),
-  //           ElevatedButton(
-  //             style: ElevatedButton.styleFrom(backgroundColor: Colors.orange),
-  //             onPressed: () {
-  //               if (mounted) {
-  //                 Navigator.of(context).pop();
-  //                 // setState(() {
-  //                 //   // _updateAddress(_address); // Update the address here
-  //                 //   Navigator.of(context).pop(); // Close the dialog
-  //                 // });
-  //               }
-  //             },
-  //             child: const Text(
-  //               "OK",
-  //               style: TextStyle(
-  //                   fontSize: 17,
-  //                   color: Colors.white,
-  //                   fontWeight: FontWeight.bold),
-  //             ),
-  //           ),
-  //         ],
-  //       ),
-  //     ],
-  //   ),
-  // );
-
-  void _navigateToMap(
-      BuildContext context, loc.LocationData? locationData) async {
-    if (locationData == null) {
-      locationData = await _getCurrentLocation();
-    }
-
-    if (locationData == null) {
-      // Handle the error if location is not available
-      return;
-    }
-
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => MapScreen(
-          locationData: locationData!,
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final authService = Provider.of<AuthService>(context);
@@ -274,154 +183,10 @@ class _RestaurantHomePageState extends State<RestaurantHomePage> {
                     ),
                   ),
                 ),
-                body: ListView(
-                  physics: const BouncingScrollPhysics(),
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        left: 10,
-                      ),
-                      child: Row(
-                        children: [
-                          isLoading
-                              ? const CircularProgressIndicator(
-                                  color: Colors.orange,
-                                )
-                              : InkWell(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => ProfileScreen(),
-                                      ),
-                                    );
-                                  },
-                                  child: CircleAvatar(
-                                    radius: 35,
-                                    backgroundImage: profileImageUrl != null
-                                        ? NetworkImage(profileImageUrl)
-                                        : null,
-                                    child: profileImageUrl == null
-                                        ? const Icon(
-                                            Icons.person,
-                                            size: 50,
-                                            color: Colors.orange,
-                                          )
-                                        : null,
-                                  ),
-                                ),
-                          // const SizedBox(width: 10),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.only(left: 23, top: 30),
-                                  child: Text(
-                                    textAlign: TextAlign.center,
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                    '${authService.userName ?? 'Loading...'}',
-                                    style: const TextStyle(
-                                      fontSize: 24,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ),
-                                InkWell(
-                                  onTap: () async {
-                                    setState(() {
-                                      isLoading = true;
-                                    });
-                                    await getLocation(context, setState);
-                                    setState(() {
-                                      isLoading = false;
-                                    });
-                                  },
-                                  child: ListTile(
-                                    title: Row(
-                                      children: [
-                                        const Icon(
-                                          Icons.location_on,
-                                          size: 35,
-                                        ),
-                                        Expanded(
-                                          child: isLoading
-                                              ? const Padding(
-                                                  padding:
-                                                      EdgeInsets.only(left: 40),
-                                                  child: Text('loading...'),
-                                                )
-                                              : Text(
-                                                  textAlign: TextAlign.start,
-                                                  deliveryAddress,
-                                                  maxLines: 2,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.only(left: 15),
-                      child: Text(
-                        "Let's enjoy",
-                        style: TextStyle(
-                            fontSize: 30, fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.only(left: 15),
-                      child: Text(
-                        'tasty meals, drinks, and desserts!',
-                        style: TextStyle(fontSize: 23),
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    CategoryListView(
-                      categoryName: 'Foods',
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const BurgersScreen()),
-                        );
-                      },
-                    ),
-                    const SizedBox(height: 20),
-                    CategoryListView(
-                      categoryName: 'Drinks',
-                      onTap: () {
-                        Navigator.pushNamed(context, 'drinksScreen');
-                      },
-                    ),
-                    const SizedBox(height: 20),
-                    CategoryListView(
-                      categoryName: 'Sweets',
-                      onTap: () {
-                        Navigator.pushNamed(context, 'sweetsScreen');
-                      },
-                    ),
-                    const SizedBox(height: 20),
-                    CategoryListView(
-                      categoryName: 'Popular Meals',
-                      onTap: () {
-                        Navigator.pushNamed(context, 'offersScreen');
-                      },
-                    ),
-                  ],
+                body: RestaurantListView(
+                  authService: authService,
+                  deliveryAddress: deliveryAddress,
+                  profileImageUrl: profileImageUrl as String,
                 ),
               );
             },
