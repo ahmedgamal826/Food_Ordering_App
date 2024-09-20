@@ -2,12 +2,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:food_ordering_app/Screens/food_manges.dart/Drinks%20Screens/coffee.dart';
+import 'package:food_ordering_app/Screens/food_manges.dart/Drinks%20Screens/Guava_juice.dart';
+import 'package:food_ordering_app/Screens/food_manges.dart/Drinks%20Screens/apple_juice.dart';
+import 'package:food_ordering_app/Screens/food_manges.dart/Drinks%20Screens/cocktail_juice.dart';
 import 'package:food_ordering_app/Screens/food_manges.dart/Drinks%20Screens/lemonade_juice.dart';
+import 'package:food_ordering_app/Screens/food_manges.dart/Drinks%20Screens/mango_juice.dart';
 import 'package:food_ordering_app/Screens/food_manges.dart/Drinks%20Screens/orange_juice.dart';
 import 'package:food_ordering_app/Screens/food_manges.dart/Drinks%20Screens/pepsi.dart';
 import 'package:food_ordering_app/Screens/food_manges.dart/Drinks%20Screens/strawberry_juice.dart';
-import 'package:food_ordering_app/Screens/food_manges.dart/Drinks%20Screens/tea.dart';
 import 'package:food_ordering_app/Screens/food_manges.dart/Drinks%20Screens/water.dart';
 import 'package:food_ordering_app/Screens/food_manges.dart/Foods%20Screens/fish_screen.dart';
 import 'package:food_ordering_app/Screens/food_manges.dart/Foods%20Screens/fries_screen.dart';
@@ -159,13 +161,17 @@ class _FoodOrderingAppState extends State<FoodOrderingApp> {
         'pastaScreen': (context) => const PastaScreen(),
         'sushiScreen': (context) => const SushiScreen(),
         // Drinks
-        "coffee": (context) => const Coffee(),
-        'tea': (context) => const Tea(),
+        "GuavaJuice": (context) => const GuavaJuice(),
+        //'tea': (context) => const Tea(),
         'pepsi': (context) => const Pepsi(),
         'water': (context) => const Water(),
         'lemonadeJuice': (context) => const LemonadeJuice(),
         'strawberryJuice': (context) => const StrawberryJuice(),
         'orangeJuice': (context) => const OrangeJuice(),
+        'cocktailJuice': (context) => const CocktailJuice(),
+        'appleJuice': (context) => const AppleJuice(),
+        'mangoJuice': (context) => const MangoJuice(),
+
         // Sweets
         'iceCream': (context) => const IceCream(),
         'chocolateCake': (context) => const ChocolateCake(),

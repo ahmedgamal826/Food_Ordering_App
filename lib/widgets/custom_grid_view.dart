@@ -53,11 +53,11 @@ class CustomGridView extends StatelessWidget {
         final name = data['name'] as String? ?? '';
         final description = data['description'] as String? ?? '';
         final discountOffer = data['offerDiscount'] as String? ?? '';
-        final priceString = data['price'] as String ?? '0.0';
+        final priceString = data['price'] ?? 0.0;
         final price = double.tryParse(priceString) ?? 0.0;
-        final priceBeforeDiscountString = data['priceAfterDiscount'] ?? '0.0';
-        final priceBeforeDiscount =
-            double.tryParse(priceBeforeDiscountString) ?? 0.0;
+        final priceAfterDiscountString = data['priceAfterDiscount'] ?? '0.0';
+        final priceAfterDiscount =
+            double.tryParse(priceAfterDiscountString) ?? 0.0;
 
         return InkWell(
           onTap: () {
@@ -151,7 +151,7 @@ class CustomGridView extends StatelessWidget {
                           PriceAdminCategory(
                             collectionName: collectionName,
                             price: price,
-                            priceBeforeDiscount: priceBeforeDiscount,
+                            priceBeforeDiscount: priceAfterDiscount,
                           ),
                           const SizedBox(width: 10),
                           collectionName == 'offers_category'
@@ -195,7 +195,7 @@ class CustomGridView extends StatelessWidget {
                   isFavouriteList: isFavouriteList,
                   name: name,
                   price: price,
-                  priceBeforeDiscount: priceBeforeDiscount,
+                  priceBeforeDiscount: priceAfterDiscount,
                   discountOffer: discountOffer,
                 ),
         );

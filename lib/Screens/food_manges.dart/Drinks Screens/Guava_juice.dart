@@ -5,14 +5,14 @@ import 'package:food_ordering_app/Screens/food_manges.dart/add_food_page.dart';
 import 'package:food_ordering_app/Screens/food_manges.dart/food_list.dart';
 import 'package:food_ordering_app/widgets/search_textform_field.dart';
 
-class Coffee extends StatefulWidget {
-  const Coffee({super.key});
+class GuavaJuice extends StatefulWidget {
+  const GuavaJuice({super.key});
 
   @override
-  State<Coffee> createState() => _CoffeeState();
+  State<GuavaJuice> createState() => _CoffeeState();
 }
 
-class _CoffeeState extends State<Coffee> {
+class _CoffeeState extends State<GuavaJuice> {
   String searchQuery = '';
   bool isAdmin = false;
 
@@ -61,7 +61,7 @@ class _CoffeeState extends State<Coffee> {
         iconTheme: const IconThemeData(color: Colors.white),
         backgroundColor: Colors.orange,
         title: const Text(
-          'Coffee',
+          'Guava Juice',
           style: TextStyle(
             fontSize: 25,
             fontWeight: FontWeight.bold,
@@ -75,16 +75,16 @@ class _CoffeeState extends State<Coffee> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: SearchTextformField(
-              hintText: 'Search your coffee...',
+              hintText: 'Search your Guava Juice...',
               onChanged: updateSearchQuery, // Pass the function here
             ),
           ),
           Expanded(
             child: FoodList(
-              collectionName: 'coffee category',
+              collectionName: 'gauva juice',
               searchQuery: searchQuery, // Pass the searchQuery here
-              foodName: 'coffee',
-              foodDetailsRoute: 'coffee',
+              foodName: 'Guava Juice',
+              foodDetailsRoute: 'Guava Juice',
             ),
           ),
         ],
@@ -102,7 +102,7 @@ class _CoffeeState extends State<Coffee> {
                   context,
                   MaterialPageRoute(
                     builder: (context) => AddFoodPage(
-                      collectionName: 'coffee category',
+                      collectionName: 'gauva juice',
                       categoryName: 'Drinks',
                     ),
                   ),

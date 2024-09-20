@@ -1,21 +1,10 @@
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:food_ordering_app/Screens/about_us_screen.dart';
-import 'package:food_ordering_app/Screens/account_management.dart';
-import 'package:food_ordering_app/Screens/admin_or_user_screen.dart';
-import 'package:food_ordering_app/Screens/bills_screen.dart';
-import 'package:food_ordering_app/Screens/favourite_screen.dart';
-import 'package:food_ordering_app/Screens/finanicial_managmenet_screen.dart';
-import 'package:food_ordering_app/Screens/food_manges.dart/orders_managment.dart';
-import 'package:food_ordering_app/Screens/my_payments_card.dart';
-import 'package:food_ordering_app/Screens/order_in_profile.dart';
 import 'package:food_ordering_app/auth/auth_services_admin.dart';
-import 'package:food_ordering_app/auth/auth_services_user.dart';
-import 'package:food_ordering_app/widgets/card_profile.dart';
+import 'package:food_ordering_app/widgets/admin_profile_listView.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
@@ -112,7 +101,7 @@ class _AdminProfileScreenState extends State<AdminProfileScreen> {
       if (imageUrl != null) {
         await saveImageUrlToFirestore(imageUrl);
         setState(() {
-          profileImageUrl = imageUrl; // تحديث عنوان الصورة المحفوظة
+          profileImageUrl = imageUrl;
         });
       } else {
         print("Image upload failed.");
@@ -162,25 +151,6 @@ class _AdminProfileScreenState extends State<AdminProfileScreen> {
     }
   }
 
-  Future<void> logout(BuildContext context) async {
-    setState(() {
-      isLoading = true;
-    });
-
-    await FirebaseAuth.instance.signOut();
-
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => AdminOrUserScreen(),
-      ),
-    ).whenComplete(() {
-      setState(() {
-        isLoading = false;
-      });
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     final adminauthService = Provider.of<AdminAuthService>(context);
@@ -201,7 +171,7 @@ class _AdminProfileScreenState extends State<AdminProfileScreen> {
         } else if (snapshot.hasError) {
           return Scaffold(
             appBar: AppBar(
-              title: Text(''),
+              title: const Text(''),
             ),
             body: Center(
               child: Text('Error: ${snapshot.error}'),
@@ -237,223 +207,13 @@ class _AdminProfileScreenState extends State<AdminProfileScreen> {
               ),
             ),
             body: Center(
-              child: ListView(
-                // mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const SizedBox(height: 20),
-                  Stack(
-                    children: [
-                      InkWell(
-                        onTap: pickImage,
-                        child: Center(
-                          child: CircleAvatar(
-                            radius: 100,
-                            backgroundImage: image != null
-                                ? FileImage(File(image!.path))
-                                : profileImageUrl != null
-                                    ? NetworkImage(profileImageUrl!)
-                                    : null,
-                            child: image == null && profileImageUrl == null
-                                ? const Icon(
-                                    Icons.person,
-                                    size: 50,
-                                    color: Colors.orange,
-                                  )
-                                : null,
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        top: 160,
-                        bottom: 0,
-                        right: 130,
-                        child: IconButton(
-                          icon: const Icon(
-                            Icons.camera_alt,
-                            color: Colors.orange,
-                            size: 30,
-                          ),
-                          onPressed: pickImage,
-                        ),
-                      ),
-                    ],
-                  ),
-                  if (isLoading) const SizedBox(height: 20),
-                  if (isLoading)
-                    const Center(
-                      child: CircularProgressIndicator(
-                        color: Colors.orange,
-                      ),
-                    ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    textAlign: TextAlign.center,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    '${name ?? ''}',
-                    // '${adminauthService.adminEmail ?? 'loading...'}',
-                    style: const TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Text(
-                    textAlign: TextAlign.center,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    '${email ?? ''}',
-                    style: const TextStyle(
-                      fontSize: 22,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => OrdersManagment(),
-                        ),
-                      );
-                    },
-                    child: CardProfile(
-                      prefixIcon: IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.shopping_cart_outlined,
-                          color: Colors.white,
-                          size: 27,
-                        ),
-                      ),
-                      suffixIcon: IconButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => OrdersManagment(),
-                            ),
-                          );
-                        },
-                        icon: const Icon(
-                          Icons.arrow_forward_ios,
-                          color: Colors.white,
-                        ),
-                      ),
-                      title: 'Orders Management',
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => FinancialScreen(),
-                        ),
-                      );
-                    },
-                    child: CardProfile(
-                      prefixIcon: IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.monetization_on,
-                          color: Colors.white,
-                          size: 30,
-                        ),
-                      ),
-                      suffixIcon: IconButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => FinancialScreen(),
-                            ),
-                          );
-                        },
-                        icon: const Icon(
-                          Icons.arrow_forward_ios,
-                          color: Colors.white,
-                        ),
-                      ),
-                      title: 'Money Management',
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => AccountManagement(),
-                        ),
-                      );
-                    },
-                    child: CardProfile(
-                      prefixIcon: IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.account_circle,
-                          color: Colors.white,
-                          size: 30,
-                        ),
-                      ),
-                      suffixIcon: IconButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => AccountManagement(),
-                            ),
-                          );
-                        },
-                        icon: const Icon(
-                          Icons.arrow_forward_ios,
-                          color: Colors.white,
-                        ),
-                      ),
-                      title: 'Account Managment',
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  InkWell(
-                    onTap: () {
-                      logout(context);
-                    },
-                    child: CardProfile(
-                      prefixIcon: IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.logout,
-                          color: Colors.white,
-                          size: 27,
-                        ),
-                      ),
-                      suffixIcon: IconButton(
-                        onPressed: () {
-                          logout(context);
-                        },
-                        icon: const Icon(
-                          Icons.arrow_forward_ios,
-                          color: Colors.white,
-                        ),
-                      ),
-                      title: 'Logout',
-                    ),
-                  ),
-                ],
+              child: CustomProfileListView(
+                email: email,
+                image: image,
+                isLoading: isLoading,
+                name: name,
+                pickImage: pickImage,
+                profileImageUrl: profileImageUrl,
               ),
             ),
           );

@@ -1,34 +1,7 @@
-// import 'package:flutter/material.dart';
-
-// class FavouriteScreen extends StatelessWidget {
-//   FavouriteScreen({required this.favourites});
-
-//   List<Map<String, dynamic>> favourites = [];
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('Favourites'),
-//       ),
-//       body: ListView.builder(
-//         itemCount: favourites.length,
-//         itemBuilder: (context, index) {
-//           final item = favourites[index];
-//           return ListTile(
-//             title: Text(item['name']),
-//             subtitle: Text('\$${item['price']}'),
-//           );
-//         },
-//       ),
-//     );
-//   }
-// }
-
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:food_ordering_app/widgets/show_snack_bar.dart';
+import 'package:food_ordering_app/widgets/favourite_card.dart';
 
 class FavouriteScreen extends StatefulWidget {
   @override
@@ -45,21 +18,6 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
     super.initState();
     _loadFavourites();
   }
-
-  // Future<void> _loadFavourites() async {
-  //   final userId = _auth.currentUser?.uid;
-  //   if (userId != null) {
-  //     final snapshot = await _firestore
-  //         .collection('favourites')
-  //         .where('userId',
-  //             isEqualTo:
-  //                 userId) // Assuming 'userId' is the field that stores the user's ID
-  //         .get();
-  //     setState(() {
-  //       favouriteItems = snapshot.docs;
-  //     });
-  //   }
-  // }
 
   Future<void> _loadFavourites() async {
     final userId = _auth.currentUser?.uid;
@@ -133,86 +91,12 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                 final name = data['name'] as String? ?? '';
                 final price = data['price'] as double? ?? 0.0;
 
-                return Card(
-                  elevation: 5,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        height: 150,
-                        width: double.infinity,
-                        child: imageUrl.startsWith('http')
-                            ? ClipRRect(
-                                borderRadius: BorderRadius.circular(10),
-                                child: Image.network(
-                                  imageUrl,
-                                  fit: BoxFit.cover,
-                                ),
-                              )
-                            : const Center(
-                                child: Icon(
-                                  Icons.image,
-                                  size: 120,
-                                  color: Colors.black,
-                                ),
-                              ),
-                      ),
-                      Expanded(
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Text(
-                                textAlign: TextAlign.center,
-                                name,
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 8.0),
-                      Padding(
-                        padding: const EdgeInsets.all(8),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Text(
-                                '\$$price',
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.orange,
-                                ),
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 2,
-                              ),
-                            ),
-                            IconButton(
-                              onPressed: () {
-                                _removeFromFavourites(doc.id);
-                                customShowSnackBar(
-                                  context: context,
-                                  content: '$name is deleted from favourites',
-                                );
-                              },
-                              icon: const Icon(
-                                Icons.favorite,
-                                color: Colors.red,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
+                return FavouriteCard(
+                  docId: doc.id,
+                  imageUrl: imageUrl,
+                  name: name,
+                  onRemove: _removeFromFavourites,
+                  price: price,
                 );
               },
             ),

@@ -158,29 +158,30 @@ class _AddFoodPageState extends State<AddFoodPage> {
                       )
                     : const SizedBox(height: 10),
                 const SizedBox(height: 20),
-                TextFieledAddFood(
-                  controller: priceBeforeDiscountController,
-                  hinText: isDrinkCategory
-                      ? 'Drink Price'
-                      : isFoodCategory
-                          ? 'Food Price'
-                          : isOffersCategory
-                              ? 'Offer Price'
-                              : 'Sweet Price',
-                ),
-                const SizedBox(height: 20),
                 isOffersCategory
                     ? TextFieledAddFood(
-                        controller: priceController,
+                        controller: priceBeforeDiscountController,
                         hinText: isDrinkCategory
                             ? 'Drink Price'
                             : isFoodCategory
                                 ? 'Food Price'
                                 : isOffersCategory
-                                    ? 'Offer Price After Discount'
+                                    ? 'Offer Price Before Discount'
                                     : 'Sweet Price',
                       )
                     : const SizedBox(height: 20),
+                const SizedBox(height: 20),
+                TextFieledAddFood(
+                  controller: priceController,
+                  hinText: isDrinkCategory
+                      ? 'Drink Price'
+                      : isFoodCategory
+                          ? 'Food Price'
+                          : isOffersCategory
+                              ? 'Offer Price After Discount'
+                              : 'Sweet Price',
+                ),
+                const SizedBox(height: 20),
                 const SizedBox(height: 20),
                 const SizedBox(height: 20),
                 ElevatedButton(

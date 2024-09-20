@@ -5,14 +5,14 @@ import 'package:food_ordering_app/Screens/food_manges.dart/add_food_page.dart';
 import 'package:food_ordering_app/Screens/food_manges.dart/food_list.dart';
 import 'package:food_ordering_app/widgets/search_textform_field.dart';
 
-class OffersScreen extends StatefulWidget {
-  const OffersScreen({super.key});
+class MangoJuice extends StatefulWidget {
+  const MangoJuice({super.key});
 
   @override
-  State<OffersScreen> createState() => _OffersScreenState();
+  State<MangoJuice> createState() => _CoffeeState();
 }
 
-class _OffersScreenState extends State<OffersScreen> {
+class _CoffeeState extends State<MangoJuice> {
   String searchQuery = '';
   bool isAdmin = false;
 
@@ -58,11 +58,10 @@ class _OffersScreenState extends State<OffersScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Text(''),
         iconTheme: const IconThemeData(color: Colors.white),
         backgroundColor: Colors.orange,
         title: const Text(
-          'Offers',
+          'Mango Juice',
           style: TextStyle(
             fontSize: 25,
             fontWeight: FontWeight.bold,
@@ -76,21 +75,21 @@ class _OffersScreenState extends State<OffersScreen> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: SearchTextformField(
-              hintText: 'Search your offers...',
-              onChanged: updateSearchQuery,
+              hintText: 'Search your Mango Juice ...',
+              onChanged: updateSearchQuery, // Pass the function here
             ),
           ),
           Expanded(
             child: FoodList(
-              collectionName: 'offers_category',
-              searchQuery: searchQuery,
-              foodName: 'Offers',
-              foodDetailsRoute: '',
+              collectionName: 'mango juice',
+              searchQuery: searchQuery, // Pass the searchQuery here
+              foodName: 'Mango Juice',
+              foodDetailsRoute: 'Mango Juice',
             ),
           ),
         ],
       ),
-      floatingActionButton: isAdmin // Show button only if user is an admin
+      floatingActionButton: isAdmin
           ? FloatingActionButton(
               backgroundColor: Colors.orange,
               child: const Icon(
@@ -103,8 +102,8 @@ class _OffersScreenState extends State<OffersScreen> {
                   context,
                   MaterialPageRoute(
                     builder: (context) => AddFoodPage(
-                      collectionName: 'offers_category',
-                      categoryName: 'Offers',
+                      collectionName: 'mango juice',
+                      categoryName: 'Drinks',
                     ),
                   ),
                 );

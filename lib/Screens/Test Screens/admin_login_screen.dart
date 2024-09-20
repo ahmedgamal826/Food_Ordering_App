@@ -2,9 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:food_ordering_app/Screens/food_manges.dart/admin_management.dart';
-import 'package:food_ordering_app/widgets/auth_functions.dart';
 import 'package:food_ordering_app/widgets/custom_text_filed.dart';
-import 'package:food_ordering_app/widgets/login_with_google_button.dart';
 import 'package:food_ordering_app/widgets/show_snack_bar.dart';
 
 class AdminLoginScreen extends StatefulWidget {
@@ -162,64 +160,10 @@ class _AdminLoginScreenState extends State<AdminLoginScreen> {
     });
   }
 
-  // void signIn(String Name, String email, String password) async {
-  //   if (_formkey.currentState!.validate()) {
-  //     setState(() {
-  //       visible = true; // إظهار الـ CircularProgressIndicator
-  //     });
-
-  //     setState(() {
-  //       isLoading = true;
-  //     });
-
-  //     try {
-  //       UserCredential userCredential =
-  //           await FirebaseAuth.instance.signInWithEmailAndPassword(
-  //         email: email,
-  //         password: password,
-  //       );
-
-  //       // عند تسجيل الدخول بنجاح، تابع إلى الشاشة المناسبة
-  //       route();
-  //     } on FirebaseAuthException catch (e) {
-  //       // إخفاء الـ CircularProgressIndicator
-  //       setState(() {
-  //         visible = false;
-  //       });
-
-  //       // عرض رسائل الخطأ باستخدام Snackbar
-  //       if (e.code == 'user-not-found') {
-  //         customShowSnackBar(context: context, content: 'Email not found');
-  //         // ScaffoldMessenger.of(context).showSnackBar(
-  //         //   const SnackBar(content: Text('Email not found')),
-  //         // );
-  //       } else if (e.code == 'wrong-password') {
-  //         customShowSnackBar(context: context, content: 'Wrong password');
-  //         // ScaffoldMessenger.of(context).showSnackBar(
-  //         //   const SnackBar(content: Text('Wrong password')),
-  //         // );
-  //       } else {
-  //         customShowSnackBar(
-  //             context: context,
-  //             content: 'Error: This email does not belong to an admin.');
-  //         // ScaffoldMessenger.of(context).showSnackBar(
-  //         //   const SnackBar(
-  //         //     content: Text('Error: This email does not belong to an admin.'),
-  //         //   ),
-  //         // );
-  //       }
-  //     } finally {
-  //       setState(() {
-  //         isLoading = false; // Stop loading
-  //       });
-  //     }
-  //   }
-  // }
-
   void signIn(String name, String email, String password) async {
     if (_formkey.currentState!.validate()) {
       setState(() {
-        visible = true; // إظهار الـ CircularProgressIndicator
+        visible = true;
       });
 
       setState(() {

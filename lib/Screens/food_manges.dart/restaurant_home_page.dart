@@ -186,7 +186,7 @@ class _RestaurantHomePageState extends State<RestaurantHomePage> {
                 body: RestaurantListView(
                   authService: authService,
                   deliveryAddress: deliveryAddress,
-                  profileImageUrl: profileImageUrl as String,
+                  profileImageUrl: profileImageUrl as String? ?? '',
                 ),
               );
             },

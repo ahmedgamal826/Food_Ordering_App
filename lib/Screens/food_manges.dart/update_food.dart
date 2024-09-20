@@ -192,31 +192,36 @@ class _UpdateFoodState extends State<UpdateFood> {
                                     : 'Food Price',
                       )
                     : const SizedBox(height: 20),
-                isOffersCategory ? const SizedBox(height: 20) : SizedBox(),
-                TextFieledAddFood(
-                  controller: priceBeforeDiscountController,
-                  hinText: isDrinkCategory
-                      ? 'Drink Price'
-                      : isSweetCategory
-                          ? 'Sweet Price'
-                          : isOffersCategory
-                              ? 'Offer Price'
-                              : 'Food Price',
+                const SizedBox(
+                  height: 20,
                 ),
-                const SizedBox(height: 20),
-                isOffersCategory
+                isOffersCategory /////////
                     ? TextFieledAddFood(
-                        controller: priceController,
+                        controller: priceBeforeDiscountController,
                         hinText: isDrinkCategory
                             ? 'Drink Price'
                             : isSweetCategory
                                 ? 'Sweet Price'
                                 : isOffersCategory
-                                    ? 'offer Price After Discount'
+                                    ? 'offer Price Before Discount'
                                     : 'Food Price',
                       )
                     : const SizedBox(height: 20),
                 isOffersCategory ? const SizedBox(height: 20) : SizedBox(),
+                TextFieledAddFood(
+                  controller: priceController,
+                  hinText: isDrinkCategory
+                      ? 'Drink Price'
+                      : isSweetCategory
+                          ? 'Sweet Price'
+                          : isOffersCategory
+                              ? 'Offer Price After Discount'
+                              : 'Food Price',
+                ),
+                const SizedBox(height: 20),
+                isOffersCategory
+                    ? const SizedBox(height: 20)
+                    : const SizedBox(),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.orange,

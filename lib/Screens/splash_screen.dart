@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food_ordering_app/Screens/Test%20Screens/register.dart';
 import 'package:food_ordering_app/Screens/admin_or_user_screen.dart';
-import 'package:food_ordering_app/Screens/home_page.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

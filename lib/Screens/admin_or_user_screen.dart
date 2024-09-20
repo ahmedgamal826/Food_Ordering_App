@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_ordering_app/Screens/Test%20Screens/admin_login_screen.dart';
-import 'package:food_ordering_app/Screens/Test%20Screens/register.dart';
-import 'package:food_ordering_app/widgets/map_screen.dart';
 import 'package:food_ordering_app/auth/login_or_register.dart';
-import 'package:food_ordering_app/auth/login_page.dart';
 import 'package:food_ordering_app/widgets/custom_button.dart';
 
 class AdminOrUserScreen extends StatelessWidget {
@@ -49,8 +46,7 @@ class AdminOrUserScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (_) => LoginOrRegister()),
-                  //MaterialPageRoute(builder: (_) => GetLocation()),
+                  MaterialPageRoute(builder: (_) => const LoginOrRegister()),
                 );
               },
             ),
