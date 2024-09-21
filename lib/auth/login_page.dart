@@ -188,26 +188,32 @@ class _LoginPageState extends State<LoginPage> {
                               const SizedBox(
                                 height: 10,
                               ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Text(
-                                    "don't have an account ?",
-                                    style: TextStyle(fontSize: 20),
-                                  ),
-                                  const SizedBox(
-                                    width: 4,
-                                  ),
-                                  GestureDetector(
-                                    onTap: widget.onTap,
-                                    child: const Text(
-                                      "Register now",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 20),
+                              SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const Text(
+                                      "don't have an account ?",
+                                      style: TextStyle(fontSize: 20),
                                     ),
-                                  ),
-                                ],
+                                    const SizedBox(
+                                      width: 4,
+                                    ),
+                                    InkWell(
+                                      onTap: widget.onTap,
+                                      child: const Text(
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 2,
+                                        "Register now",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                               const SizedBox(
                                 height: 20,

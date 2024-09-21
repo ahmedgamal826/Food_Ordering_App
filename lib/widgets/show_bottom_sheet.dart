@@ -155,119 +155,125 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                   ],
                 ),
                 const SizedBox(height: 30),
-                Row(
-                  children: [
-                    const Text(
-                      'Quantity',
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.orange,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(width: widthScreen * 0.35),
-                    InkWell(
-                      onTap: () {
-                        setState(() {
-                          if (counter > 0) {
-                            counter--;
-                            calculateTotalPrice(widget.price);
-                          }
-                        });
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.orange,
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        width: 50,
-                        height: 30,
-                        child: const Align(
-                          alignment: Alignment.center,
-                          child: Text(
-                            '-',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 23,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    Text(
-                      '$counter',
-                      style: const TextStyle(
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    InkWell(
-                      onTap: () {
-                        setState(() {
-                          counter++;
-                          calculateTotalPrice(widget.price);
-                        });
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.orange,
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        width: 50,
-                        height: 30,
-                        child: const Align(
-                          alignment: Alignment.center,
-                          child: Text(
-                            '+',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 23,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20),
-                Row(
-                  children: [
-                    const Padding(
-                      padding: EdgeInsets.only(left: 5),
-                      child: Text(
-                        'Size',
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      const Text(
+                        'Quantity',
                         style: TextStyle(
                           fontSize: 20,
                           color: Colors.orange,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                    ),
-                    SizedBox(width: widthScreen * 0.2),
-                    Wrap(
-                      spacing: 5,
-                      children: widget.sizeMultipliers.keys.map(
-                        (size) {
-                          return ChoiceChip(
-                            label: Text(size),
-                            selected: selectedSize == size,
-                            onSelected: (selected) {
-                              setState(() {
-                                selectedSize = size;
-                                calculateTotalPrice(widget.price);
-                              });
-                            },
-                            selectedColor: Colors.orange,
-                            backgroundColor: Colors.grey[200],
-                          );
+                      SizedBox(width: widthScreen * 0.35),
+                      InkWell(
+                        onTap: () {
+                          setState(() {
+                            if (counter > 0) {
+                              counter--;
+                              calculateTotalPrice(widget.price);
+                            }
+                          });
                         },
-                      ).toList(),
-                    ),
-                  ],
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.orange,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          width: 50,
+                          height: 30,
+                          child: const Align(
+                            alignment: Alignment.center,
+                            child: Text(
+                              '-',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 23,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      Text(
+                        '$counter',
+                        style: const TextStyle(
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      InkWell(
+                        onTap: () {
+                          setState(() {
+                            counter++;
+                            calculateTotalPrice(widget.price);
+                          });
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.orange,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          width: 50,
+                          height: 30,
+                          child: const Align(
+                            alignment: Alignment.center,
+                            child: Text(
+                              '+',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 23,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 20),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.only(left: 5),
+                        child: Text(
+                          'Size',
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.orange,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: widthScreen * 0.15),
+                      Wrap(
+                        spacing: 5,
+                        children: widget.sizeMultipliers.keys.map(
+                          (size) {
+                            return ChoiceChip(
+                              label: Text(size),
+                              selected: selectedSize == size,
+                              onSelected: (selected) {
+                                setState(() {
+                                  selectedSize = size;
+                                  calculateTotalPrice(widget.price);
+                                });
+                              },
+                              selectedColor: Colors.orange,
+                              backgroundColor: Colors.grey[200],
+                            );
+                          },
+                        ).toList(),
+                      ),
+                    ],
+                  ),
                 ),
                 const SizedBox(height: 20),
                 const Padding(

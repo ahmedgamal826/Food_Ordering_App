@@ -36,64 +36,74 @@ class UserCategoryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double cardHeight =
+        MediaQuery.of(context).size.height * 0.25; // 25% من ارتفاع الشاشة
+
     return Card(
       elevation: 5,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          collectionName == 'offers_category'
-              ? DiscountedImage(
-                  discountOffer: discountOffer,
-                  imageUrl: imageUrl,
-                )
-              : CustomImageOffers(
-                  imageUrl: imageUrl,
-                ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              CustomTextWidget(name: name),
-            ],
-          ),
-          const SizedBox(
-            height: 5,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 8),
-            child: Row(
+      child: Container(
+        height: cardHeight, // تعيين ارتفاع الـ Card
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Text('dfgdffd'),
+            // Padding(
+            //   padding: const EdgeInsets.all(8.0),
+            //   child: Text(
+            //     'dfgdgf',
+            //     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            //   ),
+            // ),
+            Expanded(
+              child: collectionName == 'offers_category'
+                  ? DiscountedImage(
+                      discountOffer: discountOffer,
+                      imageUrl: imageUrl,
+                    )
+                  : CustomImageOffers(
+                      imageUrl: imageUrl,
+                    ),
+            ),
+            Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                PriceBeforeDiscountWidget(
-                  collectionName: collectionName,
-                  price: price,
-                  priceBeforeDiscount: priceBeforeDiscount,
-                ),
-                collectionName == 'offers_category'
-                    ? PriceAfterDiscount(
-                        price: price,
-                      )
-                    : const Text(''),
-                collectionName != 'offers_category'
-                    ? StatefulBuilder(
-                        builder: (context, setState) {
-                          return FavouriteIconButton(
-                            description: description,
-                            docId: docId,
-                            imageUrl: imageUrl,
-                            isFavourite: isFavouriteList[index],
-                            name: name,
-                            price: price,
-                          );
-                        },
-                      )
-                    : const Text('')
+                CustomTextWidget(name: name),
               ],
             ),
-          ),
-        ],
+            const SizedBox(height: 5),
+            Padding(
+              padding: const EdgeInsets.only(left: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  PriceBeforeDiscountWidget(
+                    collectionName: collectionName,
+                    price: price,
+                    priceBeforeDiscount: priceBeforeDiscount,
+                  ),
+                  if (collectionName == 'offers_category')
+                    PriceAfterDiscount(price: price),
+                  if (collectionName != 'offers_category')
+                    StatefulBuilder(
+                      builder: (context, setState) {
+                        return FavouriteIconButton(
+                          description: description,
+                          docId: docId,
+                          imageUrl: imageUrl,
+                          isFavourite: isFavouriteList[index],
+                          name: name,
+                          price: price,
+                        );
+                      },
+                    ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
