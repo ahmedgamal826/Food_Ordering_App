@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:food_ordering_app/Screens/food_manges.dart/user_home_page.dart';
+import 'package:intl/intl.dart';
 
 class InvoiceDialog extends StatelessWidget {
   final String customerName;
@@ -25,6 +26,8 @@ class InvoiceDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final currentTime =
+        DateFormat('yyyy-MM-dd – hh:mm a').format(DateTime.now());
     return AlertDialog(
       title: const Text(
         'Invoice',
@@ -38,7 +41,7 @@ class InvoiceDialog extends StatelessWidget {
           children: <Widget>[
             _buildRow('Customer Name: ', customerName),
             const SizedBox(height: 10),
-            _buildRow('Card Type: ', 'Selected Card Name'), // Replace as needed
+            _buildRow('Order Date: ', currentTime),
             const SizedBox(height: 10),
             _buildRow('Delivery Address: ', deliveryAddress),
             const SizedBox(height: 10),

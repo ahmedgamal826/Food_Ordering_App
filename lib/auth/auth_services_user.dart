@@ -115,7 +115,10 @@ class AuthService extends ChangeNotifier {
   // Sign in user with Google
   Future<UserCredential> signInWithGoogle() async {
     try {
-      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+      final googleUser =
+          await GoogleSignIn(scopes: ['profile', 'email']).signIn();
+
+      // final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
 
       if (googleUser == null) {
         throw Exception('Google sign in was aborted');
@@ -154,7 +157,7 @@ class AuthService extends ChangeNotifier {
 
       return userCredential;
     } on FirebaseAuthException catch (e) {
-      throw Exception(e.code);
+      throw Exception('Error, please try again!');
     }
   }
 
