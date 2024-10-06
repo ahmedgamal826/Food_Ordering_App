@@ -17,7 +17,7 @@ class AuthGate extends StatelessWidget {
           if (snapshot.hasData) {
             return UserHomePage();
           } else {
-            return const SplashScreen();
+            return SplashScreen();
           }
         },
       ),

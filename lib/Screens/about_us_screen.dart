@@ -42,7 +42,7 @@ class AboutUsScreen extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             const Text(
-              'At Foodies Delivery, we are dedicated to providing you with the best food delivery experience. Our team is passionate about delivering high-quality meals from your favorite local restaurants right to your doorstep.',
+              'At Foodies Delivery, we are dedicated to providing you with the best food delivery experience. Our team is passionate about delivering high-quality meals from our local restaurant right to your doorstep.',
               style: TextStyle(
                 fontSize: 16,
                 color: Colors.black87,
@@ -96,7 +96,7 @@ class AboutUsScreen extends StatelessWidget {
             const Text(
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
-              'Email: ahmedelnemrtiger2468@gmail.com',
+              'Email: ahmedelnemrtiger592@gmail.com',
               style: TextStyle(
                 fontSize: 16,
                 color: Colors.black87,

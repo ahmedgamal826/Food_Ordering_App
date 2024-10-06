@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:food_ordering_app/Screens/about_us_screen.dart';
 import 'package:food_ordering_app/Screens/account_management.dart';
 import 'package:food_ordering_app/Screens/admin_or_user_screen.dart';
 import 'package:food_ordering_app/Screens/finanicial_managmenet_screen.dart';
@@ -55,6 +56,7 @@ class _CustomProfileListViewState extends State<CustomProfileListView> {
   @override
   Widget build(BuildContext context) {
     return ListView(
+      physics: const BouncingScrollPhysics(),
       children: [
         const SizedBox(height: 20),
         Stack(
@@ -155,6 +157,20 @@ class _CustomProfileListViewState extends State<CustomProfileListView> {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => AccountManagement()),
+            );
+          },
+        ),
+        const SizedBox(height: 10),
+        _buildCard(
+          context,
+          title: 'About Us',
+          icon: Icons.logout,
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => AboutUsScreen(),
+              ),
             );
           },
         ),

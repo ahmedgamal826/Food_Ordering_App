@@ -88,9 +88,6 @@ class _OrderScreenState extends State<OrderScreen> {
           items[itemIndex]['totalPrice'] = totalPrice;
 
           await cartRef.update({'items': items});
-          // ScaffoldMessenger.of(context).showSnackBar(
-          //   SnackBar(content: Text("Item updated")),
-          // );
         }
       }
     } catch (e) {

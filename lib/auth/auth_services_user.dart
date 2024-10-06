@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthService extends ChangeNotifier {
@@ -160,6 +161,48 @@ class AuthService extends ChangeNotifier {
       throw Exception('Error, please try again!');
     }
   }
+
+  Future<UserCredential> signInWithFacebook() async {
+    // Trigger the sign-in flow
+    final LoginResult loginResult = await FacebookAuth.instance.login();
+
+    // Create a credential from the access token
+    final OAuthCredential facebookAuthCredential =
+        FacebookAuthProvider.credential(loginResult.accessToken!.tokenString);
+
+    // Once signed in, return the UserCredential
+    return FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
+  }
+
+  // Future<UserCredential?> signInWithFacebook() async {
+  //   try {
+  //     // Trigger the sign-in flow
+  //     final LoginResult loginResult = await FacebookAuth.instance.login();
+
+  //     // Check if the login was successful
+  //     if (loginResult.status == LoginStatus.success) {
+  //       // Create a credential from the access token
+  //       final AccessToken accessToken = loginResult.accessToken!;
+
+  //       // Use the access token to create a credential
+  //       final OAuthCredential facebookAuthCredential =
+  //           FacebookAuthProvider.credential(accessToken.tokenString);
+
+  //       // Once signed in, return the UserCredential
+  //       return await FirebaseAuth.instance
+  //           .signInWithCredential(facebookAuthCredential);
+  //     } else if (loginResult.status == LoginStatus.cancelled) {
+  //       print('Login cancelled by user');
+  //       return null; // Handle the cancellation as appropriate
+  //     } else {
+  //       print('Facebook login failed: ${loginResult.message}');
+  //       return null; // Handle the error accordingly
+  //     }
+  //   } catch (e) {
+  //     print('Error during Facebook sign in: $e');
+  //     return null; // Handle the error accordingly
+  //   }
+  // }
 
   // Fetch user data from Firestore
   Future<void> _fetchUserData(String uid) async {

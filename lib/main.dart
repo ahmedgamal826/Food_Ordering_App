@@ -2,6 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:food_ordering_app/Cubit/favourites%20cubit/favourites_cubit.dart';
+import 'package:food_ordering_app/Cubit/location%20cubit/location_cubit.dart';
 import 'package:food_ordering_app/Screens/food_manges.dart/Drinks%20Screens/Guava_juice.dart';
 import 'package:food_ordering_app/Screens/food_manges.dart/Drinks%20Screens/apple_juice.dart';
 import 'package:food_ordering_app/Screens/food_manges.dart/Drinks%20Screens/cocktail_juice.dart';
@@ -33,7 +36,9 @@ import 'package:food_ordering_app/Screens/food_manges.dart/Foods%20Screens/burge
 import 'package:food_ordering_app/Screens/food_manges.dart/Foods%20Screens/chicken_screen.dart';
 import 'package:food_ordering_app/Screens/food_manges.dart/Foods%20Screens/pizza_screen.dart';
 import 'package:food_ordering_app/Screens/food_manges.dart/user_home_page.dart';
-import 'package:food_ordering_app/Screens/radio_button.dart';
+import 'package:food_ordering_app/animation_screen.dart';
+import 'package:food_ordering_app/components/loading_dots.dart';
+import 'package:food_ordering_app/widgets/radio_button.dart';
 import 'package:food_ordering_app/Screens/splash_screen.dart';
 import 'package:food_ordering_app/auth/auth_services_admin.dart';
 import 'package:food_ordering_app/auth/auth_services_user.dart';
@@ -49,6 +54,12 @@ void main() async {
 
   runApp(MultiProvider(
     providers: [
+      BlocProvider<FavouriteCubit>(
+        create: (context) => FavouriteCubit(),
+      ),
+      BlocProvider<LocationCubit>(
+        create: (context) => LocationCubit(),
+      ),
       ChangeNotifierProvider(
         create: (context) => AuthService(),
       ),
@@ -88,7 +99,9 @@ class _FoodOrderingAppState extends State<FoodOrderingApp> {
     User? user = FirebaseAuth.instance.currentUser;
 
     if (user == null) {
-      return const SplashScreen();
+      return const AnimationScreen(
+        role: '',
+      );
     }
 
     DocumentSnapshot userDoc = await FirebaseFirestore.instance
@@ -104,14 +117,18 @@ class _FoodOrderingAppState extends State<FoodOrderingApp> {
     if (userDoc.exists) {
       String role = userDoc.get('rool');
       if (role == 'user') {
-        return UserHomePage(); // User home page
+        return AnimationScreen(
+          role: role,
+        ); // User home page
       }
     }
 
     if (adminDoc.exists) {
       String role = adminDoc.get('rool');
       if (role == 'admin') {
-        return AdminManagement(); // Admin home page
+        return AnimationScreen(
+          role: role,
+        ); // Admin home page
       }
     }
 
@@ -126,15 +143,18 @@ class _FoodOrderingAppState extends State<FoodOrderingApp> {
         future: _homePage,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(
-                color: Colors.orange,
+            return Scaffold(
+              backgroundColor: Colors.white,
+              body: Center(
+                child: LoadingDots(),
               ),
             );
           } else if (snapshot.hasData) {
             return snapshot.data!;
           } else {
-            return const SplashScreen();
+            return const AnimationScreen(
+              role: '',
+            );
           }
         },
       ),

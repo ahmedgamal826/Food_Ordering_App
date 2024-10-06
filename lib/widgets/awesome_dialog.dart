@@ -10,3 +10,14 @@ void awesomeDialog({required BuildContext context, required String content}) {
     desc: content,
   ).show();
 }
+
+void SuccessAwesomeDialog(
+    {required BuildContext context, required String content}) {
+  AwesomeDialog(
+    context: context,
+    dialogType: DialogType.success,
+    //animType: AnimType.rightSlide,
+    title: 'Error',
+    desc: content,
+  ).show();
+}

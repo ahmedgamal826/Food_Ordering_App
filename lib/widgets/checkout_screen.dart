@@ -60,11 +60,11 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             builder: (BuildContext context, StateSetter setState) {
               return Column(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(20),
+                  const Padding(
+                    padding: EdgeInsets.all(20),
                     child: Align(
                       alignment: Alignment.centerLeft,
-                      child: const Text(
+                      child: Text(
                         'Select Payment Method',
                         style: TextStyle(
                           fontSize: 23,

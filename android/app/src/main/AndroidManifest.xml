@@ -6,7 +6,7 @@
 
     <application
         android:label="Food Delivery App"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/launcher_icon"
         android:name="${applicationName}">
 
         <meta-data

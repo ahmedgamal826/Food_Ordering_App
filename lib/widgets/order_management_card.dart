@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:food_ordering_app/functions/showDeleteDialog_orderManagement.dart';
+import 'package:food_ordering_app/widgets/showDeleteDialog_orderManagement.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class OrderManagementCard extends StatelessWidget {
   final String userName;
@@ -23,6 +24,16 @@ class OrderManagementCard extends StatelessWidget {
     required this.getOrderCount,
     this.pendingDeleteDocumentId,
   }) : super(key: key);
+
+  void _openMap(String address) async {
+    final Uri url = Uri.parse(
+        'https://www.google.com/maps/search/?api=1&query=${Uri.encodeComponent(address)}');
+    if (await canLaunch(url.toString())) {
+      await launch(url.toString());
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,13 +67,29 @@ class OrderManagementCard extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Text(
-                    'Address: ${order['deliveryAddress'] ?? 'Unknown'}',
-                    style: const TextStyle(
-                      fontSize: 18,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          'Address: ${order['deliveryAddress'] ?? 'Unknown'}',
+                          style: const TextStyle(
+                            fontSize: 18,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          final address = order['deliveryAddress'] ?? 'Unknown';
+                          _openMap(address); // Open map with the address
+                        },
+                        icon: const Icon(
+                          size: 35,
+                          Icons.location_pin,
+                        ),
+                      ),
+                    ],
                   ),
                   const SizedBox(height: 5),
                 ],

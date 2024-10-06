@@ -59,6 +59,8 @@ class _AccountManagementState extends State<AccountManagement> {
             itemCount: users.length,
             itemBuilder: (context, index) {
               final user = users[index].data() as Map<String, dynamic>;
+
+              final userImage = user['profile_picture'] as String? ?? '';
               final userName = user['name'] as String? ?? 'No Name';
               final userEmail = user['email'] as String? ?? 'No Email';
               final Timestamp? loginTimestamp = user['loginTimestamp'];
@@ -74,13 +76,33 @@ class _AccountManagementState extends State<AccountManagement> {
                 elevation: 4.0,
                 child: ListTile(
                   contentPadding: const EdgeInsets.all(16.0),
-                  title: Text(
-                    userName,
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
+                  title: Column(
+                    children: [
+                      userImage.isNotEmpty
+                          ? Image.network(
+                              userImage,
+                              errorBuilder: (context, error, stackTrace) {
+                                return const Icon(
+                                  Icons.person,
+                                  size: 80,
+                                  color: Colors.white,
+                                );
+                              },
+                            )
+                          : const Icon(
+                              Icons.person,
+                              size: 50,
+                              color: Colors.white,
+                            ),
+                      Text(
+                        userName,
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
                   ),
                   subtitle: Text(
                     '$userEmail\nLogin Date: $loginDate',

@@ -27,11 +27,21 @@ class _CustomTextFiledState extends State<CustomTextFiled> {
     return Align(
       alignment: Alignment.center,
       child: TextFormField(
+        keyboardType: widget.hintText == 'Enter your Phone Number'
+            ? TextInputType.number
+            : widget.hintText == 'Enter your Email'
+                ? TextInputType.emailAddress
+                : TextInputType.name,
         controller: widget.controller,
         cursorColor: Colors.black,
         validator: (value) {
           if (value!.isEmpty) {
             return widget.validatorMessage;
+          }
+          // تحقق من طول رقم الهاتف
+          if (widget.hintText == 'Enter your Phone Number' &&
+              value.length > 11) {
+            return 'Phone number cannot be more than 11 digits';
           }
           return null;
         },
@@ -41,7 +51,10 @@ class _CustomTextFiledState extends State<CustomTextFiled> {
           hintStyle: const TextStyle(color: Colors.white),
           filled: true,
           fillColor: Colors.orange,
-          border: const OutlineInputBorder(borderSide: BorderSide.none),
+          border: OutlineInputBorder(
+            borderSide: BorderSide.none,
+            borderRadius: BorderRadius.circular(10),
+          ),
           focusedBorder: const OutlineInputBorder(
             borderSide: BorderSide(color: Colors.white),
           ),
@@ -68,10 +81,15 @@ class _CustomTextFiledState extends State<CustomTextFiled> {
                       Icons.person,
                       color: Colors.white,
                     )
-                  : const Icon(
-                      Icons.lock,
-                      color: Colors.white,
-                    ),
+                  : widget.hintText == 'Enter your Phone Number'
+                      ? const Icon(
+                          Icons.phone,
+                          color: Colors.white,
+                        )
+                      : const Icon(
+                          Icons.lock,
+                          color: Colors.white,
+                        ),
         ),
       ),
     );

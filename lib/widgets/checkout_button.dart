@@ -6,6 +6,7 @@ import 'package:food_ordering_app/widgets/address_dialog.dart';
 import 'package:food_ordering_app/widgets/build_delivery_address.dart';
 import 'package:food_ordering_app/widgets/card_list_item.dart';
 import 'package:food_ordering_app/widgets/credit_card_list.dart';
+import 'package:food_ordering_app/widgets/custom_check_button.dart';
 import 'package:food_ordering_app/widgets/delivery_dialog_error.dart';
 import 'package:food_ordering_app/widgets/error_card_dialog.dart';
 import 'package:food_ordering_app/widgets/invoice_dialog.dart';
@@ -351,57 +352,13 @@ class _CheckoutButtonState extends State<CheckoutButton> {
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
-
     final FirebaseFirestore _firestore = FirebaseFirestore.instance;
     final FirebaseAuth _auth = FirebaseAuth.instance;
 
     final userId = _auth.currentUser?.uid;
 
-    return Container(
-      width: screenWidth,
-      decoration: BoxDecoration(
-        color: Colors.orange,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: MaterialButton(
-        elevation: 5,
-        onPressed: () async {
-          final userId = FirebaseAuth.instance.currentUser?.uid;
-
-          if (userId == null) {
-            // Handle the case when userId is null
-            customShowSnackBar(
-              context: context,
-              content: "User is not logged in.",
-            );
-            return;
-          }
-          final cartRef =
-              FirebaseFirestore.instance.collection('carts').doc(userId);
-          final cartSnapshot = await cartRef.get();
-          final cartData = cartSnapshot.data() as Map<String, dynamic>?;
-
-          if (cartData != null) {
-            _showCheckoutBottomSheet(context, userId);
-          } else {
-            customShowSnackBar(
-                context: context, content: 'No Products in Cart');
-          }
-        },
-        child: const Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Text(
-            'Checkout',
-            style: TextStyle(
-              fontSize: 25,
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-      ),
+    return CustomCheckButton(
+      showCheckoutBottomSheet: _showCheckoutBottomSheet,
     );
   }
 }

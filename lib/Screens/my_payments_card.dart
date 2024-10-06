@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/services.dart';
 import 'package:food_ordering_app/widgets/add_card_form.dart';
 import 'package:food_ordering_app/widgets/card_list_item.dart';
 import 'package:food_ordering_app/widgets/confirm_remove_card.dart';

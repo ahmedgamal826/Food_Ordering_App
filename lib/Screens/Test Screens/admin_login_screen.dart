@@ -2,6 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:food_ordering_app/Screens/food_manges.dart/admin_management.dart';
+import 'package:food_ordering_app/components/clip_path_widget.dart';
+import 'package:food_ordering_app/components/loading_dots.dart';
+import 'package:food_ordering_app/widgets/custom_button.dart';
 import 'package:food_ordering_app/widgets/custom_text_filed.dart';
 import 'package:food_ordering_app/widgets/show_snack_bar.dart';
 
@@ -24,33 +27,39 @@ class _AdminLoginScreenState extends State<AdminLoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-      ),
       body: isLoading
-          ? const Center(
-              child: CircularProgressIndicator(
-                color: Colors.orange,
-              ),
-            )
+          ? Center(child: LoadingDots())
           : SingleChildScrollView(
               child: Column(
                 children: [
-                  Image.asset('assets/images/admin_login.png'),
+                  ClipPathWidget(
+                    txt: 'Admin Sign In',
+                  ),
                   Container(
                     color: Colors.white,
                     width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height * 0.70,
                     child: Center(
                       child: Container(
-                        margin: EdgeInsets.all(12),
+                        margin: const EdgeInsets.all(12),
                         child: Form(
                           key: _formkey,
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const SizedBox(
                                 height: 20,
+                              ),
+                              const Text(
+                                'Name',
+                                style: TextStyle(
+                                  fontSize: 23,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                  fontStyle: FontStyle.italic,
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 10,
                               ),
                               CustomTextFiled(
                                 controller: nameController,
@@ -60,6 +69,18 @@ class _AdminLoginScreenState extends State<AdminLoginScreen> {
                               const SizedBox(
                                 height: 20,
                               ),
+                              const Text(
+                                'Email',
+                                style: TextStyle(
+                                  fontSize: 23,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                  fontStyle: FontStyle.italic,
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
                               CustomTextFiled(
                                 controller: emailController,
                                 hintText: 'Enter your Email',
@@ -67,6 +88,18 @@ class _AdminLoginScreenState extends State<AdminLoginScreen> {
                               ),
                               const SizedBox(
                                 height: 20,
+                              ),
+                              const Text(
+                                'Password',
+                                style: TextStyle(
+                                  fontSize: 23,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                  fontStyle: FontStyle.italic,
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 10,
                               ),
                               CustomTextFiled(
                                 controller: passwordController,
@@ -76,56 +109,34 @@ class _AdminLoginScreenState extends State<AdminLoginScreen> {
                               const SizedBox(
                                 height: 40,
                               ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 30,
-                                ),
-                                child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.orange,
-                                    shape: const RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(30.0)),
-                                    ),
-                                    elevation: 5.0,
-                                    minimumSize: const Size.fromHeight(40),
-                                    fixedSize: const Size(
-                                      double.infinity,
-                                      50,
-                                    ),
-                                  ),
-                                  onPressed: () {
-                                    setState(() {
-                                      visible = true;
-                                    });
-                                    signIn(
-                                        nameController.text,
-                                        emailController.text,
-                                        passwordController.text);
-                                  },
-                                  child: const Text(
-                                    "Login",
-                                    style: TextStyle(
-                                        fontSize: 23,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
+
+                              CustomButton(
+                                buttonText: 'Sign In',
+                                onPressed: () {
+                                  setState(() {
+                                    visible = true;
+                                  });
+                                  signIn(
+                                      nameController.text,
+                                      emailController.text,
+                                      passwordController.text);
+                                },
                               ),
+
                               const SizedBox(
                                 height: 20,
                               ),
-                              Visibility(
-                                maintainSize: true,
-                                maintainAnimation: true,
-                                maintainState: true,
-                                visible: visible,
-                                child: Container(
-                                  child: const CircularProgressIndicator(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
+                              // Visibility(
+                              //   maintainSize: true,
+                              //   maintainAnimation: true,
+                              //   maintainState: true,
+                              //   visible: visible,
+                              //   child: Container(
+                              //     child: const CircularProgressIndicator(
+                              //       color: Colors.white,
+                              //     ),
+                              //   ),
+                              // ),
                             ],
                           ),
                         ),

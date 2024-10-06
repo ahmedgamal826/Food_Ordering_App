@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_ordering_app/widgets/show_snack_bar.dart';
 
 class FavouriteCard extends StatelessWidget {
   final String imageUrl;
@@ -83,12 +84,9 @@ class FavouriteCard extends StatelessWidget {
                 IconButton(
                   onPressed: () {
                     onRemove(docId);
-                    // Replace the following line with your Snackbar implementation
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text('$name is deleted from favourites'),
-                      ),
-                    );
+                    customShowSnackBar(
+                        context: context,
+                        content: '$name is deleted from favourites');
                   },
                   icon: const Icon(
                     Icons.favorite,

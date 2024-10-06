@@ -7,6 +7,7 @@ void customShowSnackBar({
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
       content: Text(
+        textAlign: TextAlign.center,
         content,
         style: const TextStyle(
           fontSize: 18,

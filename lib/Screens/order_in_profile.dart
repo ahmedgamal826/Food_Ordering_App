@@ -87,7 +87,8 @@ class OrderInProfileUser extends StatelessWidget {
                     final timestamp =
                         (order['timestamp'] as Timestamp?)?.toDate();
                     final formattedTime = timestamp != null
-                        ? DateFormat('yyyy-MM-dd – hh:mm a').format(timestamp)
+                        ? DateFormat('yyyy-MM-dd – hh:mm a')
+                            .format(timestamp.toLocal())
                         : 'Unknown Time';
 
                     return OrderCardInProfile(
