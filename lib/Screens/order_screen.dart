@@ -158,6 +158,9 @@ class _OrderScreenState extends State<OrderScreen> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
+              actions: [
+                getNumberOfItems(),
+              ],
             ),
             body: StreamBuilder<DocumentSnapshot>(
               stream: FirebaseFirestore.instance
@@ -227,6 +230,83 @@ class _OrderScreenState extends State<OrderScreen> {
             ),
           );
         }
+      },
+    );
+  }
+
+  StreamBuilder<DocumentSnapshot<Object?>> getNumberOfItems() {
+    return StreamBuilder<DocumentSnapshot>(
+      stream: FirebaseFirestore.instance
+          .collection('carts')
+          .doc(FirebaseAuth.instance.currentUser?.uid)
+          .snapshots(),
+      builder: (context, cartSnapshot) {
+        if (cartSnapshot.connectionState == ConnectionState.waiting) {
+          return const Text('');
+        }
+
+        if (cartSnapshot.hasError || !cartSnapshot.hasData) {
+          return const SizedBox();
+        }
+
+        final cartData = cartSnapshot.data!.data() as Map<String, dynamic>;
+        final items = cartData['items'] as List<dynamic>? ?? [];
+        final itemCount = items.length;
+
+        return Stack(
+          children: [
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(
+                Icons.shopping_cart,
+                size: 35,
+                color: Colors.orange,
+              ),
+            ),
+            if (itemCount > 0)
+              Positioned(
+                right: 0,
+                child: ClipOval(
+                  child: Container(
+                    padding: const EdgeInsets.all(4.0),
+                    decoration: const BoxDecoration(
+                      color: Colors.red,
+                      shape: BoxShape.circle,
+                    ),
+                    constraints: BoxConstraints(
+                      maxWidth: itemCount >= 1000 ? 50 : 30,
+                      maxHeight: itemCount > 9 ? 30.0 : 24.0,
+                    ),
+                    child: Center(
+                      child: Text(
+                        textAlign: TextAlign.center,
+                        itemCount >= 1000 ? '999+' : '$itemCount',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: itemCount >= 1000 ? 10 : 13,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+          ],
+        );
+
+        // Padding(
+        //   padding: const EdgeInsets.only(right: 16.0),
+        //   child: Center(
+        //     child: Text(
+        //       '$itemCount',
+        //       style: const TextStyle(
+        //         color: Colors.orange,
+        //         fontSize: 20,
+        //         fontWeight: FontWeight.bold,
+        //       ),
+        //     ),
+        //   ),
+        // );
       },
     );
   }

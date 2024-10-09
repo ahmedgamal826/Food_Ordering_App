@@ -21,14 +21,14 @@ class _AddCardFormState extends State<AddCardForm> {
   final _expiryDateController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
-  String _selectedCardType = 'Credit Card'; // لتخزين نوع البطاقة المختار
+  String _selectedCardType = 'Credit Card'; 
 
   void _submit() {
     if (_formKey.currentState?.validate() ?? false) {
       final cardNumber = _cardNumberController.text.replaceAll(' ', '');
       final expiryDate = _expiryDateController.text;
 
-      // تحديد صورة البطاقة بناءً على الاختيار
+  
       String cardImage;
       if (_selectedCardType == 'Visa') {
         cardImage = 'assets/images/visa_image.png'; // صورة الفيزا
