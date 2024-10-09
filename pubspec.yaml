@@ -68,9 +68,9 @@ flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
   remove_alpha_ios: true
-  image_path: "assets/images/delivery.png"
+  image_path: "assets/images/app_logo.png"
   adaptive_icon_background: "#ffffff" # You can use a color or image for the background
-  adaptive_icon_foreground: "assets/images/delivery.png" # For adaptive icons on Android
+  adaptive_icon_foreground: "assets/images/app_logo.png" # For adaptive icons on Android
 
 
 
