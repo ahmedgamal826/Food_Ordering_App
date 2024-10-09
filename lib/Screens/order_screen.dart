@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:food_ordering_app/auth/auth_services_user.dart';
+import 'package:food_ordering_app/widgets/get_item_count_order.dart';
 import 'package:food_ordering_app/widgets/order_summary.dart';
 import 'package:food_ordering_app/widgets/show_snack_bar.dart';
 import 'package:provider/provider.dart';
@@ -39,7 +40,7 @@ class _OrderScreenState extends State<OrderScreen> {
         await cartRef.update({'items': items});
         customShowSnackBar(
           context: context,
-          content: "$productName is deleted from cart",
+          content: '$productName is deleted from cart',
         );
       }
     } catch (e) {
@@ -139,6 +140,7 @@ class _OrderScreenState extends State<OrderScreen> {
           return Scaffold(
             backgroundColor: const Color(0xffF4F4F4),
             appBar: AppBar(
+              iconTheme: const IconThemeData(size: 30),
               leading: IconButton(
                 onPressed: () {
                   Navigator.pushNamed(context, 'userScreen');
@@ -158,155 +160,83 @@ class _OrderScreenState extends State<OrderScreen> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              actions: [
-                getNumberOfItems(),
+              actions: const [
+                getItemsCountOrder(),
               ],
             ),
-            body: StreamBuilder<DocumentSnapshot>(
-              stream: FirebaseFirestore.instance
-                  .collection('carts')
-                  .doc(FirebaseAuth.instance.currentUser?.uid)
-                  .snapshots(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(
-                    child: CircularProgressIndicator(
-                      color: Colors.orange,
-                    ),
-                  );
-                }
-
-                if (snapshot.hasError) {
-                  return Center(child: Text('Error: ${snapshot.error}'));
-                }
-
-                if (!snapshot.hasData || !snapshot.data!.exists) {
-                  return const Center(
-                    child: Text(
-                      'No items in cart.',
-                      style: TextStyle(
-                        fontSize: 25,
-                        color: Colors.orange,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  );
-                }
-
-                final cartData = snapshot.data!.data() as Map<String, dynamic>;
-                final items = cartData['items'] as List<dynamic>? ?? [];
-
-                double totalPrice = 0;
-                for (var item in items) {
-                  final double itemPrice = item['totalPrice'] as double? ?? 0.0;
-                  totalPrice += itemPrice;
-                }
-
-                // Add delivery price to total price
-                if (totalPrice > 0) {
-                  totalPrice += deliveryPrice;
-                }
-
-                return items.isEmpty
-                    ? const Center(
-                        child: Text(
-                          'No items in cart.',
-                          style: TextStyle(
-                            fontSize: 25,
-                            color: Colors.orange,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      )
-                    : OrderSummary(
-                        deleteItem: deleteItem,
-                        deliveryPrice: deliveryPrice,
-                        items: items,
-                        totalPrice: totalPrice,
-                        updateItem: updateItem,
-                        customerName: authService.userName ?? 'UnKnown',
-                      );
-              },
-            ),
+            body: getOrderItems(deliveryPrice, authService),
           );
         }
       },
     );
   }
 
-  StreamBuilder<DocumentSnapshot<Object?>> getNumberOfItems() {
+  StreamBuilder<DocumentSnapshot<Object?>> getOrderItems(
+      double deliveryPrice, AuthService authService) {
     return StreamBuilder<DocumentSnapshot>(
       stream: FirebaseFirestore.instance
           .collection('carts')
           .doc(FirebaseAuth.instance.currentUser?.uid)
           .snapshots(),
-      builder: (context, cartSnapshot) {
-        if (cartSnapshot.connectionState == ConnectionState.waiting) {
-          return const Text('');
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(
+            child: CircularProgressIndicator(
+              color: Colors.orange,
+            ),
+          );
         }
 
-        if (cartSnapshot.hasError || !cartSnapshot.hasData) {
-          return const SizedBox();
+        if (snapshot.hasError) {
+          return Center(child: Text('Error: ${snapshot.error}'));
         }
 
-        final cartData = cartSnapshot.data!.data() as Map<String, dynamic>;
-        final items = cartData['items'] as List<dynamic>? ?? [];
-        final itemCount = items.length;
-
-        return Stack(
-          children: [
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.shopping_cart,
-                size: 35,
+        if (!snapshot.hasData || !snapshot.data!.exists) {
+          return const Center(
+            child: Text(
+              'No items in cart.',
+              style: TextStyle(
+                fontSize: 25,
                 color: Colors.orange,
+                fontWeight: FontWeight.bold,
               ),
             ),
-            if (itemCount > 0)
-              Positioned(
-                right: 0,
-                child: ClipOval(
-                  child: Container(
-                    padding: const EdgeInsets.all(4.0),
-                    decoration: const BoxDecoration(
-                      color: Colors.red,
-                      shape: BoxShape.circle,
-                    ),
-                    constraints: BoxConstraints(
-                      maxWidth: itemCount >= 1000 ? 50 : 30,
-                      maxHeight: itemCount > 9 ? 30.0 : 24.0,
-                    ),
-                    child: Center(
-                      child: Text(
-                        textAlign: TextAlign.center,
-                        itemCount >= 1000 ? '999+' : '$itemCount',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: itemCount >= 1000 ? 10 : 13,
-                        ),
-                      ),
-                    ),
+          );
+        }
+
+        final cartData = snapshot.data!.data() as Map<String, dynamic>;
+        final items = cartData['items'] as List<dynamic>? ?? [];
+
+        double totalPrice = 0;
+        for (var item in items) {
+          final double itemPrice = item['totalPrice'] as double? ?? 0.0;
+          totalPrice += itemPrice;
+        }
+
+        // Add delivery price to total price
+        if (totalPrice > 0) {
+          totalPrice += deliveryPrice;
+        }
+
+        return items.isEmpty
+            ? const Center(
+                child: Text(
+                  'No items in cart.',
+                  style: TextStyle(
+                    fontSize: 25,
+                    color: Colors.orange,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
-              ),
-          ],
-        );
-
-        // Padding(
-        //   padding: const EdgeInsets.only(right: 16.0),
-        //   child: Center(
-        //     child: Text(
-        //       '$itemCount',
-        //       style: const TextStyle(
-        //         color: Colors.orange,
-        //         fontSize: 20,
-        //         fontWeight: FontWeight.bold,
-        //       ),
-        //     ),
-        //   ),
-        // );
+              )
+            : OrderSummary(
+                deleteItem: deleteItem,
+                deliveryPrice: deliveryPrice,
+                items: items,
+                totalPrice: totalPrice,
+                updateItem: updateItem,
+                customerName: authService.userName ?? 'UnKnown',
+              );
       },
     );
   }

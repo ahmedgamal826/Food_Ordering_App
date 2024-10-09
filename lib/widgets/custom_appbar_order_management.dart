@@ -45,7 +45,7 @@ class CustomAppbarOrderManagement extends StatelessWidget
                 size: 40,
               ),
             ),
-            if (orderCount > 0)
+            if (orderCount >= 0)
               Positioned(
                 right: 0,
                 child: ClipOval(

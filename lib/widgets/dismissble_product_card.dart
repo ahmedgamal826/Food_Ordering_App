@@ -92,11 +92,6 @@ class DismissibleProductCard extends StatelessWidget {
         },
         onDismissed: (direction) async {
           await deleteItem(itemId, productName);
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('$productName was deleted'),
-            ),
-          );
         },
         child: Card(
           elevation: 5,

@@ -41,9 +41,7 @@ class _OrdersManagmentState extends State<OrdersManagment> {
   Widget build(BuildContext context) {
     // Calculate badge size based on order count
     final badgeSize = _orderCount > 9 ? 30.0 : 24.0;
-    final badgeTextSize = _orderCount > 9 ? 12.0 : 10.0;
 
-    double totalPrice = 0;
     return Scaffold(
       appBar: CustomAppbarOrderManagement(
         badgeSize: badgeSize,
