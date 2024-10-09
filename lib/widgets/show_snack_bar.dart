@@ -6,11 +6,14 @@ void customShowSnackBar({
 }) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
-      content: Text(
-        textAlign: TextAlign.center,
-        content,
-        style: const TextStyle(
-          fontSize: 18,
+      content: FittedBox(
+        fit: BoxFit.scaleDown,
+        child: Text(
+          textAlign: TextAlign.center,
+          content,
+          style: const TextStyle(
+            fontSize: 18,
+          ),
         ),
       ),
       backgroundColor: Colors.blue,
