@@ -103,20 +103,24 @@ class DismissibleProductCard extends StatelessWidget {
           color: Colors.white,
           child: ListTile(
             leading: Container(
-              height: 70,
-              width: 80,
+              height: MediaQuery.of(context).size.height * 0.1,
+              width: MediaQuery.of(context).size.width * 0.2,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(color: Colors.white, width: 2),
               ),
               child: productImage.startsWith('http')
-                  ? ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: Image.network(
-                        productImage,
-                        height: 50,
-                        width: 50,
-                        fit: BoxFit.cover,
+                  ? Container(
+                      decoration: BoxDecoration(
+                        color: Colors.grey,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Image.network(
+                          productImage,
+                          fit: BoxFit.fill,
+                        ),
                       ),
                     )
                   : const Center(

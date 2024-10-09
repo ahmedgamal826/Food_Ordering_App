@@ -4,7 +4,11 @@ import 'package:food_ordering_app/widgets/card_number_input_formatter.dart';
 import 'package:food_ordering_app/widgets/show_snack_bar.dart';
 
 class AddCardForm extends StatefulWidget {
-  final void Function(String cardNumber, String expiryDate) onAddCard;
+  final void Function(
+    String cardImage, // تعديل هنا لتمرير نوع البطاقة
+    String cardNumber,
+    String expiryDate,
+  ) onAddCard;
 
   const AddCardForm({super.key, required this.onAddCard});
 
@@ -17,12 +21,25 @@ class _AddCardFormState extends State<AddCardForm> {
   final _expiryDateController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
+  String _selectedCardType = 'Credit Card'; // لتخزين نوع البطاقة المختار
+
   void _submit() {
     if (_formKey.currentState?.validate() ?? false) {
       final cardNumber = _cardNumberController.text.replaceAll(' ', '');
       final expiryDate = _expiryDateController.text;
 
-      widget.onAddCard(cardNumber, expiryDate);
+      // تحديد صورة البطاقة بناءً على الاختيار
+      String cardImage;
+      if (_selectedCardType == 'Visa') {
+        cardImage = 'assets/images/visa_image.png'; // صورة الفيزا
+      } else {
+        cardImage = 'assets/images/master_card.png'; // صورة الكريدت كارد
+      }
+
+      customShowSnackBar(
+          context: context, content: 'New Card Added Successfully');
+
+      widget.onAddCard(cardImage, cardNumber, expiryDate);
       Navigator.of(context).pop();
     }
   }
@@ -63,6 +80,54 @@ class _AddCardFormState extends State<AddCardForm> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              OutlinedButton(
+                onPressed: () {
+                  setState(() {
+                    _selectedCardType = 'Credit Card';
+                  });
+                },
+                style: OutlinedButton.styleFrom(
+                  backgroundColor: _selectedCardType == 'Credit Card'
+                      ? Colors.orange
+                      : Colors.white,
+                  side: const BorderSide(color: Colors.orange),
+                ),
+                child: Text(
+                  'Credit Card',
+                  style: TextStyle(
+                    color: _selectedCardType == 'Credit Card'
+                        ? Colors.white
+                        : Colors.orange,
+                  ),
+                ),
+              ),
+              OutlinedButton(
+                onPressed: () {
+                  setState(() {
+                    _selectedCardType = 'Visa';
+                  });
+                },
+                style: OutlinedButton.styleFrom(
+                  backgroundColor: _selectedCardType == 'Visa'
+                      ? Colors.orange
+                      : Colors.white,
+                  side: const BorderSide(color: Colors.orange),
+                ),
+                child: Text(
+                  'Visa',
+                  style: TextStyle(
+                    color: _selectedCardType == 'Visa'
+                        ? Colors.white
+                        : Colors.orange,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 20),
           TextFormField(
             controller: _cardNumberController,
             decoration: const InputDecoration(
@@ -104,11 +169,7 @@ class _AddCardFormState extends State<AddCardForm> {
           ),
           const SizedBox(height: 20),
           ElevatedButton(
-            onPressed: () {
-              _submit();
-              customShowSnackBar(
-                  context: context, content: 'New Card Added Successfully');
-            },
+            onPressed: _submit,
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.orange,
             ),

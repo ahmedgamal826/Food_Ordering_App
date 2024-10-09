@@ -67,6 +67,10 @@ class UserCategoryCard extends StatelessWidget {
                       imageUrl: imageUrl,
                     ),
             ),
+
+            const SizedBox(
+              height: 10,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

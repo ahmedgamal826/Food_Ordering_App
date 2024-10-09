@@ -33,7 +33,8 @@ class AboutUsScreen extends StatelessWidget {
           // crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
-              'Welcome to Foodies Delivery!',
+              textAlign: TextAlign.center,
+              'Welcome to Foodies Ordering!',
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,

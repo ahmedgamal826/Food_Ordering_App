@@ -18,7 +18,7 @@ class _AccountManagementState extends State<AccountManagement> {
         title: const Text(
           'Account Management',
           style: TextStyle(
-              fontSize: 27, color: Colors.white, fontWeight: FontWeight.bold),
+              fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
         ),
         backgroundColor: Colors.orange,
       ),
@@ -79,15 +79,18 @@ class _AccountManagementState extends State<AccountManagement> {
                   title: Column(
                     children: [
                       userImage.isNotEmpty
-                          ? Image.network(
-                              userImage,
-                              errorBuilder: (context, error, stackTrace) {
-                                return const Icon(
-                                  Icons.person,
-                                  size: 80,
-                                  color: Colors.white,
-                                );
-                              },
+                          ? ClipRRect(
+                              borderRadius: BorderRadius.circular(50),
+                              child: Image.network(
+                                userImage,
+                                errorBuilder: (context, error, stackTrace) {
+                                  return const Icon(
+                                    Icons.person,
+                                    size: 80,
+                                    color: Colors.white,
+                                  );
+                                },
+                              ),
                             )
                           : const Icon(
                               Icons.person,
@@ -95,6 +98,7 @@ class _AccountManagementState extends State<AccountManagement> {
                               color: Colors.white,
                             ),
                       Text(
+                        textAlign: TextAlign.center,
                         userName,
                         style: const TextStyle(
                           fontSize: 20,
@@ -102,14 +106,21 @@ class _AccountManagementState extends State<AccountManagement> {
                           color: Colors.white,
                         ),
                       ),
+                      const Divider(
+                        indent: 25,
+                        endIndent: 25,
+                        thickness: 2,
+                        color: Colors.white,
+                      ),
+                      Text(
+                        textAlign: TextAlign.center,
+                        '$userEmail\nLogin Date: $loginDate',
+                        style: const TextStyle(
+                          fontSize: 18,
+                          color: Colors.white,
+                        ),
+                      ),
                     ],
-                  ),
-                  subtitle: Text(
-                    '$userEmail\nLogin Date: $loginDate',
-                    style: const TextStyle(
-                      fontSize: 18,
-                      color: Colors.white,
-                    ),
                   ),
                 ),
               );

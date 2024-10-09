@@ -56,9 +56,7 @@ class _MyNameAndLocationState extends State<MyNameAndLocation> {
               BlocBuilder<LocationCubit, LocationState>(
                 builder: (context, state) {
                   if (state is LocationLoading) {
-                    return const CircularProgressIndicator(
-                      color: Colors.orange,
-                    );
+                    return const Text('');
                   }
                   return const SizedBox
                       .shrink(); // لا شيء إذا لم يكن في حالة تحميل

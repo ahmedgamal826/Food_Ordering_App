@@ -25,13 +25,6 @@ class CategoryListView extends StatelessWidget {
             Navigator.pushNamed(context, 'GuavaJuice');
           },
         ),
-        // CustomCategory(
-        //   image: 'assets/images/tea.png',
-        //   categoryName: 'Tea',
-        //   onTap: () {
-        //     Navigator.pushNamed(context, 'tea');
-        //   },
-        // ),
         CustomCategory(
           image: 'assets/images/water-bottle.png',
           categoryName: 'Water',
@@ -46,7 +39,6 @@ class CategoryListView extends StatelessWidget {
             Navigator.pushNamed(context, 'cocktailJuice');
           },
         ),
-
         CustomCategory(
           image: 'assets/images/apple-juice.png',
           categoryName: 'Apple Juice',
@@ -54,7 +46,6 @@ class CategoryListView extends StatelessWidget {
             Navigator.pushNamed(context, 'appleJuice');
           },
         ),
-
         CustomCategory(
           image: 'assets/images/mango.png',
           categoryName: 'Mango Juice',
@@ -62,7 +53,6 @@ class CategoryListView extends StatelessWidget {
             Navigator.pushNamed(context, 'mangoJuice');
           },
         ),
-
         CustomCategory(
           image: 'assets/images/orange-juice.png',
           categoryName: 'Orange Juice',

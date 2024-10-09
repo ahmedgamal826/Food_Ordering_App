@@ -79,11 +79,12 @@ class SplashScreen extends StatelessWidget {
           child: AnimatedTextKit(
             animatedTexts: [
               TyperAnimatedText(
-                'Food Delivery App', //
+                textAlign: TextAlign.center,
+                'Food Ordering App', //
                 speed: const Duration(milliseconds: 200), // سرعة الكتابة
               ),
             ],
-            totalRepeatCount: 1, // تكرار الأنيميشن مرة واحدة فقط
+            totalRepeatCount: 1,
             pause:
                 const Duration(milliseconds: 500), // توقف قصير بعد نهاية النص
             displayFullTextOnTap: true, // عرض النص بالكامل عند الضغط

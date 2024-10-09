@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:food_ordering_app/Screens/admin_or_user_screen.dart';
 import 'package:food_ordering_app/Screens/admin_profile_screen.dart';
+import 'package:food_ordering_app/components/loading_dots.dart';
 import 'package:food_ordering_app/widgets/category_list_view.dart';
 
 class AdminHomeScreen extends StatefulWidget {
@@ -39,6 +40,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
     User? user = FirebaseAuth.instance.currentUser;
 
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         leading: const Text(''),
         backgroundColor: Colors.orange,
@@ -59,8 +61,8 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
             .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(color: Colors.orange),
+            return Center(
+              child: LoadingDots(),
             );
           }
 

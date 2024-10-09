@@ -34,9 +34,10 @@ class _AdminManagementState extends State<AdminManagement> {
     return Scaffold(
       body: _pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.orange,
+        backgroundColor: Colors.black,
         items: const [
           BottomNavigationBarItem(
+            backgroundColor: Colors.white,
             icon: Icon(
               Icons.home,
               size: 30,
@@ -44,6 +45,7 @@ class _AdminManagementState extends State<AdminManagement> {
             label: 'Admin Home',
           ),
           BottomNavigationBarItem(
+            backgroundColor: Colors.white,
             icon: Icon(
               Icons.local_offer_sharp,
               size: 30,
@@ -51,6 +53,7 @@ class _AdminManagementState extends State<AdminManagement> {
             label: 'Offers',
           ),
           BottomNavigationBarItem(
+            backgroundColor: Colors.white,
             icon: Icon(
               Icons.shopping_cart,
               size: 30,
@@ -58,6 +61,7 @@ class _AdminManagementState extends State<AdminManagement> {
             label: 'Order Management',
           ),
           BottomNavigationBarItem(
+            backgroundColor: Colors.white,
             icon: Icon(
               Icons.account_circle,
               size: 30,
@@ -65,6 +69,7 @@ class _AdminManagementState extends State<AdminManagement> {
             label: 'Account Management',
           ),
           BottomNavigationBarItem(
+            backgroundColor: Colors.white,
             icon: Icon(
               Icons.person,
               size: 30,

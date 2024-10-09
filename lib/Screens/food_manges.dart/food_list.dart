@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:food_ordering_app/Screens/order_screen.dart';
+import 'package:food_ordering_app/components/loading_dots.dart';
 import 'package:food_ordering_app/models/products_food.dart';
 import 'package:food_ordering_app/widgets/custom_grid_view.dart';
 import 'package:food_ordering_app/widgets/show_snack_bar.dart';
@@ -119,11 +119,7 @@ class _FoodListState extends State<FoodList> {
       stream: stream,
       builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(
-            child: CircularProgressIndicator(
-              color: Colors.orange,
-            ),
-          );
+          return Center(child: LoadingDots());
         }
 
         if (snapshot.hasError) {

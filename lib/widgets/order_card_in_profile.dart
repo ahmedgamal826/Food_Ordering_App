@@ -52,10 +52,8 @@ class OrderCardInProfile extends StatelessWidget {
                       ),
                       title: Column(
                         children: [
-                          Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                              ),
+                          ClipRRect(
+                              borderRadius: BorderRadius.circular(20),
                               child: Image.network(
                                 width: MediaQuery.of(context).size.width * 0.3,
                                 '$productImage',

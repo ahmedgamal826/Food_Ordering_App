@@ -17,12 +17,13 @@ class _MyPaymentCardsScreenState extends State<MyPaymentCardsScreen> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  void _addCard(String cardNumber, String expiryDate) async {
+  void _addCard(String cardImage, String cardNumber, String expiryDate) async {
     final userId = _auth.currentUser?.uid;
 
     if (userId != null) {
       await _firestore.collection('myCards').add({
         'userId': userId,
+        'cardImage': cardImage,
         'cardNumber': cardNumber,
         'expiryDate': expiryDate,
       });
@@ -113,10 +114,12 @@ class _MyPaymentCardsScreenState extends State<MyPaymentCardsScreen> {
                     itemBuilder: (context, index) {
                       final cardData =
                           cards[index].data() as Map<String, dynamic>;
+                      final cardImage = cardData['cardImage'] ?? 'UnKnown';
                       final cardNumber = cardData['cardNumber'] ?? 'Unknown';
                       final expiryDate = cardData['expiryDate'] ?? 'Unknown';
 
                       return CardListItem(
+                        cardImage: cardImage,
                         cardNumber: cardNumber,
                         expiryDate: expiryDate,
                         onDelete: () => _confirmRemoveCard(cards[index].id),

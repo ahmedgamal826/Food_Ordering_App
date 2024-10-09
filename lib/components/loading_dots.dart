@@ -60,8 +60,8 @@ class Dot extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 20,
-      height: 20,
+      width: 15,
+      height: 15,
       decoration: const BoxDecoration(
         color: Colors.orange,
         shape: BoxShape.circle,

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:food_ordering_app/Screens/finanicial_managmenet_screen.dart';
+import 'package:food_ordering_app/components/loading_dots.dart';
 import 'package:food_ordering_app/widgets/custom_appbar_order_management.dart';
 import 'package:food_ordering_app/widgets/order_management_card.dart';
 import 'package:intl/intl.dart';
@@ -56,8 +57,7 @@ class _OrdersManagmentState extends State<OrdersManagment> {
             .snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-                child: CircularProgressIndicator(color: Colors.orange));
+            return Center(child: LoadingDots());
           }
 
           if (snapshot.hasError) {

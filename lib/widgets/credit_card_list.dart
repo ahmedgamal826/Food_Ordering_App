@@ -24,6 +24,8 @@ class CreditCardListWidget extends StatelessWidget {
         itemBuilder: (context, index) {
           final cardData = cardList[index].data() as Map<String, dynamic>;
           final cardNumber = cardData['cardNumber'] ?? 'Unknown';
+          final cardImage = cardData['cardImage'] ?? 'Unknown';
+          final expiryDate = cardData['expiryDate'] ?? 'Unknown';
 
           return InkWell(
             onTap: () {
@@ -36,22 +38,25 @@ class CreditCardListWidget extends StatelessWidget {
                 elevation: 5,
                 child: ListTile(
                   leading: Image.asset(
-                    'assets/images/master_card.png',
-                    width: 100,
+                    cardImage,
+                    width: 80,
                     fit: BoxFit.cover,
                   ),
-                  title: const Text(
-                    'Credit card',
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.orange,
-                      fontWeight: FontWeight.bold,
+                  title: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      formatCardNumber(cardNumber),
+                      style: const TextStyle(
+                        fontSize: 18,
+                        color: Colors.orange,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                   subtitle: Text(
-                    formatCardNumber(cardNumber),
+                    'Expiry: $expiryDate',
                     style: const TextStyle(
-                      fontSize: 14,
+                      fontSize: 15,
                       color: Colors.orange,
                     ),
                   ),
