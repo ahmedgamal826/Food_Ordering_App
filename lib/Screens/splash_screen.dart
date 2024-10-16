@@ -93,7 +93,7 @@ class SplashScreen extends StatelessWidget {
               Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => OnboardingScreen(),
+                  builder: (context) => const OnboardScreen(),
                 ),
                 (route) => false,
               );
