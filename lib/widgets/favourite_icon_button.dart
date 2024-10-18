@@ -78,6 +78,7 @@ class _FavouriteIconButtonState extends State<FavouriteIconButton> {
     return IconButton(
       onPressed: _toggleFavourite,
       icon: Icon(
+        size: 25,
         isFavourite ? Icons.favorite : Icons.favorite_border,
         color: isFavourite ? Colors.red : Colors.black,
       ),

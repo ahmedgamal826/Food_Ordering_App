@@ -100,7 +100,7 @@ class _OrderScreenState extends State<OrderScreen> {
   Widget build(BuildContext context) {
     double deliveryPrice = 20;
 
-    final authService = Provider.of<AuthService>(context);
+    final authService = Provider.of<UserAuthService>(context);
     return StreamBuilder<User?>(
       stream: authService.authStateChanges,
       builder: (context, snapshot) {
@@ -172,7 +172,7 @@ class _OrderScreenState extends State<OrderScreen> {
   }
 
   StreamBuilder<DocumentSnapshot<Object?>> getOrderItems(
-      double deliveryPrice, AuthService authService) {
+      double deliveryPrice, UserAuthService authService) {
     return StreamBuilder<DocumentSnapshot>(
       stream: FirebaseFirestore.instance
           .collection('carts')

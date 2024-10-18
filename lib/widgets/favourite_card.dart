@@ -28,7 +28,7 @@ class FavouriteCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            height: 150,
+            // height: 150,
             width: double.infinity,
             child: imageUrl.startsWith('http')
                 ? ClipRRect(
@@ -54,10 +54,10 @@ class FavouriteCard extends StatelessWidget {
                     textAlign: TextAlign.center,
                     name,
                     style: const TextStyle(
-                      fontSize: 16,
+                      fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
-                    maxLines: 2,
+                    maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
@@ -73,7 +73,7 @@ class FavouriteCard extends StatelessWidget {
                   child: Text(
                     '\$$price',
                     style: const TextStyle(
-                      fontSize: 16,
+                      fontSize: 20,
                       fontWeight: FontWeight.bold,
                       color: Colors.orange,
                     ),

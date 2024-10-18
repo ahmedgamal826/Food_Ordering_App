@@ -65,7 +65,7 @@ class _AnimationScreenState extends State<AnimationScreen>
                   if (widget.role == 'admin') {
                     return const AdminManagement();
                   } else if (widget.role == 'user') {
-                    return const UserHomePage();
+                    return UserHomePage();
                   } else {
                     return SplashScreen();
                   }

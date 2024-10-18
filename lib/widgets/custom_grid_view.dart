@@ -69,6 +69,7 @@ class CustomGridView extends StatelessWidget {
               context: context,
               builder: (context) {
                 return CustomBottomSheet(
+                  docId: doc.id,
                   isAdmin: isAdmin,
                   description: description,
                   imageUrl: imageUrl,

@@ -36,7 +36,7 @@ class PriceBeforeDiscountWidget extends StatelessWidget {
             : Text(
                 '\$$price',
                 style: const TextStyle(
-                  fontSize: 18,
+                  fontSize: 20,
                   fontWeight: FontWeight.bold,
                   color: Colors.orange,
                 ),

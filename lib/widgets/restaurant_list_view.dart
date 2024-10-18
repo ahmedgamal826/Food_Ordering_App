@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_ordering_app/Cubit/location%20cubit/location_cubit.dart';
+import 'package:food_ordering_app/Screens/offers_screen.dart';
 import 'package:food_ordering_app/components/offers_cards_home_screen.dart';
 import 'package:food_ordering_app/widgets/my_name_and_location.dart';
 import 'package:food_ordering_app/widgets/restaurant_categories.dart';
@@ -132,7 +133,20 @@ class _RestaurantListViewState extends State<RestaurantListView> {
           ),
         ),
         const SizedBox(height: 10),
-        OffersCards(pageController: pageController, offers: offers),
+        InkWell(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const OffersScreen(),
+              ),
+            );
+          },
+          child: OffersCards(
+            pageController: pageController,
+            offers: offers,
+          ),
+        ),
         const SizedBox(
           height: 20,
         ),

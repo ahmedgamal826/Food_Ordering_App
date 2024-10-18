@@ -23,7 +23,7 @@ class _BillsScreenState extends State<BillsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Text(''),
+        iconTheme: const IconThemeData(color: Colors.white, size: 25),
         centerTitle: true,
         title: const Text(
           'My Bills',

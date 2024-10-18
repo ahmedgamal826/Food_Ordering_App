@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:food_ordering_app/Screens/order_screen.dart';
+import 'package:food_ordering_app/constants/constants_variables.dart';
 import 'package:food_ordering_app/models/products_food.dart';
+import 'package:food_ordering_app/widgets/favourite_icon_button.dart';
+import 'package:food_ordering_app/widgets/show_snack_bar.dart';
 
 class CustomBottomSheet extends StatefulWidget {
   final String imageUrl;
@@ -11,9 +14,11 @@ class CustomBottomSheet extends StatefulWidget {
   final String description;
   final Map<String, double> sizeMultipliers;
   final bool isAdmin;
+  final String docId;
 
   const CustomBottomSheet({
     Key? key,
+    required this.docId,
     required this.imageUrl,
     required this.name,
     required this.price,
@@ -122,7 +127,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                         ),
                         SizedBox(height: 10),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             const SizedBox(
                               width: 20,
@@ -135,18 +140,12 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                                 ),
                               ),
                             ),
-                            SizedBox(
-                              width: 120,
-                              child: Text(
-                                '${_totalPrice.toStringAsFixed(2)}',
-                                style: const TextStyle(
-                                  fontSize: 25,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                            Text(
+                              '${_totalPrice.toStringAsFixed(2)}',
+                              style: const TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold,
                               ),
-                            ),
-                            SizedBox(
-                              width: widthScreen * 0.25,
                             ),
                           ],
                         )
@@ -351,12 +350,11 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                             }
                           }
 
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => OrderScreen(),
-                            ),
-                          );
+                          Navigator.pop(context);
+
+                          customShowSnackBar(
+                              context: context,
+                              content: '${widget.name} is added to cart');
                         },
                         child: Text(
                           'Add to Cart',

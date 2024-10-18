@@ -297,7 +297,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
     if (_formKey.currentState!.validate()) {
       // get auth services
-      final authServices = Provider.of<AuthService>(context, listen: false);
+      final authServices = Provider.of<UserAuthService>(context, listen: false);
 
       setState(() {
         isLoading = true;

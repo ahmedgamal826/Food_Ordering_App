@@ -61,7 +61,7 @@ void main() async {
         create: (context) => LocationCubit(),
       ),
       ChangeNotifierProvider(
-        create: (context) => AuthService(),
+        create: (context) => UserAuthService(),
       ),
       ChangeNotifierProvider(
         create: (context) => AdminAuthService(),
@@ -170,7 +170,7 @@ class _FoodOrderingAppState extends State<FoodOrderingApp> {
         "LoginOrRegister": (context) => const LoginOrRegister(),
         'chickenScreen': (context) => const ChickenScreen(),
         // 'PizzaDetailsScreen': (context) => const PizzaDetailsScreen(),
-        'userScreen': (context) => const UserHomePage(),
+        'userScreen': (context) => UserHomePage(),
         // Foods
         "burgerScreen": (context) => const BurgersScreen(),
         "friesScreen": (context) => const FriesScreen(),

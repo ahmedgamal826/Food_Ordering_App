@@ -24,7 +24,9 @@ class CustomImageOffers extends StatelessWidget {
                     return child;
                   } else {
                     return const Center(
-                      child: CircularProgressIndicator(),
+                      child: CircularProgressIndicator(
+                        color: Colors.orange,
+                      ),
                     );
                   }
                 },

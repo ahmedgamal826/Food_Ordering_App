@@ -1,13 +1,9 @@
-import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:food_ordering_app/auth/auth_services_user.dart';
 import 'package:food_ordering_app/auth/register_page.dart';
 import 'package:food_ordering_app/auth/reset_password_screen.dart';
 import 'package:food_ordering_app/components/clip_path_widget.dart';
 import 'package:food_ordering_app/components/loading_dots.dart';
-import 'package:food_ordering_app/widgets/awesome_dialog.dart';
 import 'package:food_ordering_app/widgets/custom_button.dart';
 import 'package:food_ordering_app/widgets/custom_text_button.dart';
 import 'package:food_ordering_app/widgets/custom_text_filed.dart';
@@ -31,7 +27,7 @@ class _LoginPageState extends State<LoginPage> {
 
   void signIn() async {
     if (_formKey.currentState!.validate()) {
-      final authService = Provider.of<AuthService>(context, listen: false);
+      final authService = Provider.of<UserAuthService>(context, listen: false);
 
       setState(() {
         isLoading = true; // Start loading
@@ -54,7 +50,7 @@ class _LoginPageState extends State<LoginPage> {
 
   void signInWithGoogle() async {
     // get the auth service
-    final authService = Provider.of<AuthService>(context, listen: false);
+    final authService = Provider.of<UserAuthService>(context, listen: false);
 
     setState(() {
       isLoading = true; // Start loading
@@ -72,32 +68,6 @@ class _LoginPageState extends State<LoginPage> {
       });
     }
   }
-
-  // void signInWithFacebook() async {
-  //   // get the auth service
-  //   final authService = Provider.of<AuthService>(context, listen: false);
-
-  //   setState(() {
-  //     isLoading = true; // Start loading
-  //   });
-
-  //   try {
-  //     await authService.signInWithFacebook();
-  //     Navigator.pushReplacementNamed(context, 'userScreen');
-  //   } catch (e) {
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       SnackBar(
-  //         content: Text(
-  //           e.toString(),
-  //         ),
-  //       ),
-  //     );
-  //   } finally {
-  //     setState(() {
-  //       isLoading = false; // Stop loading
-  //     });
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -160,31 +130,6 @@ class _LoginPageState extends State<LoginPage> {
                                       const ResetPasswordPage(),
                                 ),
                               );
-                              // if (emailController.text == '') {
-                              //   awesomeDialog(
-                              //       context: context,
-                              //       content:
-                              //           'الرجاء من كتابة بريدك الالكتروني');
-                              //   return;
-                              // }
-                              // try {
-                              //   await FirebaseAuth.instance
-                              //       .sendPasswordResetEmail(
-                              //           email: emailController.text);
-
-                              //   AwesomeDialog(
-                              //     context: context,
-                              //     dialogType: DialogType.success,
-                              //     title: 'تم',
-                              //     desc:
-                              //         'لقد تم ارسال لينك لإعادة كلمة المرور إلي بريدك الالكتروني .. الرجاء التوجه الي بريدك الالكتروني والضغط علي اللينك',
-                              //   ).show();
-                              // } catch (e) {
-                              //   awesomeDialog(
-                              //       context: context,
-                              //       content:
-                              //           'الرجاء التأكد من ان البريد الالكتروني الذي ادخلته صحيح ثم قم بإعادة المحاولة');
-                              // }
                             },
                           ),
                           const SizedBox(

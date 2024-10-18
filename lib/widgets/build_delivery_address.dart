@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_ordering_app/components/loading_dots.dart';
 
 class BuildDeliveryAddress extends StatelessWidget {
   final String deliveryAddress;
@@ -65,16 +66,10 @@ class BuildDeliveryAddress extends StatelessWidget {
                     ),
                     Expanded(
                       child: isLoading
-                          ? const Padding(
-                              padding: EdgeInsets.only(left: 40),
+                          ? Padding(
+                              padding: const EdgeInsets.only(left: 40),
                               child: SizedBox(
-                                height: 20,
-                                width: 20,
-                                child: CircularProgressIndicator(
-                                  color: Colors.orange,
-                                  strokeWidth: 3.0,
-                                ),
-                              ),
+                                  height: 20, width: 20, child: LoadingDots()),
                             )
                           : Text(
                               deliveryAddress,

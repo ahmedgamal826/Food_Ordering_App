@@ -11,7 +11,7 @@ class RestaurantHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final authService = context.read<AuthService>();
+    final authService = context.read<UserAuthService>();
 
     return StreamBuilder<User?>(
       stream: authService.authStateChanges,

@@ -4,7 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:food_ordering_app/auth/auth_services_admin.dart';
-import 'package:food_ordering_app/widgets/admin_profile_listView.dart';
+import 'package:food_ordering_app/components/loading_dots.dart';
+import 'package:food_ordering_app/widgets/custom_profile_list_view.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
@@ -162,10 +163,8 @@ class _AdminProfileScreenState extends State<AdminProfileScreen> {
             appBar: AppBar(
               title: const Text(''),
             ),
-            body: const Center(
-              child: CircularProgressIndicator(
-                color: Colors.orange,
-              ),
+            body: Center(
+              child: LoadingDots(),
             ),
           );
         } else if (snapshot.hasError) {

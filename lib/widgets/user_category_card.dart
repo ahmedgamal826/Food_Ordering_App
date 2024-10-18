@@ -47,6 +47,7 @@ class UserCategoryCard extends StatelessWidget {
       child: Container(
         height: cardHeight, // تعيين ارتفاع الـ Card
         child: Column(
+          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Text('dfgdffd'),
@@ -68,13 +69,12 @@ class UserCategoryCard extends StatelessWidget {
                     ),
             ),
 
-            const SizedBox(
-              height: 10,
-            ),
             CustomTextWidget(name: name),
-            const SizedBox(height: 5),
+
+            const SizedBox(height: 10),
+
             Padding(
-              padding: const EdgeInsets.only(left: 10),
+              padding: const EdgeInsets.only(left: 15, bottom: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

@@ -34,6 +34,7 @@ dependencies:
   bloc: ^8.1.4
   cloud_firestore: ^5.2.1
   cupertino_icons: ^1.0.6
+  curved_navigation_bar: ^1.0.6
   device_preview: ^1.2.0
   equatable: ^2.0.5
   firebase_auth: ^5.1.2
@@ -57,12 +58,11 @@ dependencies:
   uuid: ^4.4.2
 
 dev_dependencies:
-  
+
+  flutter_launcher_icons: "^0.14.1"
   flutter_lints: ^3.0.0
   flutter_test:
     sdk: flutter
-  
-  flutter_launcher_icons: "^0.14.1"
 
 flutter_launcher_icons:
   android: "launcher_icon"
@@ -72,9 +72,6 @@ flutter_launcher_icons:
   adaptive_icon_background: "#ffffff" # You can use a color or image for the background
   adaptive_icon_foreground: "assets/images/app_logo.png" # For adaptive icons on Android
 
-
-
- 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 # The following section is specific to Flutter packages.

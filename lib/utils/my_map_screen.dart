@@ -26,7 +26,7 @@ class _MyMapScreenState extends State<MyMapScreen> {
         centerTitle: true,
         backgroundColor: Colors.orange,
         title: const Text(
-          'Map',
+          'Your Location',
           style: TextStyle(
             fontSize: 25,
             color: Colors.white,
