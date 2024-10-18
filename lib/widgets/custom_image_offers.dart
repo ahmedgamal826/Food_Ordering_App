@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_ordering_app/constants/constants_variables.dart';
 
 class CustomImageOffers extends StatelessWidget {
   final String imageUrl;
@@ -11,19 +12,18 @@ class CustomImageOffers extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 140,
+      height: height(context) * 0.18,
       width: double.infinity,
       child: imageUrl.startsWith('http')
           ? ClipRRect(
               borderRadius: BorderRadius.circular(10),
               child: Image.network(
-                fit: BoxFit.cover,
                 imageUrl,
                 loadingBuilder: (context, child, progress) {
                   if (progress == null) {
                     return child;
                   } else {
-                    return Center(
+                    return const Center(
                       child: CircularProgressIndicator(),
                     );
                   }

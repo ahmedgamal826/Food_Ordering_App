@@ -96,114 +96,104 @@ class DismissibleProductCard extends StatelessWidget {
         child: Card(
           elevation: 5,
           color: Colors.white,
-          child: ListTile(
-            leading: Container(
-              height: MediaQuery.of(context).size.height * 0.1,
-              width: MediaQuery.of(context).size.width * 0.2,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: Colors.white, width: 2),
-              ),
-              child: productImage.startsWith('http')
-                  ? Container(
-                      decoration: BoxDecoration(
-                        color: Colors.grey,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: Image.network(
-                          productImage,
-                          fit: BoxFit.fill,
-                        ),
-                      ),
-                    )
-                  : const Center(
-                      child: Icon(Icons.image, size: 120, color: Colors.black),
-                    ),
-            ),
-            title: SizedBox(
-              width: 30,
-              child: Text(
-                productName,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.orange,
-                ),
-              ),
-            ),
-            subtitle: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Size: $size'),
-                const SizedBox(height: 5),
-                Text('\$${itemTotalPrice.toStringAsFixed(2)}'),
-              ],
-            ),
-            trailing: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                InkWell(
-                  onTap: () {
-                    if (quantity > 1) {
-                      updateItem(itemId, quantity - 1, size);
-                    }
-                  },
-                  child: Container(
-                    width: 50,
-                    height: 30,
-                    decoration: BoxDecoration(
-                      color: Colors.orange,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: const Align(
-                      alignment: Alignment.center,
-                      child: Text(
-                        '-',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 23,
+                CircleAvatar(
+                  radius: 50,
+                  backgroundColor: Colors.white,
+                  child: Image.network(
+                    productImage,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        productName,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontSize: 20,
                           fontWeight: FontWeight.bold,
+                          color: Colors.orange,
+                        ),
+                      ),
+                      Text('Size: $size'),
+                      const SizedBox(height: 5),
+                      Text('\$${itemTotalPrice.toStringAsFixed(2)}'),
+                    ],
+                  ),
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        if (quantity > 1) {
+                          updateItem(itemId, quantity - 1, size);
+                        }
+                      },
+                      child: Container(
+                        width: 50,
+                        height: 30,
+                        decoration: BoxDecoration(
+                          color: Colors.orange,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: const Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            '-',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 23,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ),
-                const SizedBox(width: 5),
-                Text(
-                  '$quantity',
-                  style: const TextStyle(
-                    fontSize: 21,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(width: 5),
-                InkWell(
-                  onTap: () {
-                    updateItem(itemId, quantity + 1, size);
-                  },
-                  child: Container(
-                    width: 50,
-                    height: 30,
-                    decoration: BoxDecoration(
-                      color: Colors.orange,
-                      borderRadius: BorderRadius.circular(20),
+                    const SizedBox(width: 5),
+                    Text(
+                      '$quantity',
+                      style: const TextStyle(
+                        fontSize: 21,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                    child: const Align(
-                      alignment: Alignment.center,
-                      child: Text(
-                        '+',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 23,
-                          fontWeight: FontWeight.bold,
+                    const SizedBox(width: 5),
+                    InkWell(
+                      onTap: () {
+                        updateItem(itemId, quantity + 1, size);
+                      },
+                      child: Container(
+                        width: 50,
+                        height: 30,
+                        decoration: BoxDecoration(
+                          color: Colors.orange,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: const Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            '+',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 23,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ),
                       ),
                     ),
-                  ),
+                  ],
                 ),
               ],
             ),

@@ -52,7 +52,7 @@ class _OnboardScreenState extends State<OnboardScreen> {
             (route) => false,
           );
         }
-        index = index > 1 ? 0 : index + 1;
+        index = index > 1 ? 2 : index + 1;
       });
     });
   }

@@ -96,8 +96,6 @@ class _FoodListState extends State<FoodList> {
 
   @override
   Widget build(BuildContext context) {
-    double screenHeight = MediaQuery.of(context).size.height;
-
     final CollectionReference foodRef =
         FirebaseFirestore.instance.collection(widget.collectionName);
 

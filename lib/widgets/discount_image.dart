@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_ordering_app/constants/constants_variables.dart';
 
 class DiscountedImage extends StatelessWidget {
   final String imageUrl;
@@ -15,13 +16,13 @@ class DiscountedImage extends StatelessWidget {
     return Stack(
       children: [
         SizedBox(
-          height: 115,
+          height: height(context) * 0.18,
           width: double.infinity,
           child: imageUrl.startsWith('http')
               ? ClipRRect(
                   borderRadius: BorderRadius.circular(10),
                   child: Image.network(
-                    fit: BoxFit.cover,
+                    // fit: BoxFit.cover,
                     imageUrl,
                   ),
                 )

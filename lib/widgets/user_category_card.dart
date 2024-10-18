@@ -71,12 +71,7 @@ class UserCategoryCard extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CustomTextWidget(name: name),
-              ],
-            ),
+            CustomTextWidget(name: name),
             const SizedBox(height: 5),
             Padding(
               padding: const EdgeInsets.only(left: 10),

@@ -184,39 +184,41 @@ class _AddFoodPageState extends State<AddFoodPage> {
                 const SizedBox(height: 20),
                 const SizedBox(height: 20),
                 const SizedBox(height: 20),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.orange,
-                  ),
+                MaterialButton(
+                  color: Colors.orange,
                   onPressed: pickImage,
-                  child: const Text(
-                    'Pick Image',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                  child: const Padding(
+                    padding: EdgeInsets.all(10),
+                    child: Text(
+                      'Pick Image',
+                      style: TextStyle(
+                        fontSize: 23,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),
                 if (image != null) Image.file(File(image!.path)),
                 const SizedBox(height: 50),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.orange,
-                  ),
+                MaterialButton(
+                  color: Colors.orange,
                   onPressed: addFood,
-                  child: Text(
-                    isDrinkCategory
-                        ? 'Add Drink'
-                        : isFoodCategory
-                            ? 'Add Food'
-                            : isOffersCategory
-                                ? 'Add Offer'
-                                : 'Add Sweet',
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Text(
+                      isDrinkCategory
+                          ? 'Add Drink'
+                          : isFoodCategory
+                              ? 'Add Food'
+                              : isOffersCategory
+                                  ? 'Add Offer'
+                                  : 'Add Sweet',
+                      style: const TextStyle(
+                        fontSize: 23,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),

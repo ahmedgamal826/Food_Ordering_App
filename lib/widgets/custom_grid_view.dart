@@ -1,6 +1,7 @@
 // lib/widgets/custom_grid_view.dart
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:food_ordering_app/constants/constants_variables.dart';
 import 'package:food_ordering_app/widgets/action_admin_buttons.dart';
 import 'package:food_ordering_app/widgets/custom_name_category.dart';
 import 'package:food_ordering_app/widgets/price_admin_category.dart';
@@ -36,7 +37,7 @@ class CustomGridView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.all(0),
       physics: const BouncingScrollPhysics(),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2, // Number of columns
@@ -84,108 +85,106 @@ class CustomGridView extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        collectionName == 'offers_category'
-                            ? Stack(
-                                children: [
-                                  SizedBox(
-                                    height: 115,
-                                    width: double.infinity,
-                                    child: imageUrl.startsWith('http')
-                                        ? ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            child: Image.network(
-                                              fit: BoxFit.cover,
-                                              imageUrl,
-                                            ),
-                                          )
-                                        : const Center(
-                                            child: Icon(
-                                              Icons.image,
-                                              size: 120,
-                                              color: Colors.black,
-                                            ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      collectionName == 'offers_category'
+                          ? Stack(
+                              children: [
+                                SizedBox(
+                                  // height: 115,
+                                  width: double.infinity,
+                                  child: imageUrl.startsWith('http')
+                                      ? ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          child: Image.network(
+                                            fit: BoxFit.cover,
+                                            imageUrl,
                                           ),
+                                        )
+                                      : const Center(
+                                          child: Icon(
+                                            Icons.image,
+                                            size: 120,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                ),
+                                Container(
+                                  width: 40,
+                                  color: Colors.red,
+                                  child: Text(
+                                    textAlign: TextAlign.center,
+                                    '${discountOffer}%',
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
-                                  Container(
-                                    width: 40,
-                                    color: Colors.red,
-                                    child: Text(
-                                      textAlign: TextAlign.center,
-                                      '${discountOffer}%',
-                                      style: const TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
+                                )
+                              ],
+                            )
+                          : SizedBox(
+                              height: height(context) * 0.18,
+                              width: double.infinity,
+                              child: imageUrl.startsWith('http')
+                                  ? ClipRRect(
+                                      borderRadius: BorderRadius.circular(10),
+                                      child: Image.network(
+                                        imageUrl,
+                                      ),
+                                    )
+                                  : const Center(
+                                      child: Icon(
+                                        Icons.image,
+                                        size: 120,
+                                        color: Colors.black,
                                       ),
                                     ),
-                                  )
-                                ],
-                              )
-                            : SizedBox(
-                                height: 115,
-                                width: double.infinity,
-                                child: imageUrl.startsWith('http')
-                                    ? ClipRRect(
-                                        borderRadius: BorderRadius.circular(10),
-                                        child: Image.network(
-                                          fit: BoxFit.cover,
-                                          imageUrl,
-                                        ),
-                                      )
-                                    : const Center(
-                                        child: Icon(
-                                          Icons.image,
-                                          size: 120,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                              ),
-                        CustomNameCategory(name: name),
-                        const SizedBox(height: 5),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            PriceAdminCategory(
-                              collectionName: collectionName,
-                              price: price,
-                              priceBeforeDiscount: priceAfterDiscount,
                             ),
-                            const SizedBox(width: 10),
-                            collectionName == 'offers_category'
-                                ? PriceAfterDiscountAdmin(price: price)
-                                : const SizedBox()
-                          ],
-                        ),
-                        isAdmin
-                            ? ActionAdminButtons(
-                                collectionName: collectionName,
-                                foodData: data,
-                                docId: doc.id,
-                                name: name,
-                                onDelete: () {
-                                  foodRef.doc(doc.id).delete();
-                                  customShowSnackBar(
-                                    context: context,
-                                    content:
-                                        '$name is deleted from $collectionName',
-                                  );
-                                },
-                              )
-                            : PriceAndFavouriteButton(
-                                description: description,
-                                docId: doc.id,
-                                imageUrl: imageUrl,
-                                index: index,
-                                isFavouriteList: isFavouriteList,
-                                name: name,
-                                price: price.toString(),
-                              ),
-                      ],
-                    ),
+                      CustomNameCategory(name: name),
+                      const SizedBox(height: 5),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          PriceAdminCategory(
+                            collectionName: collectionName,
+                            price: price,
+                            priceBeforeDiscount: priceAfterDiscount,
+                          ),
+                          const SizedBox(width: 10),
+                          collectionName == 'offers_category'
+                              ? PriceAfterDiscountAdmin(price: price)
+                              : const SizedBox()
+                        ],
+                      ),
+                      isAdmin
+                          ? ActionAdminButtons(
+                              collectionName: collectionName,
+                              foodData: data,
+                              docId: doc.id,
+                              name: name,
+                              onDelete: () {
+                                foodRef.doc(doc.id).delete();
+                                customShowSnackBar(
+                                  context: context,
+                                  content:
+                                      '$name is deleted from $collectionName',
+                                );
+                              },
+                            )
+                          : PriceAndFavouriteButton(
+                              description: description,
+                              docId: doc.id,
+                              imageUrl: imageUrl,
+                              index: index,
+                              isFavouriteList: isFavouriteList,
+                              name: name,
+                              price: price.toString(),
+                            ),
+                    ],
                   ),
                 )
               : UserCategoryCard(

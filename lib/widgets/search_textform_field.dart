@@ -18,6 +18,8 @@ class SearchTextformField extends StatelessWidget {
             border: const OutlineInputBorder(),
             prefixIcon: const Icon(Icons.search),
             hintText: hintText,
+            prefixIconColor: Colors.white,
+            hintStyle: const TextStyle(color: Colors.white),
             enabledBorder: const OutlineInputBorder(
               borderSide: BorderSide(color: Colors.white),
             ),

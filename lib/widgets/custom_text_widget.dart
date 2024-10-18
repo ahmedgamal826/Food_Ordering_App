@@ -11,22 +11,15 @@ class CustomTextWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 50,
-      width: 100,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 10,
+      child: Text(
+        textAlign: TextAlign.center,
+        name,
+        style: const TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
         ),
-        child: Text(
-          textAlign: TextAlign.center,
-          name,
-          style: const TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-          ),
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
-        ),
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
       ),
     );
   }

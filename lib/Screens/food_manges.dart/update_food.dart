@@ -79,13 +79,6 @@ class _UpdateFoodState extends State<UpdateFood> {
     final imageUrl =
         image != null ? await uploadImage(image!) : widget.foodData['image'];
 
-    // FirebaseFirestore.instance.collection('foods').doc(widget.docId).update({
-    //   'name': nameController.text,
-    //   'price': priceController.text,
-    //   'image': imageUrl, // رابط الصورة
-    // });
-    // Navigator.pop(context);
-
     FirebaseFirestore.instance
         .collection(widget.collectionName)
         .doc(widget.docId)
@@ -207,7 +200,9 @@ class _UpdateFoodState extends State<UpdateFood> {
                                     : 'Food Price',
                       )
                     : const SizedBox(height: 20),
-                isOffersCategory ? const SizedBox(height: 20) : SizedBox(),
+                isOffersCategory
+                    ? const SizedBox(height: 20)
+                    : const SizedBox(),
                 TextFieledAddFood(
                   controller: priceController,
                   hinText: isDrinkCategory
@@ -222,17 +217,18 @@ class _UpdateFoodState extends State<UpdateFood> {
                 isOffersCategory
                     ? const SizedBox(height: 20)
                     : const SizedBox(),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.orange,
-                  ),
+                MaterialButton(
+                  color: Colors.orange,
                   onPressed: pickImage,
-                  child: const Text(
-                    'Pick Image',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                  child: const Padding(
+                    padding: EdgeInsets.all(10),
+                    child: Text(
+                      'Pick Image',
+                      style: TextStyle(
+                        fontSize: 23,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),
@@ -240,23 +236,24 @@ class _UpdateFoodState extends State<UpdateFood> {
                 const SizedBox(
                   height: 50,
                 ),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.orange,
-                  ),
+                MaterialButton(
+                  color: Colors.orange,
                   onPressed: updateFood,
-                  child: Text(
-                    isDrinkCategory
-                        ? 'Edit Drink'
-                        : isSweetCategory
-                            ? 'Edit Sweet'
-                            : isOffersCategory
-                                ? 'Edit Offer'
-                                : 'Edit Food',
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Text(
+                      isDrinkCategory
+                          ? 'Edit Drink'
+                          : isSweetCategory
+                              ? 'Edit Sweet'
+                              : isOffersCategory
+                                  ? 'Edit Offer'
+                                  : 'Edit Food',
+                      style: const TextStyle(
+                        fontSize: 23,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 )
